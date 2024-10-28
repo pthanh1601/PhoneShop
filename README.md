@@ -1,5 +1,5 @@
 PHÂN CÔNG
-* Trang chủ admin
+* Trang admin
   - Thoại: Quản lý hóa đơn, chi tiết hóa đơn
   - Ngọc Thành: Quản lý nhân viên, phân quyền
   - Lộc: Login, logout
