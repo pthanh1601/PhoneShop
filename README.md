@@ -1,7 +1,7 @@
 PHÂN CÔNG
 * Trang chủ admin
-  - Thoại: quản lý nhân viên
-  - Ngọc Thành: quản lý đơn hàng
+  - Thoại: Quản lý hóa đơn, chi tiết hóa đơn
+  - Ngọc Thành: Quản lý nhân viên, phân quyền
   - Lộc: Login, logout
   - Quang: Quản lý khách hàng
-  - Anh Cọp: Quản lý hóa đơn
+  - Anh Cọp: Quản lý nhà cung cấp
