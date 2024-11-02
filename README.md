@@ -2,9 +2,8 @@ Quy tắc đặt tên nhánh
   #  Không Push Code Trực Tiếp Vào Nhánh Developer AND master:
 -      Tất cả các thành viên trong nhóm không được phép push code trực tiếp vào nhánh developer.
 
-  #  Sử Dụng Nhánh Riêng Để Phát Triển:
-
-  #  Mỗi thành viên trong nhóm nên tạo một nhánh riêng cho các tính năng hoặc sửa lỗi mà họ đang làm việc. 
+  #  Sử Dụng Nhánh Riêng Để Phát Tri
+    - Mỗi thành viên trong nhóm nên tạo một nhánh riêng cho các tính năng hoặc sửa lỗi mà họ đang làm việc. 
     -    Tên nhánh nên có định dạng như sau:
     +    feature/<tên-tính-năng> cho các tính năng mới.
     +    bugfix/<tên-sửa-lỗi> cho các sửa lỗi.
