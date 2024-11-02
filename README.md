@@ -1,8 +1,14 @@
 Quy tắc đặt tên nhánh
--     feature/ cho các tính năng mới (ví dụ: feature/dang-nhap)
--     bugfix/ cho các sửa lỗi (ví dụ: bugfix/sua-loi-dang-nhap)
--     tfix/ cho các sửa lỗi khẩn cấp (ví dụ: hotfix/sua-loi-nghiem-trong)
--     lease/ cho việc chuẩn bị phát hành mới (ví dụ: release/v1.0)
+  #  Không Push Code Trực Tiếp Vào Nhánh Developer AND master:
+-      Tất cả các thành viên trong nhóm không được phép push code trực tiếp vào nhánh developer.
+
+  #  Sử Dụng Nhánh Riêng Để Phát Triển:
+
+  #  Mỗi thành viên trong nhóm nên tạo một nhánh riêng cho các tính năng hoặc sửa lỗi mà họ đang làm việc. 
+    -    Tên nhánh nên có định dạng như sau:
+    +    feature/<tên-tính-năng> cho các tính năng mới.
+    +    bugfix/<tên-sửa-lỗi> cho các sửa lỗi.
+    +    hotfix/<tên-sửa-lỗi-nghiêm-trọng> cho các sửa lỗi khẩn cấp.
 PHÂN CÔNG
 * Trang admin
   - Thoại: Quản lý hóa đơn, chi tiết hóa đơn
