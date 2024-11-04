@@ -7,7 +7,7 @@
 <h2>Danh Sách Khách Hàng</h2>
 
 <!-- Link to the create view -->
-<a href="/KhachHang/ThemKhachHang" class="btn btn-primary">Thêm Khách Hàng</a>
+<a href="/admin/KhachHang/Create" class="btn btn-primary">Thêm Khách Hàng</a>
 
 <table class="table table-striped">
     <thead>
@@ -29,10 +29,10 @@
                 <td>@khachHang.DienThoai</td>
                 <td>
                     <!-- Link to the edit view, passing the customer ID -->
-                    <a href="/KhachHang/SuaKhachHang/@khachHang.MaKh" class="btn btn-warning">Sửa</a>
+                    <a href="/admin/KhachHang/Edit/@khachHang.MaKh" class="btn btn-warning">Sửa</a>
 
                     <!-- Link to the delete view, passing the customer ID -->
-                    <a href="/KhachHang/XoaKhachHang/@khachHang.MaKh" class="btn btn-danger">Xóa</a>
+                    <a href="/admin/KhachHang/Delete/@khachHang.MaKh" class="btn btn-danger">Xóa</a>
                 </td>
             </tr>
         }
