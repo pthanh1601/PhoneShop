@@ -18,4 +18,4 @@ public partial class PhanCong
     public virtual NhanVien MaNvNavigation { get; set; } = null!;
 
     public virtual PhongBan MaPbNavigation { get; set; } = null!;
-}
+}   
