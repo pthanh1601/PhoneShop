@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+}
+
+@model IEnumerable<PhoneShop.Data.NhanVien>
+
+<h1 class="text-center my-4">Danh Sách Nhân Viên</h1>
+
+<!-- Nút thêm nhân viên mới -->
+<form action="/admin/nhanvien/create" method="post">
+    <button type="submit" class="btn btn-success mb-3">Thêm Nhân Viên Mới</button>
+</form>
+
+<!-- Bảng danh sách nhân viên -->
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>MaNV</th>
+            <th>HoTen</th>
+            <th>Email</th>
+            <th>MatKhau</th>
+            <th>Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.MaNv</td>
+                <td>@employee.HoTen</td>
+                <td>@employee.Email</td>
+                <td>@employee.MatKhau</td>
+                <td>
+                    <!-- Nút sửa -->
+                    <form method="post" action="/Admin/NhanVien/Edit" class="d-inline-block">
+                        <input type="hidden" name="MaNv" value="@employee.MaNv" />
+                        <button type="submit" class="btn btn-warning btn-sm">Sửa</button>
+                    </form>
+
+                    <!-- Nút xóa -->
+                    <form method="post" action="/Admin/NhanVien/Delete" class="d-inline-block" onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?');">
+                        <input type="hidden" name="maNv" value="@employee.MaNv" />
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
