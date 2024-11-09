@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using PhoneShop.Areas.Admin.ViewModels;
 
 namespace PhoneShop.Data;
 
@@ -57,6 +58,11 @@ public partial class Hshop2023Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+
+     modelBuilder.Entity<Areas.Admin.ViewModels.HangHoaViewModels>().HasNoKey();
+     
+
         modelBuilder.Entity<BanBe>(entity =>
         {
             entity.HasKey(e => e.MaBb).HasName("PK_Promotions");
@@ -446,4 +452,10 @@ public partial class Hshop2023Context : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<PhoneShop.Areas.Admin.ViewModels.HangHoaViewModels> HangHoaViewModels { get; set; }
+  
+
+
+
 }
