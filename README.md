@@ -1,6 +1,7 @@
 # Cách chạy Code 
   ## 1 Cài 3 Thư Viện này
-     ![image](https://github.com/user-attachments/assets/d5929600-ff37-4615-8ec8-98cf29676d50)
+     ![image](https://github.com/<username>/<repository>/blob/main/<path_to_image>?raw=true)
+
   ## 2 Kết Nối SQL 
     ![image](https://github.com/user-attachments/assets/da6688b4-be36-469f-90e9-5ff715e5265c)
   
