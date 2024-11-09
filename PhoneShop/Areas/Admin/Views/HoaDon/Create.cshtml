@@ -1,0 +1,131 @@
+@model PhoneShop.Data.HoaDon
+
+@{
+    ViewData["Title"] = "Thêm Hóa Đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+}
+
+<h1>Thêm Hóa Đơn Mới</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="MaKh">Khách Hàng</label>
+        <select class="form-control" id="MaKh" name="MaKh">
+            <option value="">Chọn Khách Hàng</option>
+            @foreach (var item in ViewBag.KhachHang as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="NgayDat">Ngày Đặt</label>
+        <input type="date" class="form-control" id="NgayDat" name="NgayDat" required />
+    </div>
+
+    <div class="form-group">
+        <label for="NgayCan">Ngày Cần</label>
+        <input type="date" class="form-control" id="NgayCan" name="NgayCan" />
+    </div>
+
+    <div class="form-group">
+        <label for="NgayGiao">Ngày Giao</label>
+        <input type="date" class="form-control" id="NgayGiao" name="NgayGiao" />
+    </div>
+
+    <div class="form-group">
+        <label for="DiaChi">Địa Chỉ</label>
+        <input type="text" class="form-control" id="DiaChi" name="DiaChi" required />
+    </div>
+
+    <div class="form-group">
+        <label for="DienThoai">Điện Thoại</label>
+        <input type="text" class="form-control" id="DienThoai" name="DienThoai" />
+    </div>
+
+    <div class="form-group">
+        <label for="CachThanhToan">Cách Thanh Toán</label>
+        <input type="text" class="form-control" id="CachThanhToan" name="CachThanhToan" required />
+    </div>
+
+    <div class="form-group">
+        <label for="CachVanChuyen">Cách Vận Chuyển</label>
+        <input type="text" class="form-control" id="CachVanChuyen" name="CachVanChuyen" required />
+    </div>
+
+    <div class="form-group">
+        <label for="PhiVanChuyen">Phí Vận Chuyển</label>
+        <input type="number" class="form-control" id="PhiVanChuyen" name="PhiVanChuyen" step="0.01" value="0" required />
+    </div>
+
+    <div class="form-group">
+        <label for="MaTrangThai">Trạng Thái</label>
+        <select class="form-control" id="MaTrangThai" name="MaTrangThai" required>
+            <option value="">Chọn Trạng Thái</option>
+            @foreach (var item in ViewBag.TrangThai as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+    <h4>Chi Tiết Hóa Đơn</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hàng Hóa</th>
+                <th>Số Lượng</th>
+                <th>Đơn Giá</th>
+                <th>Giảm Giá</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody id="chiTietTable">
+            <tr>
+                <td>
+                    <select name="ChiTietHds[0].MaHh" class="form-control">
+                        <option value="">Chọn Hàng Hóa</option>
+                        @foreach (var item in ViewBag.HangHoa as SelectList)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </td>
+                <td><input type="number" name="ChiTietHds[0].SoLuong" class="form-control" value="1" /></td>
+                <td><input type="text" name="ChiTietHds[0].DonGia" class="form-control" /></td>
+                <td><input type="text" name="ChiTietHds[0].GiamGia" class="form-control" /></td>
+                <td><button type="button" class="btn btn-danger removeRow">Xóa</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" id="addRow" class="btn btn-primary">Thêm Chi Tiết</button>
+
+    <button type="submit" class="btn btn-success">Lưu Hóa Đơn</button>
+</form>
+
+@section Scripts {
+    <script>
+        var rowCount = 1;
+        $("#addRow").click(function () {
+            var newRow = `<tr>
+                            <td><select name="ChiTietHds[${rowCount}].MaHh" class="form-control">
+                                @foreach (var item in ViewBag.HangHoa as SelectList)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select></td>
+                            <td><input type="number" name="ChiTietHds[${rowCount}].SoLuong" class="form-control" value="1" /></td>
+                            <td><input type="text" name="ChiTietHds[${rowCount}].DonGia" class="form-control" /></td>
+                            <td><input type="text" name="ChiTietHds[${rowCount}].GiamGia" class="form-control" /></td>
+                            <td><button type="button" class="btn btn-danger removeRow">Xóa</button></td>
+                          </tr>`;
+            $("#chiTietTable").append(newRow);
+            rowCount++;
+        });
+
+        $(document).on('click', '.removeRow', function () {
+            $(this).closest('tr').remove();
+        });
+    </script>
+}

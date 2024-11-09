@@ -1,0 +1,94 @@
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<PhoneShop.Data.HoaDon>
+@{
+    ViewData["Title"] = "Quản Lý Hóa Đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Quản Lý Hóa Đơn</h1>
+
+<div>
+    <a asp-action="Create" >Thêm Hoá Đơn</a>
+
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().MaHd)</th>
+            <th>@Html.DisplayNameFor(model => model.First().HoTen)</th>
+            <th>@Html.DisplayNameFor(model => model.First().NgayDat)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DienThoai)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DiaChi)</th>
+            <th>@Html.DisplayNameFor(model => model.First().CachThanhToan)</th>
+            <th>@Html.DisplayNameFor(model => model.First().MaTrangThai)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.MaHd)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaKhNavigation.HoTen)</td>
+            <td>@Html.DisplayFor(modelItem => item.NgayDat)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaKhNavigation.DienThoai)</td>
+            <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+            <td>@Html.DisplayFor(modelItem => item.CachThanhToan)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaTrangThaiNavigation.MaTrangThai)</td>
+            <td>
+                <a asp-action="Details" asp-area="Admin" asp-controller="HoaDon" asp-route-id="10257">Chi tiết</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="pagination-container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
+
+<style>
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination-container .pagination {
+        list-style: none;
+        padding: 0;
+        display: flex;
+    }
+
+    .pagination-container .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination-container .pagination li a {
+        display: block;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .pagination-container .pagination li a:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination-container .pagination li.active a {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+    .pagination-container .pagination li.disabled a {
+        color: #6c757d;
+        pointer-events: none;
+    }
+</style>
