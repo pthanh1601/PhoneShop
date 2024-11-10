@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+    <!-- Hiển thị thông báo thành công hoặc lỗi nếu có -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Bảng hiển thị danh sách phân công -->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Mã Phân Công</th>
+                    <th scope="col">Mã Nhân Viên</th>
+                    <th scope="col">Mã Phòng Ban</th>
+                    <th scope="col">Ngày Phân Công</th>
+                    <th scope="col">Hiệu Lực</th>
+                    <th scope="col">Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaPc</td>
+                        <td>@item.MaNv</td>
+                        <td>@item.MaPb</td>
+                        <td>@item.NgayPc?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <span class="badge @(item.HieuLuc == true ? "bg-success" : "bg-danger")">
+                                @(item.HieuLuc == true ? "Có" : "Không")
+                            </span>
+                        </td>
+                        <td>
+                            <!-- Nút sửa phân công -->
+                            <a href="@Url.Action("Edit", "PhanCong", new { maPc = item.MaPc })" class="btn btn-primary btn-sm me-1">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+
+                            <!-- Nút xóa phân công -->
+                            <form action="@Url.Action("Delete", "PhanCong", new { maPc = item.MaPc })" method="post" style="display:inline-block;">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa phân công này không?')">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Nút thêm phân công mới -->
+    <div class="text-end mt-3">
+        <a href="@Url.Action("Create", "PhanCong")" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Thêm Phân Công Mới
+        </a>
+    </div>
+</div>
