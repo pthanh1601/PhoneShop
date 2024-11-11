@@ -91,7 +91,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/HomeAdmin/PhanCong.cshtml", assignments);
         }
 
-        // GET: Display Edit Assignment page
+        // Phương thức GET để hiển thị trang sửa phân công
         public IActionResult Edit(int maPc)
         {
             var phanCong = _context.PhanCongs.FirstOrDefault(pc => pc.MaPc == maPc);
@@ -100,6 +100,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            // Chuyển dữ liệu vào ViewModel
             var viewModel = new PhanCongVM
             {
                 PhanCong = phanCong,
@@ -107,55 +108,46 @@ namespace PhoneShop.Areas.Admin.Controllers
                 PhongBans = _context.PhongBans.ToList()
             };
 
+            // Trả về View với ViewModel
             return View("~/Areas/Admin/Views/HomeAdmin/SuaPhanCong.cshtml", viewModel);
         }
-
         // POST: Update assignment
         [HttpPost]
-        public async Task<IActionResult> Update(PhanCongVM viewModel)
+        public async Task<IActionResult> Update(PhanCongVM model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    var existingPhanCong = await _context.PhanCongs.FirstOrDefaultAsync(pc => pc.MaPc == viewModel.PhanCong.MaPc);
-                    if (existingPhanCong != null)
-                    {
-                        existingPhanCong.MaNv = viewModel.PhanCong.MaNv;
-                        existingPhanCong.MaPb = viewModel.PhanCong.MaPb;
-                        existingPhanCong.NgayPc = viewModel.PhanCong.NgayPc;
-                        existingPhanCong.HieuLuc = viewModel.PhanCong.HieuLuc;
-
-                        _context.PhanCongs.Update(existingPhanCong);
-                        await _context.SaveChangesAsync();
-
-                        // Log JSON serialized data to debug console
-                        _logger.LogInformation($"Assignment updated: {JsonSerializer.Serialize(existingPhanCong)}");
-
-                        TempData["SuccessMessage"] = "Cập nhật phân công thành công.";
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"Error updating assignment: {ex.Message}");
-                    ModelState.AddModelError("", "Có lỗi xảy ra khi cập nhật phân công.");
-
-                    viewModel.NhanViens = _context.NhanViens.ToList();
-                    viewModel.PhongBans = _context.PhongBans.ToList();
-                    return View("~/Areas/Admin/Views/HomeAdmin/SuaPhanCong.cshtml", viewModel);
-                }
+                // Nếu ModelState không hợp lệ, trả về lại trang sửa với dữ liệu hiện tại
+                TempData["ModelStateErrors"] = string.Join(";", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+                model.NhanViens = _context.NhanViens.ToList();
+                model.PhongBans = _context.PhongBans.ToList();
+                return View("~/Areas/Admin/Views/HomeAdmin/SuaPhanCong.cshtml", model);
             }
 
-            viewModel.NhanViens = _context.NhanViens.ToList();
-            viewModel.PhongBans = _context.PhongBans.ToList();
-            return View("~/Areas/Admin/Views/HomeAdmin/SuaPhanCong.cshtml", viewModel);
-        }
+            // Tìm phân công trong cơ sở dữ liệu dựa trên MaPc
+            var existingPhanCong = await _context.PhanCongs.FindAsync(model.PhanCong.MaPc);
+            if (existingPhanCong == null)
+            {
+                TempData["ErrorMessage"] = "Phân công không tồn tại.";
+                return RedirectToAction("Index");
+            }
 
+            // Cập nhật dữ liệu phân công từ model
+            existingPhanCong.MaNv = model.PhanCong.MaNv;
+            existingPhanCong.MaPb = model.PhanCong.MaPb;
+            existingPhanCong.NgayPc = model.PhanCong.NgayPc;
+            existingPhanCong.HieuLuc = model.PhanCong.HieuLuc;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            _context.Update(existingPhanCong);
+            await _context.SaveChangesAsync();
+
+            // Thông báo thành công và chuyển hướng về trang danh sách phân công
+            TempData["SuccessMessage"] = "Cập nhật phân công thành công.";
+            return RedirectToAction("Index");
+        }
         // POST: Delete assignment
         [HttpPost]
         public async Task<IActionResult> Delete(int maPc)
