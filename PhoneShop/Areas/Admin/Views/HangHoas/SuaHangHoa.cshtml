@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaLoai" class="control-label"></label>
-                <input asp-for="MaLoai" class="form-control" />
+                <select asp-for="MaLoai" class="form-control" asp-items="@(ViewBag.MaLoai)"></select>
                 <span asp-validation-for="MaLoai" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -54,7 +54,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaNcc" class="control-label"></label>
-                <input asp-for="MaNcc" class="form-control" />
+                <select asp-for="MaNcc" class="form-control" asp-items="@(ViewBag.MaNcc)"></select>
                 <span asp-validation-for="MaNcc" class="text-danger"></span>
             </div>
             <div class="form-group">

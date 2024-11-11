@@ -275,14 +275,18 @@ namespace PhoneShop.Areas.Admin.Controllers
             var hanghoa = new HangHoaViewModels()
             {
                 TenHh = hangHoa.TenHh,
-                MaLoai =hangHoa.MaLoai,
-                DonGia= hangHoa.DonGia,
+                MaLoai = hangHoa.MaLoai,
+                DonGia = hangHoa.DonGia,
                 Hinh = hangHoa.Hinh,
                 GiamGia = hangHoa.GiamGia,
                 SoLanXem = hangHoa.SoLanXem,
                 MoTa = hangHoa.MoTa,
                 MaNcc = hangHoa.MaNcc,
+
             };
+            ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
+            ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
+
 
 
             ViewData["MaHh"] = hangHoa.MaHh;
@@ -319,6 +323,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             hangHoa.MaNcc = hanghoa.MaNcc;
 
             db.SaveChanges();
+            db.Entry(hangHoa).Reload();
             return RedirectToAction("DanhSachHangHoa");
         }
 

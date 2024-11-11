@@ -97,6 +97,8 @@ namespace PhoneShop.Areas.Admin.ViewModels
 
         [Required(ErrorMessage = "Mã nhà cung cấp không được để trống")]
         public string MaNcc { get; set; } = null!;
+
+
     }
 }
 
