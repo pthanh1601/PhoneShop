@@ -1,0 +1,44 @@
+﻿@model PhoneShop.Data.NhanVien
+@{
+    ViewData["Title"] = "DeleteNhanVien";
+}
+
+<h1>Delete Nhân Viên</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaNv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaNv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HoTen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoTen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MatKhau)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MatKhau)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MaNv" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div
+

@@ -25,13 +25,17 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options
-    =>
-{
-    options.LoginPath = "/KhachHang/DangNhap";
-    options.AccessDeniedPath = "/AccessDenied";
-}
-);
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie("KhachHang", options =>
+    {
+        options.LoginPath = "/KhachHang/DangNhap";
+        options.AccessDeniedPath = "/AccessDenied";
+    })
+    .AddCookie("Admin", options =>
+    {
+        options.LoginPath = "/Admin/Login/Index";
+        options.AccessDeniedPath = "/AccessDenied";
+    });
 
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
 

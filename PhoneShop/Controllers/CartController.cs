@@ -115,7 +115,7 @@ namespace PhoneShop.Controllers
                     MaKh = customerId,
                     HoTen = model.HoTen ?? khachHang.HoTen,
                     DiaChi = model.DiaChi ?? khachHang.DiaChi,
-                    DienThoai = model.DienThoai ?? khachHang.DienThoai,
+                    //DienThoai = model.DienThoai ?? khachHang.DienThoai,
                     NgayDat = DateTime.Now,
                     CachThanhToan = "COD",
                     CachVanChuyen = "GRAB",

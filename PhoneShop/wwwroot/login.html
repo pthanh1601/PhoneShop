@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Fruitables - Vegetable Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Login</h1>
+    </div>
+    <div class="bg-dark">
+        <form method="post" asp-controller="Account" asp-action="Login" class="container">
+            <div class="py-2 position-relative mx-auto col-lg-6">
+                <input id="Username" class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="text" placeholder="Username">
+                <span class="error-message"></span>
+            </div>
+            <div class="py-2 position-relative mx-auto col-lg-6">
+                <input id="Password" class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="password" placeholder="Password">
+                <span class="error-message"></span>
+            </div>
+            <div class="justify-content-center d-flex py-2">
+                <a href="index.html" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Login</a>
+                <button type="submit" class="btn border-secondary py-2 px-4 rounded-pill text-primary">login</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Javascript -->
+    <script src="js/login.js"></script>
+</body>
+</html>

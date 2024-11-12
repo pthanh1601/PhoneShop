@@ -9,6 +9,8 @@ namespace PhoneShop.ViewModels
         [Required(ErrorMessage ="*")]
         [MaxLength(20,ErrorMessage ="Tối đa 20 kí tự")]
         public string MaKh { get; set; }
+        public string MaNv { get; set; }
+
 
         [Display(Name = "Mật Khẩu")]
         [Required(ErrorMessage ="*")]
