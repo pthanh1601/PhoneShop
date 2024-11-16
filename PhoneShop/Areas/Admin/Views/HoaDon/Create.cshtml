@@ -1,131 +1,144 @@
-@model PhoneShop.Data.HoaDon
+@model PhoneShop.ViewModels.CreateHoaDon
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "Thêm Hóa Đơn";
+    ViewData["Title"] = "Quản Lý Hóa Đơn";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
 }
 
-<h1>Thêm Hóa Đơn Mới</h1>
+<h2>Thêm Hóa Đơn</h2>
 
-<form method="post">
+<form asp-action="Create" method="post">
+    <!-- Thông tin hóa đơn -->
     <div class="form-group">
-        <label for="MaKh">Khách Hàng</label>
-        <select class="form-control" id="MaKh" name="MaKh">
-            <option value="">Chọn Khách Hàng</option>
-            @foreach (var item in ViewBag.KhachHang as SelectList)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
+        <label for="MaKh">Khách hàng:</label>
+        <input asp-for="HoaDon.MaKh" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="DiaChi">Địa chỉ:</label>
+        <input asp-for="HoaDon.DiaChi" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="MaTrangThai">Trạng thái:</label>
+        <select asp-for="HoaDon.MaTrangThai" asp-items="@(new SelectList(Model.TrangThais, "MaTrangThai", "TenTrangThai"))" class="form-control"></select>
     </div>
 
-    <div class="form-group">
-        <label for="NgayDat">Ngày Đặt</label>
-        <input type="date" class="form-control" id="NgayDat" name="NgayDat" required />
+    <hr />
+    <h3>Hàng hóa</h3>
+    <div style="display: flex;">
+        <!-- Bộ lọc tìm kiếm hàng hóa -->
+        <div style="width: 20%;">
+            <label for="searchKeyword">Tìm kiếm:</label>
+            <input type="text" id="searchKeyword" class="form-control" placeholder="Nhập từ khóa..." />
+            <br />
+            <label for="filterCategory">Loại hàng hóa:</label>
+            <select id="filterCategory" class="form-control">
+                <option value="">-- Tất cả --</option>
+                @foreach (var category in Model.HangHoas.Select(h => h.MaLoaiNavigation).Distinct())
+                {
+                    <option value="@category.MaLoai">@category.TenLoai</option>
+                }
+            </select>
+            <br />
+            <button type="button" id="searchButton" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+
+        <!-- Bảng danh sách hàng hóa -->
+        <div style="width: 80%;">
+            <table id="productTable" class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Tên hàng hóa</th>
+                        <th>Đơn giá</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hangHoa in Model.HangHoas)
+                    {
+                        <tr>
+                            <td>@hangHoa.TenHh</td>
+                            <td>@hangHoa.DonGia</td>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick="addToDetails(@hangHoa.MaHh, '@hangHoa.TenHh', @hangHoa.DonGia)">Thêm</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="NgayCan">Ngày Cần</label>
-        <input type="date" class="form-control" id="NgayCan" name="NgayCan" />
-    </div>
-
-    <div class="form-group">
-        <label for="NgayGiao">Ngày Giao</label>
-        <input type="date" class="form-control" id="NgayGiao" name="NgayGiao" />
-    </div>
-
-    <div class="form-group">
-        <label for="DiaChi">Địa Chỉ</label>
-        <input type="text" class="form-control" id="DiaChi" name="DiaChi" required />
-    </div>
-
-    <div class="form-group">
-        <label for="DienThoai">Điện Thoại</label>
-        <input type="text" class="form-control" id="DienThoai" name="DienThoai" />
-    </div>
-
-    <div class="form-group">
-        <label for="CachThanhToan">Cách Thanh Toán</label>
-        <input type="text" class="form-control" id="CachThanhToan" name="CachThanhToan" required />
-    </div>
-
-    <div class="form-group">
-        <label for="CachVanChuyen">Cách Vận Chuyển</label>
-        <input type="text" class="form-control" id="CachVanChuyen" name="CachVanChuyen" required />
-    </div>
-
-    <div class="form-group">
-        <label for="PhiVanChuyen">Phí Vận Chuyển</label>
-        <input type="number" class="form-control" id="PhiVanChuyen" name="PhiVanChuyen" step="0.01" value="0" required />
-    </div>
-
-    <div class="form-group">
-        <label for="MaTrangThai">Trạng Thái</label>
-        <select class="form-control" id="MaTrangThai" name="MaTrangThai" required>
-            <option value="">Chọn Trạng Thái</option>
-            @foreach (var item in ViewBag.TrangThai as SelectList)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
-    </div>
-
-    <h4>Chi Tiết Hóa Đơn</h4>
-    <table class="table">
+    <hr />
+    <h3>Chi tiết hóa đơn</h3>
+    <table id="detailsTable" class="table table-bordered">
         <thead>
             <tr>
-                <th>Hàng Hóa</th>
-                <th>Số Lượng</th>
-                <th>Đơn Giá</th>
-                <th>Giảm Giá</th>
-                <th>Thao Tác</th>
+                <th>Tên hàng hóa</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th>Hành động</th>
             </tr>
         </thead>
-        <tbody id="chiTietTable">
-            <tr>
-                <td>
-                    <select name="ChiTietHds[0].MaHh" class="form-control">
-                        <option value="">Chọn Hàng Hóa</option>
-                        @foreach (var item in ViewBag.HangHoa as SelectList)
-                        {
-                            <option value="@item.Value">@item.Text</option>
-                        }
-                    </select>
-                </td>
-                <td><input type="number" name="ChiTietHds[0].SoLuong" class="form-control" value="1" /></td>
-                <td><input type="text" name="ChiTietHds[0].DonGia" class="form-control" /></td>
-                <td><input type="text" name="ChiTietHds[0].GiamGia" class="form-control" /></td>
-                <td><button type="button" class="btn btn-danger removeRow">Xóa</button></td>
-            </tr>
+        <tbody>
         </tbody>
     </table>
-    <button type="button" id="addRow" class="btn btn-primary">Thêm Chi Tiết</button>
 
-    <button type="submit" class="btn btn-success">Lưu Hóa Đơn</button>
+    <hr />
+    <button type="submit" class="btn btn-primary">Lưu hóa đơn</button>
 </form>
 
-@section Scripts {
-    <script>
-        var rowCount = 1;
-        $("#addRow").click(function () {
-            var newRow = `<tr>
-                            <td><select name="ChiTietHds[${rowCount}].MaHh" class="form-control">
-                                @foreach (var item in ViewBag.HangHoa as SelectList)
-                                {
-                                    <option value="@item.Value">@item.Text</option>
-                                }
-                            </select></td>
-                            <td><input type="number" name="ChiTietHds[${rowCount}].SoLuong" class="form-control" value="1" /></td>
-                            <td><input type="text" name="ChiTietHds[${rowCount}].DonGia" class="form-control" /></td>
-                            <td><input type="text" name="ChiTietHds[${rowCount}].GiamGia" class="form-control" /></td>
-                            <td><button type="button" class="btn btn-danger removeRow">Xóa</button></td>
-                          </tr>`;
-            $("#chiTietTable").append(newRow);
-            rowCount++;
-        });
+<script>
+    $(document).ready(function () {
+        // Tìm kiếm và lọc hàng hóa
+        $("#searchButton").click(function () {
+            const keyword = $("#searchKeyword").val();
+            const categoryId = $("#filterCategory").val();
 
-        $(document).on('click', '.removeRow', function () {
-            $(this).closest('tr').remove();
+            $.post("/Admin/HoaDon/SearchProducts", { keyword: keyword, categoryId: categoryId }, function (data) {
+                // Xóa các dòng hiện tại trong bảng và thêm kết quả tìm kiếm vào bảng
+                $("#productTable tbody").empty();
+                data.forEach(function (hangHoa) {
+                    const row = `
+                        <tr>
+                            <td>${hangHoa.tenHh}</td>
+                            <td>${hangHoa.donGia}</td>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick="addToDetails(${hangHoa.maHh}, '${hangHoa.tenHh}', ${hangHoa.donGia})">Thêm</button>
+                            </td>
+                        </tr>
+                    `;
+                    $("#productTable tbody").append(row);
+                });
+            });
         });
-    </script>
-}
+    });
+
+    // Thêm sản phẩm vào bảng chi tiết hóa đơn
+    function addToDetails(maHh, tenHh, donGia) {
+        const row = `
+            <tr>
+                <td>${tenHh}</td>
+                <td><input type="number" name="ChiTietHds[0].SoLuong" value="1" onchange="updateTotal(this, ${donGia})" class="form-control" /></td>
+                <td>${donGia}</td>
+                <td><span>${donGia}</span></td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Xóa</button></td>
+            </tr>
+        `;
+        $("#detailsTable tbody").append(row);
+    }
+
+    // Cập nhật thành tiền khi thay đổi số lượng
+    function updateTotal(input, donGia) {
+        const quantity = $(input).val();
+        const total = quantity * donGia;
+        $(input).closest("tr").find("span").text(total);
+    }
+
+    // Xóa dòng khỏi bảng chi tiết hóa đơn
+    function removeRow(button) {
+        $(button).closest("tr").remove();
+    }
+</script>
+

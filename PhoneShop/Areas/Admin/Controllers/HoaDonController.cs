@@ -72,47 +72,35 @@ namespace MyApp.Namespace
         [Route("Create")]
         public IActionResult Create()
         {
-            // Lấy danh sách khách hàng, trạng thái và mặt hàng để hiển thị trong form
-            ViewBag.KhachHang = new SelectList(hshop2023Context.KhachHangs, "MaKh", "HoTen");
-            ViewBag.TrangThai = new SelectList(hshop2023Context.TrangThais, "MaTrangThai", "MaTrangThai");
-            ViewBag.HangHoa = new SelectList(hshop2023Context.HangHoas, "MaHh", "TenHh");
-
-            return View();
+            var model = new CreateHoaDon
+            {
+                HoaDon = new HoaDon(),
+                TrangThais = hshop2023Context.TrangThais.ToList(),
+                HangHoas = hshop2023Context.HangHoas.Include(h => h.MaLoaiNavigation).ToList()
+            };
+            return View(model);
         }
 
-
-        // POST: Thêm hóa đơn
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh, NgayDat, NgayCan, NgayGiao, HoTen, DiaChi, DienThoai, CachThanhToan, CachVanChuyen, PhiVanChuyen, MaTrangThai, MaNv, GhiChu, ChiTietHds")] HoaDon hoaDon)
+        public IActionResult SearchProducts(string keyword, int? categoryId)
         {
-            if (ModelState.IsValid)
+            var hangHoas = hshop2023Context.HangHoas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(keyword))
             {
-                // Lưu hóa đơn mới vào cơ sở dữ liệu
-                hshop2023Context.Add(hoaDon);
-                await hshop2023Context.SaveChangesAsync();
-
-                // Sau khi lưu hóa đơn, thêm chi tiết hóa đơn vào cơ sở dữ liệu
-                foreach (var chiTiet in hoaDon.ChiTietHds)
-                {
-                    chiTiet.MaHd = hoaDon.MaHd;  // Gán MaHd cho chi tiết hóa đơn
-                    hshop2023Context.Add(chiTiet);
-                }
-
-                // Lưu lại các chi tiết hóa đơn
-                await hshop2023Context.SaveChangesAsync();
-
-                // Chuyển hướng về trang danh sách hóa đơn sau khi thêm thành công
-                return RedirectToAction(nameof(Index));
+                hangHoas = hangHoas.Where(h => h.TenHh.Contains(keyword));
             }
 
-            // Nếu có lỗi, hiển thị lại form và dữ liệu đã nhập
-            ViewBag.KhachHang = new SelectList(hshop2023Context.KhachHangs, "MaKh", "HoTen", hoaDon.MaKh);
-            ViewBag.TrangThai = new SelectList(hshop2023Context.TrangThais, "MaTrangThai", "MaTrangThai", hoaDon.MaTrangThai);
-            ViewBag.HangHoa = new SelectList(hshop2023Context.HangHoas, "MaHh", "TenHh");
+            if (categoryId.HasValue)
+            {
+                hangHoas = hangHoas.Where(h => h.MaLoai == categoryId);
+            }
 
-            return View(hoaDon);
+            return Json(hangHoas.ToList());  // Trả về danh sách sản phẩm dưới dạng JSON
         }
+
+
+
 
 
     }
