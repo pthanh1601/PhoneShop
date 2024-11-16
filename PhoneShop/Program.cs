@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using PhoneShop.Helper;
+using PhoneShop.Hubs;
 using PhoneShop.Models.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
 
+// Add SignalR service
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request  pipeline.
@@ -61,6 +65,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
+// Map the SignalR hub
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
