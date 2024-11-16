@@ -275,11 +275,11 @@ namespace PhoneShop.Areas.Admin.Controllers
             var hanghoa = new HangHoaViewModels()
             {
                 TenHh = hangHoa.TenHh,
-                MaLoai = hangHoa.MaLoai,
+                MaLoai = (int)hangHoa.MaLoai,
                 DonGia = hangHoa.DonGia,
                 Hinh = hangHoa.Hinh,
-                GiamGia = hangHoa.GiamGia,
-                SoLanXem = hangHoa.SoLanXem,
+                GiamGia = (double)hangHoa.GiamGia,
+                SoLanXem = (int)hangHoa.SoLanXem,
                 MoTa = hangHoa.MoTa,
                 MaNcc = hangHoa.MaNcc,
 
