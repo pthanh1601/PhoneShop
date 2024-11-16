@@ -1,0 +1,44 @@
+@model IEnumerable<PhoneShop.Data.KhachHang>
+
+@{
+    ViewData["Title"] = "Danh Sách Khách Hàng";
+}
+
+<h2>Danh Sách Khách Hàng</h2>
+
+<!-- Link to the create view -->
+<a href="/admin/KhachHang/Create" class="btn btn-primary">Thêm Khách Hàng</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Họ Tên</th>
+            <th>Ngày Sinh</th>
+            <th>Giới Tính</th>
+            <th>Điện Thoại</th>
+            <th>Email</th>
+            <th>Hiệu Lực</th>
+            <th>Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var khachHang in Model)
+        {
+            <tr>
+                <td>@khachHang.HoTen</td>
+                <td>@khachHang.NgaySinh</td>
+                <td>@(khachHang.GioiTinh ? "Nam" : "Nữ")</td>
+                <td>@khachHang.DienThoai</td>
+                <td>@khachHang.Email</td>
+                <td>@(khachHang.HieuLuc ? "Đang hoạt động" : "Ngừng hoạt động")</td>
+                <td>
+                    <!-- Link to the edit view, passing the customer ID -->
+                    <a href="/admin/KhachHang/Edit/@khachHang.MaKh" class="btn btn-warning">Sửa</a>
+
+                    <!-- Link to the delete view, passing the customer ID -->
+                    <a href="/admin/KhachHang/Delete/@khachHang.MaKh" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
