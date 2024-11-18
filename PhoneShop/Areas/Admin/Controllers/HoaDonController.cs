@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PhoneShop.Data;
 using PhoneShop.ViewModels;
 using X.PagedList;
@@ -68,40 +69,68 @@ namespace MyApp.Namespace
             return RedirectToAction("Details", new { id = MaHd });
         }
 
-        // Thêm hoá đơn
-        [Route("Create")]
+        // GET: Admin/HoaDon/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
-            var model = new CreateHoaDon
+            var viewModel = new HoaDonViewModel
             {
-                HoaDon = new HoaDon(),
-                TrangThais = hshop2023Context.TrangThais.ToList(),
-                HangHoas = hshop2023Context.HangHoas.Include(h => h.MaLoaiNavigation).ToList()
+                KhachHangs = hshop2023Context.KhachHangs.ToList(),
+                HangHoas = hshop2023Context.HangHoas.ToList()
             };
-            return View(model);
+            return View(viewModel);
         }
 
-        [HttpPost]
-        public IActionResult SearchProducts(string keyword, int? categoryId)
+        // POST: Admin/HoaDon/Create
+        [HttpPost("Create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(HoaDonViewModel viewModel)
         {
-            var hangHoas = hshop2023Context.HangHoas.AsQueryable();
-
-            if (!string.IsNullOrEmpty(keyword))
+            if (ModelState.IsValid)
             {
-                hangHoas = hangHoas.Where(h => h.TenHh.Contains(keyword));
+                // Tạo hóa đơn mới
+                var hoaDon = new HoaDon
+                {
+                    MaKh = viewModel.MaKh,
+                    NgayDat = viewModel.NgayDat,
+                    NgayCan = viewModel.NgayCan,
+                    NgayGiao = viewModel.NgayGiao,
+                    HoTen = viewModel.HoTen,
+                    DiaChi = viewModel.DiaChi,
+                    DienThoai = viewModel.DienThoai,
+                    CachThanhToan = viewModel.CachThanhToan,
+                    CachVanChuyen = viewModel.CachVanChuyen,
+                    PhiVanChuyen = viewModel.PhiVanChuyen,
+                    MaTrangThai = viewModel.MaTrangThai,
+                    MaNv = viewModel.MaNv?? null,
+                    GhiChu = viewModel.GhiChu
+                };
+
+                // Thêm hóa đơn vào cơ sở dữ liệu
+                hshop2023Context.HoaDons.Add(hoaDon);
+                await hshop2023Context.SaveChangesAsync();
+
+                // Thêm chi tiết hóa đơn
+                foreach (var chiTiet in viewModel.ChiTietHds)
+                {
+                    var chiTietHd = new ChiTietHd
+                    {
+                        MaHd = hoaDon.MaHd,
+                        MaHh = chiTiet.MaHh,
+                        DonGia = chiTiet.DonGia,
+                        SoLuong = chiTiet.SoLuong,
+                        GiamGia = chiTiet.GiamGia
+                    };
+                    hshop2023Context.ChiTietHds.Add(chiTietHd);
+                }
+
+                await hshop2023Context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
             }
 
-            if (categoryId.HasValue)
-            {
-                hangHoas = hangHoas.Where(h => h.MaLoai == categoryId);
-            }
-
-            return Json(hangHoas.ToList());  // Trả về danh sách sản phẩm dưới dạng JSON
+            // Nếu không hợp lệ, trả về lại form với lỗi
+            return View(viewModel);
         }
-
-
-
-
-
     }
 }
