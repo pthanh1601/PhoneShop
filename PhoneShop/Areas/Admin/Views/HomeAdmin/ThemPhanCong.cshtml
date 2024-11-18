@@ -3,6 +3,18 @@
 @{
     ViewData["Title"] = "Thêm Phân Công";
 }
+@if (TempData["ModelStateErrors"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Có lỗi xảy ra:</strong>
+        <ul>
+            @foreach (var error in TempData["ModelStateErrors"].ToString().Split(";"))
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
 
 <h2>@ViewData["Title"]</h2>
 
