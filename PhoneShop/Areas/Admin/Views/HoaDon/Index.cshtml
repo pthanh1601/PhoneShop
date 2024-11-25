@@ -9,10 +9,6 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <h1>Quản Lý Hóa Đơn</h1>
 
-<div>
-    <a asp-action="Create" >Thêm Hoá Đơn</a>
-
-</div>
 
 <table class="table table-bordered table-hover">
     <thead>
@@ -38,7 +34,7 @@
             <td>@Html.DisplayFor(modelItem => item.CachThanhToan)</td>
             <td>@Html.DisplayFor(modelItem => item.MaTrangThaiNavigation.MaTrangThai)</td>
             <td>
-                <a asp-action="Details" asp-area="Admin" asp-controller="HoaDon" asp-route-id="10257">Chi tiết</a>
+                <a asp-action="Details" asp-area="Admin" asp-controller="HoaDon" asp-route-id="@item.MaHd">Chi tiết</a>
             </td>
         </tr>
     }

@@ -69,68 +69,6 @@ namespace MyApp.Namespace
             return RedirectToAction("Details", new { id = MaHd });
         }
 
-        // GET: Admin/HoaDon/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
-        {
-            var viewModel = new HoaDonViewModel
-            {
-                KhachHangs = hshop2023Context.KhachHangs.ToList(),
-                HangHoas = hshop2023Context.HangHoas.ToList()
-            };
-            return View(viewModel);
+        
         }
-
-        // POST: Admin/HoaDon/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HoaDonViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                // Tạo hóa đơn mới
-                var hoaDon = new HoaDon
-                {
-                    MaKh = viewModel.MaKh,
-                    NgayDat = viewModel.NgayDat,
-                    NgayCan = viewModel.NgayCan,
-                    NgayGiao = viewModel.NgayGiao,
-                    HoTen = viewModel.HoTen,
-                    DiaChi = viewModel.DiaChi,
-                    DienThoai = viewModel.DienThoai,
-                    CachThanhToan = viewModel.CachThanhToan,
-                    CachVanChuyen = viewModel.CachVanChuyen,
-                    PhiVanChuyen = viewModel.PhiVanChuyen,
-                    MaTrangThai = viewModel.MaTrangThai,
-                    MaNv = viewModel.MaNv?? null,
-                    GhiChu = viewModel.GhiChu
-                };
-
-                // Thêm hóa đơn vào cơ sở dữ liệu
-                hshop2023Context.HoaDons.Add(hoaDon);
-                await hshop2023Context.SaveChangesAsync();
-
-                // Thêm chi tiết hóa đơn
-                foreach (var chiTiet in viewModel.ChiTietHds)
-                {
-                    var chiTietHd = new ChiTietHd
-                    {
-                        MaHd = hoaDon.MaHd,
-                        MaHh = chiTiet.MaHh,
-                        DonGia = chiTiet.DonGia,
-                        SoLuong = chiTiet.SoLuong,
-                        GiamGia = chiTiet.GiamGia
-                    };
-                    hshop2023Context.ChiTietHds.Add(chiTietHd);
-                }
-
-                await hshop2023Context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            // Nếu không hợp lệ, trả về lại form với lỗi
-            return View(viewModel);
-        }
-    }
 }
