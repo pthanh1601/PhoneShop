@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
@@ -7,6 +8,7 @@ namespace PhoneShop.Areas.Admin.Controllers
     [Route("admin/homeadmin")]
     public class HomeAdminController : Controller
     {
+        [Authorize]
         [Route("")]
         [Route("index")]
         public IActionResult Index()
