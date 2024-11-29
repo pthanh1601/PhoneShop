@@ -34,6 +34,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 }
 );
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Strict; // Hoặc SameSiteMode.Lax
+    options.Secure = CookieSecurePolicy.Always; // Đánh dấu Secure
+});
+
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
 
 // Add SignalR service

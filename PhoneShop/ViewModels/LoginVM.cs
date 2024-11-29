@@ -4,10 +4,10 @@ namespace PhoneShop.ViewModels
 {
     public class LoginVM
     {
-        [Display(Name ="Tên đăng nhập")]
+        [Display(Name ="Email")]
         [Required(ErrorMessage ="Chưa nhập tên đăng nhập")]
-        [MaxLength(20, ErrorMessage ="Tối đa 20 kí tự")]
-        public string UserName { get; set; }
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
 
         [Display(Name = "Mật khẩu")]
         [Required(ErrorMessage = "Chưa nhập mật khẩu")]
