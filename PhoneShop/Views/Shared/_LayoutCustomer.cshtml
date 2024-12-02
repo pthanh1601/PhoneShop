@@ -28,8 +28,10 @@
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/style.css?v=1.00" rel="stylesheet">
     @RenderSection("Styles", required: false)
+
+
 </head>
 <body>
     <div>
@@ -111,12 +113,13 @@
         <div style="min-height:400px" class="hero-header">
             @RenderBody()
         </div>
+        
 
         @await Html.PartialAsync("_Footer")
     </div>
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
+    @await Html.PartialAsync("_ChatBox")
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -127,8 +130,9 @@
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="~/js/main.js"></script>
+    <script src="~/js/main.js?v=1.00"></script>
     @RenderSection("Scripts", required:false)
+
 
     <script>
         $(document).ready(function(){
@@ -139,8 +143,7 @@
         });
         
     </script>
-    <script>
-        $
-    </script>
+
+
 </body>
 </html>

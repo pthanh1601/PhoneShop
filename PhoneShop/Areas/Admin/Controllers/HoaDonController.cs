@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PhoneShop.Data;
 using PhoneShop.ViewModels;
-using X.PagedList;
 using X.PagedList.Extensions;
+
 
 namespace MyApp.Namespace
 {

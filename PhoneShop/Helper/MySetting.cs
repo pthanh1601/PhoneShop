@@ -4,6 +4,7 @@
     {
         public static string CART_KEY = "MYCART";
         public static string CLAIM_CUSTOMERID = "CustomerID";
+        public static string CLAIM_EMPLOYEERID = "EmployeeID";
 
     }
     public class PaymentType

@@ -1,9 +1,12 @@
+
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using X.PagedList;
 using X.PagedList.Extensions;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
@@ -13,6 +16,8 @@ namespace PhoneShop.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         Hshop2023Context db = new Hshop2023Context();
+
+        [Authorize]
 
         [Route("")]
         [Route("index")]
