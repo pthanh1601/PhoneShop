@@ -23,7 +23,6 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options
@@ -31,8 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     options.LoginPath = "/KhachHang/DangNhap";
     options.AccessDeniedPath = "/AccessDenied";
-}
-);
+});
 
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
 
@@ -41,12 +39,11 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-// Configure the HTTP request  pipeline.
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseHsts(); // Ensure HSTS is used in production
 }
 
 app.UseHttpsRedirection();
@@ -54,23 +51,30 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();
-
-app.UseAuthentication();
-
-
+app.UseAuthentication(); // Ensure Authentication comes before Authorization
 app.UseAuthorization();
 // app.MapControllerRoute(
 //     name: "admin",
 //     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 
+app.UseSession(); // Use session if required
+
+// Admin area route mapping
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Map the SignalR hub
-app.MapHub<ChatHub>("/chathub");
+//<<<<<<< HEAD
+//// Map the SignalR hub
+//app.MapHub<ChatHub>("/chathub");
 
+//=======
+//>>>>>>> QLNV/QLPC
 app.Run();
 
