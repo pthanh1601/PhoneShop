@@ -55,8 +55,11 @@ namespace MyApp.Namespace
             }
 
             return View(hoaDon);
-        }
+            
 
+        
+        }
+      
         [HttpPost]
         public IActionResult UpdateStatus(int MaHd, int MaTrangThai)
         {
@@ -69,6 +72,6 @@ namespace MyApp.Namespace
             return RedirectToAction("Details", new { id = MaHd });
         }
 
-        
-        }
+
+    }
 }

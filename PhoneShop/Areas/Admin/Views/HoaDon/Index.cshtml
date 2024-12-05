@@ -36,6 +36,7 @@
             <td>
                 <a asp-action="Details" asp-area="Admin" asp-controller="HoaDon" asp-route-id="@item.MaHd">Chi tiết</a>
             </td>
+           
         </tr>
     }
     </tbody>
@@ -45,46 +46,3 @@
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
 
-<style>
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .pagination-container .pagination {
-        list-style: none;
-        padding: 0;
-        display: flex;
-    }
-
-    .pagination-container .pagination li {
-        margin: 0 5px;
-    }
-
-    .pagination-container .pagination li a {
-        display: block;
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        color: #007bff;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-
-    .pagination-container .pagination li a:hover {
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .pagination-container .pagination li.active a {
-        background-color: #007bff;
-        color: #fff;
-        border-color: #007bff;
-    }
-
-    .pagination-container .pagination li.disabled a {
-        color: #6c757d;
-        pointer-events: none;
-    }
-</style>
