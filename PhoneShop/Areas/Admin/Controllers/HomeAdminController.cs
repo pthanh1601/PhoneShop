@@ -15,5 +15,13 @@ namespace PhoneShop.Areas.Admin.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        [Route("ChatAdmin")]
+        public IActionResult ChatAdmin()
+        {
+            return View();
+        }
     }
+
 }

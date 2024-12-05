@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Chat với Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Hỗ trợ trực tuyến</h1>
+
+<div style="display: flex; height: 70vh">
+    <!-- Khu vực trò chuyện -->
+    <div style="width: 100%; display: flex; flex-direction: column;">
+        <div id="messages" style="flex: 1; padding: 10px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 10px;">
+            <!-- Tin nhắn được thêm động tại đây -->
+        </div>
+        <!-- Khu vực nhập tin nhắn -->
+        <div style="padding: 10px;">
+            <input id="messageInput" type="text" style="width: calc(100% - 60px); padding: 5px;" placeholder="Nhập tin nhắn...">
+            <button id="sendButton" style="width: 50px;">Gửi</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub")
+        .build();
+
+    connection.on("ReceiveMessage", (sender, message) => {
+        const messages = document.getElementById("messages");
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+
+        if (sender === "Admin") {
+            messageElement.classList.add('message', 'admin');
+        } else {
+            messageElement.classList.add('message', 'customer');
+        }
+
+        messages.appendChild(messageElement);
+
+        // Cuộn xuống cuối cùng
+        messages.scrollTop = messages.scrollHeight;
+    });
+
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    document.getElementById("sendButton").addEventListener("click", () => {
+        const messageInput = document.getElementById('messageInput');
+        const messageText = messageInput.value.trim();
+
+        if (messageText !== '') {
+            // Thêm tin nhắn khách hàng vào hộp chat
+            const chatBox = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'customer');
+            messageElement.textContent = messageText;
+            chatBox.appendChild(messageElement);
+
+            // Cuộn xuống cuối cùng
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            connection.invoke("SendMessageToAdmin", messageText).catch(err => console.error(err.toString()));
+
+            // Xóa nội dung trong ô nhập tin nhắn
+            messageInput.value = '';
+        }
+
+        
+    });
+</script>
+<style>
+    .message {
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 70%;
+    }
+
+        .message.admin {
+            background-color: #f0f0f0; /* Màu nền xám nhạt */
+            text-align: left; /* Canh trái */
+        }
+
+        .message.customer {
+            background-color: #d1e7dd; /* Màu nền xanh nhạt */
+            text-align: right; /* Canh phải */
+            margin-left: auto; /* Đẩy sang phải */
+        }
+
+</style>

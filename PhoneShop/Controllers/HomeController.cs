@@ -25,6 +25,13 @@ namespace PhoneShop.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("/Chat")]
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

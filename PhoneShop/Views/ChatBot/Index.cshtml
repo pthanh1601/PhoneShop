@@ -1,0 +1,51 @@
+﻿<div style="border: 1px solid #ccc; padding: 10px; width: 300px;">
+    <div id="chatBox" style="height: 300px; overflow-y: auto; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+        <!-- Tin nhắn sẽ hiển thị tại đây -->
+    </div>
+    <input id="userInput" type="text" style="width: calc(100% - 60px);" placeholder="Nhập tin nhắn...">
+    <button id="sendBtn" style="width: 50px;">Gửi</button>
+</div>
+
+<script>
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    sendBtn.addEventListener("click", () => {
+        const userMessage = userInput.value.trim();
+        console.log("Sending data:", { message: userMessage });
+
+        if (userMessage) {
+            // Hiển thị tin nhắn người dùng
+            const userMessageElem = document.createElement("div");
+            userMessageElem.textContent = `Bạn: ${userMessage}`;
+            chatBox.appendChild(userMessageElem);
+
+            // Gửi tin nhắn tới server
+            fetch("/api/chatbot/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const botReplyElem = document.createElement("div");
+                    botReplyElem.textContent = `Bot: ${data.reply}`;
+                    chatBox.appendChild(botReplyElem);
+
+                    // Cuộn xuống cuối
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(err => console.error(err));
+
+            userInput.value = ""; // Xóa nội dung nhập
+        }
+    });
+</script>
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="PhoneShop"
+  agent-id="68c63c83-face-4bca-ab97-f17af6638276"
+  language-code="vi"
+></df-messenger>
