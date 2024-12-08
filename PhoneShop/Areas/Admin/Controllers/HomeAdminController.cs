@@ -1,11 +1,12 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using X.PagedList;
 using X.PagedList.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using PhoneShop.Models;
 
 
 namespace PhoneShop.Areas.Admin.Controllers
@@ -16,14 +17,18 @@ namespace PhoneShop.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         Hshop2023Context db = new Hshop2023Context();
-
+        public HomeAdminController(Hshop2023Context context)
+        {
+            db = context;
+        }
         [Authorize]
 
         [Route("")]
         [Route("index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Điều hướng tới trang Dashboard
+            return RedirectToAction("Dashboard", "Admin");
         }
 
 
@@ -37,8 +42,8 @@ namespace PhoneShop.Areas.Admin.Controllers
 
 
 
-        
-// Ở dưới là danh mục plese tách ra riêng//
+
+        // Ở dưới là danh mục plese tách ra riêng//
         [Route("danhmucsanpham")]
         public IActionResult DanhMucSanPham(int? page)
         {
@@ -51,7 +56,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
         [Route("ThemDanhMucSanPham")]
         [HttpGet]
-       
+
         public IActionResult ThemDanhMucSanPham()
         {
             //var nccList = db.NhaCungCaps.ToList();
@@ -72,7 +77,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("DanhMucSanPham");
             }
-    
+
             return View(loai);
 
         }
@@ -131,7 +136,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 if (existingLoai == null)
                 {
                     TempData["Message"] = "Danh mục sản phẩm không tồn tại.";
-                    return RedirectToAction("DanhMucSanPham","HomeAdmin");
+                    return RedirectToAction("DanhMucSanPham", "HomeAdmin");
                 }
 
                 // Cập nhật thông tin
@@ -144,7 +149,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 db.SaveChanges();
 
                 TempData["Message"] = "Danh mục sản phẩm đã được cập nhật thành công.";
-                return RedirectToAction("DanhMucSanPham","HomeAdmin");
+                return RedirectToAction("DanhMucSanPham", "HomeAdmin");
             }
 
             return View(loai);
@@ -160,11 +165,11 @@ namespace PhoneShop.Areas.Admin.Controllers
             db.Remove(db.Loais.Find(MaLoai));
             db.SaveChanges();
             TempData["Message"] = "Danh mục đã được xóa";
-            return RedirectToAction("DanhMucSanPham","HomeAdmin") ;
+            return RedirectToAction("DanhMucSanPham", "HomeAdmin");
         }
 
-        
-        
+
+
 
 
     }
