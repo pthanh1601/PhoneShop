@@ -1,3 +1,22 @@
+# Cách chạy Code 
+  ## 1 Cài 3 Thư Viện này
+![image](https://github.com/user-attachments/assets/d5929600-ff37-4615-8ec8-98cf29676d50)
+
+  ## 2 Kết Nối SQL 
+ ![image](https://github.com/user-attachments/assets/da6688b4-be36-469f-90e9-5ff715e5265c)
+  
+![image](https://github.com/user-attachments/assets/e3944548-fed0-4126-9e43-88f317f52f87)
+
+  ## 3 Chạy Câu lệnh Package Manager Console
+![image](https://github.com/user-attachments/assets/ecc2fda9-80df-49cf-89fe-67fd188741c9)
+
+      Scaffold-DbContext "Data Source=LAPTOP-B8CQH803\ALINSBTC;Initial Catalog=Hshop2023;Integrated Security=True;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data -f
+ 
+  ## 4 Sữa lại file appsettings.json
+ ![image](https://github.com/user-attachments/assets/1b5f363f-60ac-4d48-9c0e-75ca21bd3fd2)
+
+
+
 Quy tắc đặt tên nhánh
   #  Không Push Code Trực Tiếp Vào Nhánh Developer AND master:
 -      Tất cả các thành viên trong nhóm không được phép push code trực tiếp vào nhánh developer.
@@ -14,6 +33,6 @@ PHÂN CÔNG
   - Ngọc Thành: Quản lý nhân viên, phân quyền
   - Lộc: Login, logout
   - Quang: Quản lý khách hàng
-  - Anh Cọp: Quản lý nhà cung cấp
+  - Tuấn Anh: Quản lý nhà cung cấp
 
 DEADLINE: 00:00 4/11 

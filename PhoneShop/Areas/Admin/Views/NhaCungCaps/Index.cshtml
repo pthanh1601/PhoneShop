@@ -1,8 +1,13 @@
-﻿@model IEnumerable<PhoneShop.Data.NhaCungCap>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<PhoneShop.Data.NhaCungCap>
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <h1>Index</h1>
 
@@ -13,25 +18,23 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TenCongTy)
+                Tên Công ty
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Logo)
+                Logo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NguoiLienLac)
+                Người Liên Lạc
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+               Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DienThoai)
+                Điện Thoại
             </th>
+           
             <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
+                Mô tả
             </th>
             <th></th>
         </tr>
@@ -54,9 +57,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DienThoai)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.MoTa)
             </td>
@@ -69,3 +70,13 @@
 }
     </tbody>
 </table>
+
+<div class="order__pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions
+    {
+        UlElementClasses = new List<string> { "pagination" },
+        LiElementClasses = new List<string> { "page-item" },
+        PageClasses = new List<string> { "page-link" }
+    })
+</div>

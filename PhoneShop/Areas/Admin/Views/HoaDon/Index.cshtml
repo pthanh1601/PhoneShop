@@ -17,7 +17,7 @@
             <th>@Html.DisplayNameFor(model => model.First().HoTen)</th>
             <th>@Html.DisplayNameFor(model => model.First().NgayDat)</th>
             <th>@Html.DisplayNameFor(model => model.First().DienThoai)</th>
-            <th>@Html.DisplayNameFor(model => model.First().DiaChi)</th>
+           
             <th>@Html.DisplayNameFor(model => model.First().CachThanhToan)</th>
             <th>@Html.DisplayNameFor(model => model.First().MaTrangThai)</th>
             <th></th>
@@ -30,7 +30,7 @@
             <td>@Html.DisplayFor(modelItem => item.MaKhNavigation.HoTen)</td>
             <td>@Html.DisplayFor(modelItem => item.NgayDat)</td>
             <td>@Html.DisplayFor(modelItem => item.MaKhNavigation.DienThoai)</td>
-            <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+          
             <td>@Html.DisplayFor(modelItem => item.CachThanhToan)</td>
             <td>@Html.DisplayFor(modelItem => item.MaTrangThaiNavigation.MaTrangThai)</td>
             <td>
@@ -42,7 +42,13 @@
     </tbody>
 </table>
 
-<div class="pagination-container">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+<div class="order__pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions
+    {
+        UlElementClasses = new List<string> { "pagination" },
+        LiElementClasses = new List<string> { "page-item" },
+        PageClasses = new List<string> { "page-link" }
+    })
 </div>
 

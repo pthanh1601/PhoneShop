@@ -1,0 +1,31 @@
+@model PhoneShop.Data.KhachHang
+
+@{
+    ViewData["Title"] = "Xoá Khách Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+   
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>Xóa Khách Hàng</h2>
+
+<div>
+    <h4>Bạn có chắc chắn muốn xóa khách hàng này?</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Mã KH</dt>
+        <dd class="col-sm-10">@Model.MaKh</dd>
+
+        <dt class="col-sm-2">Họ Tên</dt>
+        <dd class="col-sm-10">@Model.HoTen</dd>
+
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+    </dl>
+
+    <form asp-action="XoaKhachHang" method="post">
+        <input type="hidden" asp-for="MaKh" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="DanhSachKhachHang" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

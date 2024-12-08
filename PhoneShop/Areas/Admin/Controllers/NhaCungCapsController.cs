@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
+using X.PagedList.Extensions;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
@@ -19,9 +20,16 @@ namespace PhoneShop.Areas.Admin.Controllers
         // GET: Admin/NhaCungCaps
         [Route("")]
         [Route("Index")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.NhaCungCaps.ToListAsync());
+            int pageSize = 10; // Số lượng mục mỗi trang
+            int pageNumber = page ?? 1; // Trang hiện tại, mặc định là trang 1
+
+            // Lấy tất cả nhà cung cấp và phân trang
+            var nhacungcap = await _context.NhaCungCaps.ToListAsync();
+            var pagedNhacungcap = nhacungcap.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedNhacungcap);
         }
 
         // GET: Admin/NhaCungCaps/Details/5

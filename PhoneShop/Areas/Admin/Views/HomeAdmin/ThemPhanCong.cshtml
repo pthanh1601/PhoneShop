@@ -1,0 +1,91 @@
+﻿@model PhoneShop.ViewModels.PhanCongVM
+
+@{
+    ViewData["Title"] = "Thêm Phân Công";
+}
+@* <<<<<<< HEAD *@
+@* ======= *@
+@* @if (TempData["ModelStateErrors"] != null) *@
+@* { *@
+@*     <div class="alert alert-danger"> *@
+@*         <strong>Có lỗi xảy ra:</strong> *@
+@*         <ul> *@
+@*             @foreach (var error in TempData["ModelStateErrors"].ToString().Split(";")) *@
+@*             { *@
+@*                 <li>@error</li> *@
+@*             } *@
+@*         </ul> *@
+@*     </div> *@
+@* } *@
+@* >>>>>>> QLNV/QLPC *@
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Hiển thị thông báo thành công hoặc lỗi nếu có -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<!-- Hiển thị thông báo lỗi từ ModelState -->
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<!-- Form để thêm phân công mới -->
+<form method="post" action="/Admin/PhanCong/Add">
+    <div class="form-group">
+        <label for="MaNv">Mã Nhân Viên</label>
+        <select class="form-control" id="MaNv" name="PhanCong.MaNv" required>
+            <option value="">Chọn Nhân Viên</option>
+            @foreach (var employee in Model.NhanViens)
+            {
+                <option value="@employee.MaNv" @(employee.MaNv == Model.PhanCong.MaNv ? "selected" : "")>@employee.HoTen</option>
+            }
+        </select>
+        @Html.ValidationMessageFor(model => model.PhanCong.MaNv, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="MaPb">Mã Phòng Ban</label>
+        <select class="form-control" id="MaPb" name="PhanCong.MaPb" required>
+            <option value="">Chọn Phòng Ban</option>
+            @foreach (var department in Model.PhongBans)
+            {
+                <option value="@department.MaPb" @(department.MaPb == Model.PhanCong.MaPb ? "selected" : "")>@department.TenPb</option>
+            }
+        </select>
+        @Html.ValidationMessageFor(model => model.PhanCong.MaPb, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="NgayPc">Ngày Phân Công</label>
+        <input type="date" class="form-control" id="NgayPc" name="PhanCong.NgayPc" value="@Model.PhanCong.NgayPc?.ToString("yyyy-MM-dd")" required />
+        @Html.ValidationMessageFor(model => model.PhanCong.NgayPc, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="HieuLuc">Hiệu Lực</label>
+        <select class="form-control" id="HieuLuc" name="PhanCong.HieuLuc" required>
+            <option value="true" @(Model.PhanCong.HieuLuc == true ? "selected" : "")>Có</option>
+            <option value="false" @(Model.PhanCong.HieuLuc == false ? "selected" : "")>Không</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PhanCong.HieuLuc, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Thêm Phân Công</button>
+</form>
+
+<!-- Thêm JavaScript để hỗ trợ validation phía client -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

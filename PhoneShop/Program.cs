@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using PhoneShop.Helper;
+using PhoneShop.Hubs;
 using PhoneShop.Models.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,25 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Hshop2023Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("PhoneShop"));
+    // Lấy chuỗi kết nối từ appsettings.json
+string connectionString = builder.Configuration.GetConnectionString("PhoneShop");
+
+// In chuỗi kết nối ra terminal
+Console.WriteLine($"Connection String: {connectionString}");
+ 
+
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    Console.WriteLine("Kết nối thành công!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi: {ex.Message}");
+            }
 });
 
 builder.Services.AddDistributedMemoryCache();
@@ -22,7 +43,6 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options
@@ -30,19 +50,26 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     options.LoginPath = "/KhachHang/DangNhap";
     options.AccessDeniedPath = "/AccessDenied";
-}
-);
+});
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Strict; // Hoặc SameSiteMode.Lax
+    options.Secure = CookieSecurePolicy.Always; // Đánh dấu Secure
+});
 
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
 
+// Add SignalR service
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
-// Configure the HTTP request  pipeline.
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseHsts(); // Ensure HSTS is used in production
 }
 
 app.UseHttpsRedirection();
@@ -50,22 +77,30 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();
-
-app.UseAuthentication();
-
-
+app.UseAuthentication(); // Ensure Authentication comes before Authorization
 app.UseAuthorization();
 // app.MapControllerRoute(
 //     name: "admin",
 //     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 
+app.UseSession(); // Use session if required
+
+// Admin area route mapping
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+//<<<<<<< HEAD
+//// Map the SignalR hub
+//app.MapHub<ChatHub>("/chathub");
 
-
+//=======
+//>>>>>>> QLNV/QLPC
 app.Run();
 

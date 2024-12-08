@@ -55,7 +55,8 @@ public partial class Hshop2023Context : DbContext
 // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
 //         => optionsBuilder.UseSqlServer("Server=LAPTOP-VMBD6LCV\\MSSQLSERVER01;Database=Hshop2023;Integrated Security=True;Trust Server Certificate=True");
      // Sử dụng chuỗi kết nối từ appsettings.json
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
@@ -164,15 +165,15 @@ public partial class Hshop2023Context : DbContext
 
             entity.Property(e => e.MaHh).HasColumnName("MaHH");
             entity.Property(e => e.DonGia).HasDefaultValue(0.0);
+            entity.Property(e => e.GiamGia).HasDefaultValue(0.0);
             entity.Property(e => e.Hinh).HasMaxLength(50);
-            entity.Property(e => e.MaNcc)
-                .HasMaxLength(50)
-                .HasColumnName("MaNCC");
+            entity.Property(e => e.MaNcc).HasMaxLength(50);
             entity.Property(e => e.MoTaDonVi).HasMaxLength(50);
             entity.Property(e => e.NgaySx)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("NgaySX");
+            entity.Property(e => e.SoLanXem).HasDefaultValue(0);
             entity.Property(e => e.TenAlias).HasMaxLength(50);
             entity.Property(e => e.TenHh)
                 .HasMaxLength(50)
@@ -180,10 +181,12 @@ public partial class Hshop2023Context : DbContext
 
             entity.HasOne(d => d.MaLoaiNavigation).WithMany(p => p.HangHoas)
                 .HasForeignKey(d => d.MaLoai)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Products_Categories");
 
             entity.HasOne(d => d.MaNccNavigation).WithMany(p => p.HangHoas)
                 .HasForeignKey(d => d.MaNcc)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Products_Suppliers");
         });
 
@@ -298,9 +301,7 @@ public partial class Hshop2023Context : DbContext
 
             entity.ToTable("NhaCungCap");
 
-            entity.Property(e => e.MaNcc)
-                .HasMaxLength(50)
-                .HasColumnName("MaNCC");
+            entity.Property(e => e.MaNcc).HasMaxLength(50);
             entity.Property(e => e.DiaChi).HasMaxLength(50);
             entity.Property(e => e.DienThoai).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
@@ -452,6 +453,6 @@ public partial class Hshop2023Context : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-
+    
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

@@ -1,0 +1,88 @@
+@model PhoneShop.ViewModels.PhanCongVM
+
+@{
+    ViewData["Title"] = "Sửa Phân Công";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
+
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Hiển thị thông báo lỗi nếu có -->
+@if (TempData["ModelStateErrors"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Có lỗi xảy ra:</strong>
+        <ul>
+            @foreach (var error in TempData["ModelStateErrors"].ToString().Split(";"))
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<!-- Hiển thị thông báo thành công hoặc lỗi nếu có -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<!-- Form để sửa phân công không sử dụng asp-for -->
+<form method="post" action="/Admin/PhanCong/Update">
+    <!-- Mã phân công -->
+    <input type="hidden" name="MaPc" value="@Model.PhanCong.MaPc" />
+
+    <div class="form-group">
+        <label for="MaNv" class="font-weight-bold text-info">Mã Nhân Viên</label>
+        <select class="form-control border-info" id="MaNv" name="MaNv" required>
+            <option value="">Chọn Nhân Viên</option>
+            @foreach (var employee in Model.NhanViens)
+            {
+                <option value="@employee.MaNv" @(employee.MaNv == Model.PhanCong.MaNv ? "selected" : "")>@employee.HoTen</option>
+            }
+        </select>
+        <span class="text-danger">@ViewData.ModelState["PhanCong.MaNv"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+    </div>
+
+    <div class="form-group">
+        <label for="MaPb" class="font-weight-bold text-info">Mã Phòng Ban</label>
+        <select class="form-control border-info" id="MaPb" name="MaPb" required>
+            <option value="">Chọn Phòng Ban</option>
+            @foreach (var department in Model.PhongBans)
+            {
+                <option value="@department.MaPb" @(department.MaPb == Model.PhanCong.MaPb ? "selected" : "")>@department.TenPb</option>
+            }
+        </select>
+        <span class="text-danger">@ViewData.ModelState["PhanCong.MaPb"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+    </div>
+
+    <div class="form-group">
+        <label for="NgayPc" class="font-weight-bold text-info">Ngày Phân Công</label>
+        <input type="date" class="form-control border-info" id="NgayPc" name="NgayPc" value="@Model.PhanCong.NgayPc?.ToString("yyyy-MM-dd")" required />
+        <span class="text-danger">@ViewData.ModelState["PhanCong.NgayPc"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+    </div>
+
+    <div class="form-group">
+        <label for="HieuLuc" class="font-weight-bold text-info">Hiệu Lực</label>
+        <select class="form-control border-info" id="HieuLuc" name="HieuLuc" required>
+            <option value="true" @(Model.PhanCong.HieuLuc == true ? "selected" : "")>Có</option>
+            <option value="false" @(Model.PhanCong.HieuLuc == false ? "selected" : "")>Không</option>
+        </select>
+        <span class="text-danger">@ViewData.ModelState["PhanCong.HieuLuc"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+    </div>
+
+    <button type="submit" class="btn btn-warning btn-lg btn-block">Lưu Thay Đổi</button>
+    <a href="/Admin/PhanCong/Index" class="btn btn-secondary">Quay Lại</a>
+
+</form>
+  
