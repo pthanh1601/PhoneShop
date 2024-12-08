@@ -16,16 +16,16 @@
 <p>@TempData["Message"]</p>
 <style>
     .table td {
-        word-wrap: break-word; 
-        white-space: normal; 
-        max-width: 200px; 
+        word-wrap: break-word;
+        white-space: normal;
+        max-width: 200px;
     }
 
         .table td.mo-ta {
-            line-height: 1.5; 
-            max-width: 300px; 
+            line-height: 1.5;
+            max-width: 300px;
             height: auto;
-            overflow-wrap: break-word; 
+            overflow-wrap: break-word;
         }
 </style>
 
@@ -44,7 +44,7 @@
     </thead>
     <tbody>
         @{
-            int index = 1; 
+            int index = 1;
         }
         @foreach (var item in Model)
         {
@@ -54,9 +54,15 @@
                 <td>@Html.DisplayFor(modelItem => item.MaLoai)</td>
                 <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
                 <td>
-                    <img src="@Url.Content("~/Hinh/HangHoa/" + item.Hinh)" alt="@item.TenHh" style="max-width: 100px; max-height: 100px;" />
+                    @if (!string.IsNullOrEmpty(item.Hinh))
+                    {
+                        <img src="@Url.Content("~/images/" + item.Hinh)" alt="@item.TenHh" style="max-width: 100px; max-height: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
                 </td>
-                
                 <td>@Html.DisplayFor(modelItem => item.NgaySx)</td>
                 <td class="mo-ta">@Html.DisplayFor(modelItem => item.MoTa)</td>
                 <td>

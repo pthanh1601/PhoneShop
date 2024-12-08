@@ -47,7 +47,7 @@ namespace PhoneShop.Areas.Admin.Controllers
         [Route("ThemHangHoa")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ThemHangHoa(HangHoaViewModels hanghoa)
+        public IActionResult ThemHangHoa(HangHoaViewModels hanghoa, IFormFile hinh)
         {
             // Kiểm tra nếu dữ liệu không hợp lệ
             if (!ModelState.IsValid)
@@ -60,7 +60,39 @@ namespace PhoneShop.Areas.Admin.Controllers
                 return View(hanghoa);
             }
 
-            // Nếu hợp lệ, tiến hành thêm hàng hóa
+            // Kiểm tra nếu có tệp hình ảnh được chọn
+            if (hinh != null && hinh.Length > 0)
+            {
+                // Lấy tên tệp và lưu vào thư mục 'images'
+                string fileName = Path.GetFileName(hinh.FileName);
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+
+                // Tạo thư mục nếu chưa có
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Tạo đường dẫn để lưu tệp
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                // Lưu tệp vào thư mục
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    hinh.CopyTo(fileStream);
+                }
+
+                // Lưu tên tệp vào cơ sở dữ liệu (chỉ lưu tên tệp, không lưu đường dẫn đầy đủ)
+                hanghoa.Hinh = fileName;
+            }
+
+            // Nếu không có tệp hình ảnh, giữ lại giá trị cũ cho cột Hinh nếu có
+            else
+            {
+                hanghoa.Hinh = hanghoa.Hinh; // Giữ lại giá trị đã có trong view model nếu không chọn ảnh
+            }
+
+            // Tiến hành thêm hàng hóa vào cơ sở dữ liệu
             var themhanghoa = new HangHoa
             {
                 TenHh = hanghoa.TenHh,
@@ -75,8 +107,12 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             db.HangHoas.Add(themhanghoa);
             db.SaveChanges();
+
+            // Chuyển hướng đến danh sách hàng hóa sau khi thêm
             return RedirectToAction("DanhSachHangHoa");
         }
+
+
 
 
         //   Sửa hàng hóa
@@ -296,7 +332,7 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
         [Route("SuaHangHoa")]
         [HttpPost]
-        public IActionResult SuaHangHoa(int MaHh,HangHoaViewModels hanghoa)
+        public IActionResult SuaHangHoa(int MaHh, HangHoaViewModels hanghoa, IFormFile Hinh)
         {
             var hangHoa = db.HangHoas.Find(MaHh);
 
@@ -309,24 +345,44 @@ namespace PhoneShop.Areas.Admin.Controllers
             {
                 ViewData["MaHh"] = hangHoa.MaHh;
                 ViewData["NgaySX"] = hangHoa.NgaySx;
-               
+
                 return View(hanghoa);
             }
 
             hangHoa.TenHh = hanghoa.TenHh;
             hangHoa.MaLoai = hanghoa.MaLoai;
             hangHoa.DonGia = hanghoa.DonGia;
-            hangHoa.Hinh = hanghoa.Hinh;
             hangHoa.GiamGia = hanghoa.GiamGia;
             hangHoa.SoLanXem = hanghoa.SoLanXem;
             hangHoa.MoTa = hanghoa.MoTa;
             hangHoa.MaNcc = hanghoa.MaNcc;
 
+            if (Hinh != null && Hinh.Length > 0)
+            {
+                var fileName = Path.GetFileName(Hinh.FileName);  // Lấy tên tệp hình ảnh
+
+                var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "HangHoa");
+
+                if (!Directory.Exists(uploadDirectory))
+                {
+                    Directory.CreateDirectory(uploadDirectory);
+                }
+
+                var filePath = Path.Combine(uploadDirectory, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    Hinh.CopyTo(stream);
+                }
+
+                hangHoa.Hinh = fileName;  // Cập nhật tên tệp hình ảnh vào cơ sở dữ liệu
+            }
+
             db.SaveChanges();
             db.Entry(hangHoa).Reload();
+
             return RedirectToAction("DanhSachHangHoa");
         }
-
 
 
 
