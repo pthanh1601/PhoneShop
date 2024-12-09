@@ -73,7 +73,7 @@ namespace PhoneShop.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         [HttpGet]
         public IActionResult ThanhToan(int id)
         {
@@ -84,7 +84,7 @@ namespace PhoneShop.Controllers
             return View(Cart);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public IActionResult ThanhToan(ThanhToanVM model, string payment = "COD")
         {
@@ -156,19 +156,19 @@ namespace PhoneShop.Controllers
             return View(Cart);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         public IActionResult PaymentSuccess()
         {
             return View("Success");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         public IActionResult PaymentFail()
         {
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         public IActionResult PaymentCallBack()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);

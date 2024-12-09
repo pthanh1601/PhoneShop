@@ -28,7 +28,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options
     =>
 {
-    options.LoginPath = "/KhachHang/DangNhap";
+    options.LoginPath = "/Login";
     options.AccessDeniedPath = "/AccessDenied";
 });
 

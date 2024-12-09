@@ -14,459 +14,291 @@
         <li class="breadcrumb-item active text-white">@Model.TenHh</li>
     </ol>
 </div>
+
+
+
+
 <!-- Single Page Header End -->
-<!-- Single Product Start -->
-<div class="container-fluid py-5 mt-5">
-    <div class="container py-5">
-        <div class="row g-4 mb-5">
-            <div class="col-lg-8 col-xl-9">
-                <div class="row g-4">
-                    <div class="col-lg-6">
-                        <div class="border rounded">
-                            <a asp-action="Detail" asp-route-id="@Model.MaHh">
-                                <img src="~/Hinh/HangHoa/@Model.Hinh" class="img-fluid rounded" alt="@Model.TenHh">
-                            </a>
+<section class="flat-spacing-4 pt_0">
+    <div class="tf-main-product section-image-zoom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tf-product-media-wrap sticky-top">
+                        <div class="thumbs-slider">
+                            <!-- <div class="swiper tf-product-media-thumbs other-image-zoom" data-direction="vertical">
+                                <div class="swiper-wrapper stagger-wrap"> -->
+                            <!-- <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod31.jpg" src="images/shop/products/hmgoepprod31.jpg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod.jpg" src="images/shop/products/hmgoepprod.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod2.jpg" src="images/shop/products/hmgoepprod2.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod3.jpg" src="images/shop/products/hmgoepprod3.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod4.jpg" src="images/shop/products/hmgoepprod4.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod5.jpg" src="images/shop/products/hmgoepprod5.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod6.jpg" src="images/shop/products/hmgoepprod6.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod7.jpg" src="images/shop/products/hmgoepprod7.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod8.jpg" src="images/shop/products/hmgoepprod8.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide stagger-item">
+                                        <div class="item">
+                                            <img class="lazyload" data-src="images/shop/products/hmgoepprod9.jpg" src="images/shop/products/hmgoepprod9.jpg" alt="img-compare">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="swiper tf-product-media-main" id="gallery-swiper-started">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <a href="~/Hinh/HangHoa/@Model.Hinh" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" src="~/Hinh/HangHoa/@Model.Hinh" alt="@Model.TenHh">
+                                        </a>
+                                    </div>
+                                    <!-- <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod.jpg" data-src="images/shop/products/hmgoepprod.jpg" src="images/shop/products/hmgoepprod.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod2.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod2.jpg" data-src="images/shop/products/hmgoepprod2.jpg" src="images/shop/products/hmgoepprod2.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod3.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod3.jpg" data-src="images/shop/products/hmgoepprod3.jpg" src="images/shop/products/hmgoepprod3.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod4.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod4.jpg" data-src="images/shop/products/hmgoepprod4.jpg" src="images/shop/products/hmgoepprod4.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod5.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod5.jpg" data-src="images/shop/products/hmgoepprod5.jpg" src="images/shop/products/hmgoepprod5.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod6.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod6.jpg" data-src="images/shop/products/hmgoepprod6.jpg" src="images/shop/products/hmgoepprod6.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod7.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod7.jpg" data-src="images/shop/products/hmgoepprod7.jpg" src="images/shop/products/hmgoepprod7.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod8.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                            <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod8.jpg" data-src="images/shop/products/hmgoepprod8.jpg" src="images/shop/products/hmgoepprod8.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <a href="images/shop/products/hmgoepprod9.jpg" target="_blank" class="item" data-pswp-width="770px" data-pswp-height="1075px">
+                                             <img class="tf-image-zoom lazyload" data-zoom="images/shop/products/hmgoepprod9.jpg" data-src="images/shop/products/hmgoepprod9.jpg" src="images/shop/products/hmgoepprod9.jpg" alt="">
+                                        </a>
+                                    </div> -->
+                                </div>
+                                <!-- <div class="swiper-button-next button-style-arrow thumbs-next"></div>
+                                <div class="swiper-button-prev button-style-arrow thumbs-prev"></div> -->
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <h4 class="fw-bold mb-3">@Model.TenHh</h4>
-                        <p class="mb-3">Category: @Model.TenLoai</p>
-                        <h5 class="fw-bold mb-3">@Model.DonGia $</h5>
-                        <div class="d-flex mb-4">
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <p class="mb-4">@Model.MotaNgan</p>
-                        <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.MaHh">
-                            <div class="input-group quantity mb-5" style="width: 100px;">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" type="button">
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                </div>
+                <div class="col-md-6">
+                    <div class="tf-product-info-wrap position-relative">
+                        <div class="tf-zoom-main"></div>
+                        <div class="tf-product-info-list other-image-zoom">
+                            <div class="tf-product-info-title">
+                                <h5>@Model.TenHh</h5>
                             </div>
-                            <input type="text" class="form-control form-control-sm text-center border-0" value="1" name="quantity">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-plus rounded-circle bg-light border" type="button">
-                                    <i class="fa fa-plus"></i>
-                                </button>
+                            <div class="tf-product-info-badges">
+                                <p class="mb-3">Category: @Model.TenLoai</p>
                             </div>
-                        </div>
-                            <button href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
-                        </form>
-                    </div>
-                    <div class="col-lg-12">
-                        <nav>
-                            <div class="nav nav-tabs mb-3">
-                                <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
-                                        id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
-                                        aria-controls="nav-about" aria-selected="true">
-                                    Thông tin hàng hóa
-                                </button>
-                                <button class="nav-link border-white border-bottom-0" type="button" role="tab"
-                                        id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                        aria-controls="nav-mission" aria-selected="false">
-                                    Đánh giá
-                                </button>
+                            <div class="tf-product-info-price">
+                                <div class="price-on-sale">@Model.DonGia $</div>
+
                             </div>
-                        </nav>
-                        <div class="tab-content mb-5">
-                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                <p>@Model.ChiTiet</p>
-                                <div class="px-2">
-                                    <div class="row g-4">
-                                        <div class="col-6">
-                                            <div class="row bg-light align-items-center text-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Weight</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">1 kg</p>
-                                                </div>
+
+                            <div class="tf-product-info-quantity">
+                                <div class="quantity-title fw-6">Quantity</div>
+                                <div class="wg-quantity">
+                                    <span class="btn-quantity minus-btn">-</span>
+                                    <input type="text" name="number" value="1">
+                                    <span class="btn-quantity plus-btn">+</span>
+                                </div>
+                            </div>
+                            <div class="tf-product-info-buy-button">
+                                <form class="">
+                                    <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.MaHh" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn "><span>Add to cart</span></a>
+
+                           
+                                </form>
+                            </div>
+                            <div class="tf-product-info-extra-link">
+                                <a href="#compare_color" data-bs-toggle="modal" class="tf-product-extra-icon">
+                                    <div class="icon">
+                                        <img src="images/item/compare.svg" alt="">
+                                    </div>
+                                    <div class="text fw-6">Compare color</div>
+                                </a>
+                                <a href="#ask_question" data-bs-toggle="modal" class="tf-product-extra-icon">
+                                    <div class="icon">
+                                        <i class="icon-question"></i>
+                                    </div>
+                                    <div class="text fw-6">Ask a question</div>
+                                </a>
+                                <a href="#delivery_return" data-bs-toggle="modal" class="tf-product-extra-icon">
+                                    <div class="icon">
+                                        <svg class="d-inline-block" xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="currentColor"><path d="M21.7872 10.4724C21.7872 9.73685 21.5432 9.00864 21.1002 8.4217L18.7221 5.27043C18.2421 4.63481 17.4804 4.25532 16.684 4.25532H14.9787V2.54885C14.9787 1.14111 13.8334 0 12.4255 0H9.95745V1.69779H12.4255C12.8948 1.69779 13.2766 2.07962 13.2766 2.54885V14.5957H8.15145C7.80021 13.6052 6.85421 12.8936 5.74468 12.8936C4.63515 12.8936 3.68915 13.6052 3.33792 14.5957H2.55319C2.08396 14.5957 1.70213 14.2139 1.70213 13.7447V2.54885C1.70213 2.07962 2.08396 1.69779 2.55319 1.69779H9.95745V0H2.55319C1.14528 0 0 1.14111 0 2.54885V13.7447C0 15.1526 1.14528 16.2979 2.55319 16.2979H3.33792C3.68915 17.2884 4.63515 18 5.74468 18C6.85421 18 7.80021 17.2884 8.15145 16.2979H13.423C13.7742 17.2884 14.7202 18 15.8297 18C16.9393 18 17.8853 17.2884 18.2365 16.2979H21.7872V10.4724ZM16.684 5.95745C16.9494 5.95745 17.2034 6.08396 17.3634 6.29574L19.5166 9.14894H14.9787V5.95745H16.684ZM5.74468 16.2979C5.27545 16.2979 4.89362 15.916 4.89362 15.4468C4.89362 14.9776 5.27545 14.5957 5.74468 14.5957C6.21392 14.5957 6.59575 14.9776 6.59575 15.4468C6.59575 15.916 6.21392 16.2979 5.74468 16.2979ZM15.8298 16.2979C15.3606 16.2979 14.9787 15.916 14.9787 15.4468C14.9787 14.9776 15.3606 14.5957 15.8298 14.5957C16.299 14.5957 16.6809 14.9776 16.6809 15.4468C16.6809 15.916 16.299 16.2979 15.8298 16.2979ZM18.2366 14.5957C17.8853 13.6052 16.9393 12.8936 15.8298 12.8936C15.5398 12.8935 15.252 12.943 14.9787 13.04V10.8511H20.0851V14.5957H18.2366Z"></path></svg>
+                                    </div>
+                                    <div class="text fw-6">Delivery & Return</div>
+                                </a>
+                                <a href="#share_social" data-bs-toggle="modal" class="tf-product-extra-icon">
+                                    <div class="icon">
+                                        <i class="icon-share"></i>
+                                    </div>
+                                    <div class="text fw-6">Share</div>
+                                </a>
+                            </div>
+                            <div class="tf-product-info-delivery-return">
+                                <div class="row">
+                                    <div class="col-xl-6 col-12">
+                                        <div class="tf-product-delivery">
+                                            <div class="icon">
+                                                <i class="icon-delivery-time"></i>
                                             </div>
-                                            <div class="row text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Country of Origin</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">Agro Farm</p>
-                                                </div>
+                                            <p>Estimate delivery times: <span class="fw-7">12-26 days</span> (International), <span class="fw-7">3-6 days</span> (United States).</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-12">
+                                        <div class="tf-product-delivery mb-0">
+                                            <div class="icon">
+                                                <i class="icon-return-order"></i>
                                             </div>
-                                            <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Quality</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">Organic</p>
-                                                </div>
-                                            </div>
-                                            <div class="row text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Сheck</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">Healthy</p>
-                                                </div>
-                                            </div>
-                                            <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Min Weight</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">250 Kg</p>
-                                                </div>
-                                            </div>
+                                            <p>Return within <span class="fw-7">30 days</span> of purchase. Duties & taxes are non-refundable.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
-                                <div class="d-flex">
-                                    <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                    <div class="">
-                                        <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                        <div class="d-flex justify-content-between">
-                                            <h5>Jason Smith</h5>
-                                            <div class="d-flex mb-3">
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <p>
-                                            The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                            words etc. Susp endisse ultricies nisi vel quam suscipit
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                    <div class="">
-                                        <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                        <div class="d-flex justify-content-between">
-                                            <h5>Sam Peters</h5>
-                                            <div class="d-flex mb-3">
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <p class="text-dark">
-                                            The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                            words etc. Susp endisse ultricies nisi vel quam suscipit
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="nav-vision" role="tabpanel">
-                                <p class="text-dark">
-                                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                                    amet diam et eos labore. 3
-                                </p>
-                                <p class="mb-0">
-                                    Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
-                                    Clita erat ipsum et lorem et sit
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <form action="#">
-                        <h4 class="mb-5 fw-bold">Leave a Reply</h4>
-                        <div class="row g-4">
-                            <div class="col-lg-6">
-                                <div class="border-bottom rounded">
-                                    <input type="text" class="form-control border-0 me-4" placeholder="Yur Name *">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="border-bottom rounded">
-                                    <input type="email" class="form-control border-0" placeholder="Your Email *">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="border-bottom rounded my-4">
-                                    <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="d-flex justify-content-between py-3 mb-5">
-                                    <div class="d-flex align-items-center">
-                                        <p class="mb-0 me-3">Please rate:</p>
-                                        <div class="d-flex align-items-center" style="font-size: 12px;">
-                                            <i class="fa fa-star text-muted"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-3">
-                <div class="row g-4 fruite">
-                    <div class="col-lg-12">
-                        @await Html.PartialAsync("_TimKiemPanel")
-                        @await Component.InvokeAsync("MenuLoai")
-                    </div>
-                    <div class="col-lg-12">
-                        <h4 class="mb-4">Featured products</h4>
-                        <div class="d-flex align-items-center justify-content-start">
-                            <div class="rounded" style="width: 100px; height: 100px;">
-                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="Image">
-                            </div>
-                            <div>
-                                <h6 class="mb-2">Big Banana</h6>
-                                <div class="d-flex mb-2">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-start">
-                            <div class="rounded" style="width: 100px; height: 100px;">
-                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                            </div>
-                            <div>
-                                <h6 class="mb-2">Big Banana</h6>
-                                <div class="d-flex mb-2">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-start">
-                            <div class="rounded" style="width: 100px; height: 100px;">
-                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                            </div>
-                            <div>
-                                <h6 class="mb-2">Big Banana</h6>
-                                <div class="d-flex mb-2">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-start">
-                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                <img src="img/vegetable-item-4.jpg" class="img-fluid rounded" alt="">
-                            </div>
-                            <div>
-                                <h6 class="mb-2">Big Banana</h6>
-                                <div class="d-flex mb-2">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-start">
-                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                <img src="img/vegetable-item-5.jpg" class="img-fluid rounded" alt="">
-                            </div>
-                            <div>
-                                <h6 class="mb-2">Big Banana</h6>
-                                <div class="d-flex mb-2">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-start">
-                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                <img src="img/vegetable-item-6.jpg" class="img-fluid rounded" alt="">
-                            </div>
-                            <div>
-                                <h6 class="mb-2">Big Banana</h6>
-                                <div class="d-flex mb-2">
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center my-4">
-                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="position-relative">
-                            <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
-                            <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h1 class="fw-bold mb-0">Related products</h1>
-        <div class="vesitable">
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-3.png" class="img-fluid w-100 rounded-top bg-light" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Banana</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Bell Papper</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Potatoes</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Potatoes</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 pb-0 rounded-bottom">
-                        <h4>Parsely</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Single Product End -->
+    <div class="tf-sticky-btn-atc">
+        <div class="container">
+            <div class="tf-height-observer w-100 d-flex align-items-center">
+                <div class="tf-sticky-atc-product d-flex align-items-center">
+                    <div class="tf-sticky-atc-img">
+                        <img class="lazyloaded" src="~/Hinh/HangHoa/@Model.Hinh" alt="@Model.TenHh">
+                    </div>
+                    <div class="tf-sticky-atc-title fw-5 d-xl-block d-none">@Model.TenHh</div>
+                </div>
+                <div class="tf-sticky-atc-infos">
+                    <form class="">
+                        <div class="tf-sticky-atc-btns">
+                            <div class="tf-product-info-quantity">
+                                <div class="wg-quantity">
+                                    <span class="btn-quantity minus-btn">-</span>
+                                    <input type="text" name="number" value="1">
+                                    <span class="btn-quantity plus-btn">+</span>
+                                </div>
+                            </div>
+                            <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.MaHh" class="tf-btn btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn "><span>Add to cart</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- tabs -->
+<section class="flat-spacing-17 pt_0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="widget-tabs style-has-border">
+                    <ul class="widget-menu-tab">
+                        <li class="item-title active">
+                            <span class="inner">Description</span>
+                        </li>
+                        <li class="item-title">
+                            <span class="inner">Review</span>
+                        </li>
+                        <li class="item-title">
+                            <span class="inner">Shipping</span>
+                        </li>
+           
+                    </ul>
+                    <div class="widget-content-tab">
+                        <div class="widget-content-inner active">
+                            <div class="">
+                                <p class="mb_30">
+                                 @Model.ChiTiet
+                                </p>
+                            </div>
+                        </div>
+                        <div class="widget-content-inner">
+                            <div class="tf-pr-attrs">
+                                
+                  @Model.MotaNgan
+                                
+                            </div>
+                        </div>
+                        <div class="widget-content-inner">
+                            <div class="tf-page-privacy-policy">
+                                <div class="title">The Company Private Limited Policy</div>
+                                <p>The Company Private Limited and each of their respective subsidiary, parent and affiliated companies is deemed to operate this Website (“we” or “us”) recognizes that you care how information about you is used and shared. We have created this Privacy Policy to inform you what information we collect on the Website, how we use your information and the choices you have about the way your information is collected and used. Please read this Privacy Policy carefully. Your use of the Website indicates that you have read and accepted our privacy practices, as outlined in this Privacy Policy.</p>
+                                <p>Please be advised that the practices described in this Privacy Policy apply to information gathered by us or our subsidiaries, affiliates or agents: (i) through this Website, (ii) where applicable, through our Customer Service Department in connection with this Website, (iii) through information provided to us in our free standing retail stores, and (iv) through information provided to us in conjunction with marketing promotions and sweepstakes.</p>
+                                <p>We are not responsible for the content or privacy practices on any websites.</p>
+                                <p>We reserve the right, in our sole discretion, to modify, update, add to, discontinue, remove or otherwise change any portion of this Privacy Policy, in whole or in part, at any time. When we amend this Privacy Policy, we will revise the “last updated” date located at the top of this Privacy Policy.</p>
+                                <p>If you provide information to us or access or use the Website in any way after this Privacy Policy has been changed, you will be deemed to have unconditionally consented and agreed to such changes. The most current version of this Privacy Policy will be available on the Website and will supersede all previous versions of this Privacy Policy.</p>
+                                <p>If you have any questions regarding this Privacy Policy, you should contact our Customer Service Department by email at marketing@company.com</p>
+                            </div>
+                        </div>
+           
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /tabs -->

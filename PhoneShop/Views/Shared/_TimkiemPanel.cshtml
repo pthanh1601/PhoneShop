@@ -1,8 +1,8 @@
-﻿<form asp-action="Search" asp-controller="HangHoas">
-    <div class="input-group w-100 mx-auto d-flex">
-        <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" name="query">
-        <button class="btn-group">
-            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-        </button>
-    </div>
+﻿<form asp-action="Search" asp-controller="HangHoas" class="tf-mini-search-frm">
+    <fieldset class="text" style="width: 200px;">
+        <input type="search" placeholder="Search" name="query" tabindex="0" aria-required="true" required="" style="border: 1px solid #000;">
+    </fieldset>
+    <button type="submit">
+        <i class="icon-search"></i>
+    </button>
 </form>

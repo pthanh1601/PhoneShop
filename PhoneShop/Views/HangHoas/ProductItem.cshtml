@@ -6,25 +6,53 @@
 
 @foreach (var item in Model)
 {
-    <div class="col-md-6 col-lg-6 col-xl-4">
-        <div class="rounded position-relative fruite-item">
-            <div class="fruite-img">
-                <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh>
-                    <img src="~/Hinh/HangHoa/@item.Hinh" class="img-fluid w-100 rounded-top" alt="@item.TenHh">
+    <div class="card-product">
+        <div class="card-product-wrapper">
+      
+                <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh class="product-img">
+                <img src="~/Hinh/HangHoa/@item.Hinh" class="lazyload img-product" rounded-top" alt="@item.TenHh">
+                <img class="lazyload img-hover" src="~/Hinh/HangHoa/@item.Hinh" src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh">
                 </a>
-            </div>
-            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.TenLoai</div>
-            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh>
-                    <h4>@item.TenHh</h4>
-                </a>
-                <p>@item.MotaNgan</p>
-                <div class="d-flex justify-content-between flex-lg-wrap">
-                    <p class="text-dark fs-5 fw-bold mb-0">$@item.DonGia / Per</p>
-                    <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Đưa vào giỏ</a>
+                <div class="list-product-btn">
+                <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh"  data-bs-toggle="" class="box-icon bg_white quick-add tf-btn-loading">
+                        <span class="icon icon-bag"></span>
+                 
+                    </a>
+                    <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
+                        <span class="icon icon-heart"></span>
+                        <span class="tooltip">Add to Wishlist</span>
+                        <span class="icon icon-delete"></span>
+                    </a>
+                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
+                        <span class="icon icon-compare"></span>
+                        <span class="tooltip">Add to Compare</span>
+                        <span class="icon icon-check"></span>
+                    </a>
+                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
+                        <span class="icon icon-view"></span>
+                        <span class="tooltip">Quick View</span>
+                    </a>
                 </div>
-            </div>
         </div>
+
+    
+
+   
+    <div class="card-product-info">
+                <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh>
+                    @item.TenHh
+                </a>
+            <span class="price">$@item.DonGia</span>
+            <ul class="list-color-product">
+
+            </ul>
     </div>
+
+    </div>
+
+
+
+
+
 }
 

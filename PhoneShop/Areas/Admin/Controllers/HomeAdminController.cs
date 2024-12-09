@@ -1,5 +1,5 @@
 
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
@@ -38,7 +38,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
         [Route("ThemDanhMucSanPham")]
         [HttpGet]
-       
+
         public IActionResult ThemDanhMucSanPham()
         {
             //var nccList = db.NhaCungCaps.ToList();
@@ -59,7 +59,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("DanhMucSanPham");
             }
-    
+
             return View(loai);
 
         }
@@ -118,7 +118,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 if (existingLoai == null)
                 {
                     TempData["Message"] = "Danh mục sản phẩm không tồn tại.";
-                    return RedirectToAction("DanhMucSanPham","HomeAdmin");
+                    return RedirectToAction("DanhMucSanPham", "HomeAdmin");
                 }
 
                 // Cập nhật thông tin
@@ -131,7 +131,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 db.SaveChanges();
 
                 TempData["Message"] = "Danh mục sản phẩm đã được cập nhật thành công.";
-                return RedirectToAction("DanhMucSanPham","HomeAdmin");
+                return RedirectToAction("DanhMucSanPham", "HomeAdmin");
             }
 
             return View(loai);
@@ -147,12 +147,34 @@ namespace PhoneShop.Areas.Admin.Controllers
             db.Remove(db.Loais.Find(MaLoai));
             db.SaveChanges();
             TempData["Message"] = "Danh mục đã được xóa";
-            return RedirectToAction("DanhMucSanPham","HomeAdmin") ;
+            return RedirectToAction("DanhMucSanPham", "HomeAdmin");
         }
 
-        
-        
+
+
 
 
     }
 }
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
+
+//namespace PhoneShop.Areas.Admin.Controllers
+//{
+//    [Area("admin")]
+//    [Route("admin")]
+//    [Route("admin/homeadmin")]
+//    public class HomeAdminController : Controller
+//    {
+//        [Authorize]
+//        [Route("")]
+//        [Route("index")]
+//        public IActionResult Index()
+//        {
+//            return View();
+//        }
+
+
+//    }
+
+//}
