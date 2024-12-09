@@ -1,6 +1,5 @@
-﻿@model X.PagedList.IPagedList<PhoneShop.Data.HangHoa>
+﻿@model IEnumerable<PhoneShop.Data.HangHoa>
 @using PhoneShop.Data
-@using X.PagedList.Mvc.Core
 
 @{
     ViewData["Title"] = "DanhSachHangHoa";
@@ -14,6 +13,7 @@
     <a asp-action="ThemHangHoa" class="btn btn-primary">Create New</a>
 </p>
 <p>@TempData["Message"]</p>
+
 <style>
     .table td {
         word-wrap: break-word;
@@ -27,6 +27,41 @@
             height: auto;
             overflow-wrap: break-word;
         }
+
+        /* Cải thiện hình ảnh trong bảng */
+        .table td img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+        }
+
+    /* Cải thiện bảng */
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    /* Cải thiện kiểu dáng của các nút */
+    .action-buttons a {
+        margin-right: 10px;
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .action-buttons .edit-btn {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .action-buttons .delete-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .action-buttons a:hover {
+        opacity: 0.8;
+    }
 </style>
 
 <table class="table table-striped">
@@ -50,38 +85,28 @@
         {
             <tr>
                 <td>@index</td>
-                <td>@Html.DisplayFor(modelItem => item.TenHh)</td>
-                <td>@Html.DisplayFor(modelItem => item.MaLoai)</td>
-                <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+                <td>@item.TenHh</td>  <!-- Hiển thị tên hàng hóa -->
+                <td>@item.MaLoai</td>  <!-- Hiển thị mã loại -->
+                <td>@item.DonGia</td>  <!-- Hiển thị đơn giá -->
                 <td>
                     @if (!string.IsNullOrEmpty(item.Hinh))
                     {
-                        <img src="@Url.Content("~/images/" + item.Hinh)" alt="@item.TenHh" style="max-width: 100px; max-height: 100px;" />
+                        <img src="@Url.Content("~/images/HangHoa/" + item.Hinh)" alt="@item.TenHh" style="max-width: 100px; max-height: 100px;" />
                     }
                     else
                     {
                         <span>No Image</span>
                     }
                 </td>
-                <td>@Html.DisplayFor(modelItem => item.NgaySx)</td>
-                <td class="mo-ta">@Html.DisplayFor(modelItem => item.MoTa)</td>
-                <td>
-                    <a asp-action="SuaHangHoa" asp-route-MaHh="@item.MaHh">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.MaHh">Details</a> |
-                    <a asp-action="XoaHangHoa" asp-route-MaHh="@item.MaHh">Delete</a>
+                <td>@(item.NgaySx.HasValue ? item.NgaySx.Value.ToString("dd/MM/yyyy") : "Không có ngày")</td>
+                <!-- Hiển thị ngày sản xuất với định dạng -->
+                <td class="mo-ta">@item.MoTa</td>  <!-- Hiển thị mô tả -->
+                <td class="action-buttons">
+                    <a class="edit-btn" asp-action="SuaHangHoa" asp-route-MaHh="@item.MaHh">Edit</a>
+                    <a class="delete-btn" asp-action="XoaHangHoa" asp-route-MaHh="@item.MaHh">Delete</a>
                 </td>
             </tr>
             index++;
         }
     </tbody>
 </table>
-
-<div class="product__pagination">
-    @Html.PagedListPager(Model, page => Url.Action("DanhSachHangHoa", new { page = page }),
-            new PagedListRenderOptions
-    {
-        UlElementClasses = new List<string> { "pagination" },
-        LiElementClasses = new List<string> { "page-item" },
-        PageClasses = new List<string> { "page-link" }
-    })
-</div>
