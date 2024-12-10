@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using X.PagedList.Extensions;
 
 namespace MyApp.Namespace
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/HoaDon")]
 

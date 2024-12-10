@@ -8,9 +8,11 @@ using PhoneShop.Areas.Admin.ViewModels;
 using X.PagedList;
 using X.PagedList.Extensions;
 using PhoneShop.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("admin")]
     [Route("admin")]
     [Route("admin/hanghoa")]
@@ -24,7 +26,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             this.db = context;
             this.environment = environment;
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("hanghoa")]
         public IActionResult DanhSachHangHoa(int? page)
         {
