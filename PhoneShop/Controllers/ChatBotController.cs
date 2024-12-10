@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+using PhoneShop.Hubs;
+using PhoneShop.Helper;
 
 namespace PhoneShop.Controllers
 {
@@ -14,11 +17,13 @@ namespace PhoneShop.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<ChatbotController> _logger;
+        private readonly IHubContext<ChatHub> _hubContext; // Inject SignalR Hub
 
-        public ChatbotController(HttpClient httpClient, ILogger<ChatbotController> logger)
+        public ChatbotController(HttpClient httpClient, ILogger<ChatbotController> logger, IHubContext<ChatHub> hubContext)
         {
             _httpClient = httpClient;
             _logger = logger;
+            _hubContext = hubContext; // Gán SignalR Hub
         }
 
         [HttpPost]
@@ -28,6 +33,15 @@ namespace PhoneShop.Controllers
             {
                 // Lấy Access Token
                 var accessToken = await GetAccessTokenAsync();
+                var customerIdClaim = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == MySetting.CLAIM_CUSTOMERID)?.Value;
+                if (string.IsNullOrEmpty(customerIdClaim))
+                {
+                    return BadRequest("Customer ID is missing.");
+                }
+
+                string sessionId = customerIdClaim; // Tạo session ID ngẫu nhiên
+
+
                 var dialogflowRequest = new
                 {
                     queryInput = new
@@ -39,7 +53,6 @@ namespace PhoneShop.Controllers
                         }
                     }
                 };
-                string sessionId = Guid.NewGuid().ToString(); // Tạo session ID ngẫu nhiên
 
                 var dialogflowEndpoint = "https://dialogflow.googleapis.com/v2/projects/asp-mvc-with-website/agent/sessions/" + sessionId + ":detectIntent";
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post, dialogflowEndpoint);
@@ -49,14 +62,33 @@ namespace PhoneShop.Controllers
                 var response = await _httpClient.SendAsync(requestMessage);
                 var responseBody = await response.Content.ReadAsStringAsync();
 
-                if (!response.IsSuccessStatusCode)
+                string reply = null;
+                if (response.IsSuccessStatusCode)
+                {
+                    var dialogflowResponse = JsonConvert.DeserializeObject<DialogflowResponse>(responseBody);
+                    reply = dialogflowResponse.QueryResult.FulfillmentText;
+                }
+                else
                 {
                     _logger.LogError("Error response from Dialogflow: {0}", responseBody);
-                    return StatusCode((int)response.StatusCode, "Error from Dialogflow");
                 }
 
-                var dialogflowResponse = JsonConvert.DeserializeObject<DialogflowResponse>(responseBody);
-                return Ok(new { reply = dialogflowResponse.QueryResult.FulfillmentText });
+                if (!string.IsNullOrEmpty(customerIdClaim))
+                {
+                    await _hubContext.Clients.Group("Admin").SendAsync("ReceiveMessage", customerIdClaim, message.Message);
+                }
+
+                // Gửi phản hồi từ Dialogflow (nếu có) đến khách hàng
+                if (!string.IsNullOrEmpty(reply))
+                {
+                    // Gửi tin nhắn phản hồi tới khung chat của admin (chỉ hiển thị trên UI admin)
+                    await _hubContext.Clients.Group("Admin").SendAsync("ReceiveMessageToAdminChat", customerIdClaim, reply);
+
+
+
+                }
+                return Ok(new { reply });
+
             }
             catch (Exception ex)
             {

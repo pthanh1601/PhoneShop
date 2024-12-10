@@ -76,6 +76,22 @@
         }
     });
 
+    // Nhận phản hồi từ Dialogflow và hiển thị trong khung chat admin
+    connection.on("ReceiveMessageToAdminChat", (customerId, message) => {
+        // Lưu tin nhắn dưới dạng admin gửi
+        if (!conversations[customerId]) {
+            conversations[customerId] = [];
+        }
+        conversations[customerId].push({ sender: "Admin", message });
+
+        // Kiểm tra nếu khách hàng đang được chọn
+        const customerList = document.getElementById("customerList");
+        const selectedCustomer = customerList.querySelector('li[data-selected="true"]');
+        if (selectedCustomer && selectedCustomer.getAttribute("data-id") === customerId) {
+            displayMessages(customerId);
+        }
+    });
+
     // Hàm hiển thị tin nhắn của khách hàng
     function displayMessages(connectionId) {
         const messages = document.getElementById("messages");
