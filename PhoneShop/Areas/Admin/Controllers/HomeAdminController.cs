@@ -7,6 +7,7 @@ using X.PagedList;
 using X.PagedList.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using PhoneShop.Models;
+using Microsoft.AspNetCore.Authentication;
 
 
 namespace PhoneShop.Areas.Admin.Controllers
@@ -28,9 +29,15 @@ namespace PhoneShop.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             // Điều hướng tới trang Dashboard
-            return RedirectToAction("Dashboard", "Admin");
+            return View();
         }
-
+        [Route("Dangxuat")]
+        [Authorize]
+        public async Task<IActionResult> DangXuat()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/login");
+        }
 
 
 
