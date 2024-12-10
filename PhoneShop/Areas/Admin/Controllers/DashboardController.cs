@@ -111,9 +111,8 @@ namespace MyApp.Namespace
                 {
                     Year = g.Key,
                     Revenue = g.Sum(h => h.ChiTietHds.Sum(ct => ct.SoLuong * ct.DonGia - ct.GiamGia))  // Tổng doanh thu của từng năm
-                })
-                .OrderByDescending(g => g.Year)  // Sắp xếp theo năm giảm dần
-                .ToList();
+                });
+               
 
             return Json(revenueByYear);  // Trả về kết quả dưới dạng JSON
         }

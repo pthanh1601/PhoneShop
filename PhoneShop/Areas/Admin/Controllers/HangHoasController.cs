@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     [Area("admin")]
     [Route("admin")]
     [Route("admin/hanghoa")]
-     [Authorize]
+    [Authorize]
     public class HangHoasController : Controller
     {
         private readonly Hshop2023Context db;
@@ -27,7 +27,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             this.db = context;
             this.environment = environment;
         }
-        [Authorize(Roles = "Admin")]
+        
         [Route("hanghoa")]
         public IActionResult DanhSachHangHoa(int? page)
         {
@@ -51,7 +51,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
         [Route("ThemHangHoa")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult ThemHangHoa(HangHoaViewModels hanghoa, IFormFile hinh)
         {
             // Kiểm tra nếu dữ liệu không hợp lệ

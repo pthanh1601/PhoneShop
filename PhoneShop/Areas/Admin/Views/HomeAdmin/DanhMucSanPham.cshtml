@@ -44,7 +44,7 @@
             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TenLoai)</th>
             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TenLoaiAlias)</th>
             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().MoTa)</th>
-            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Hinh)</th>
+            
             <th>Thao Tác</th>
         </tr>
     </thead>
@@ -59,12 +59,7 @@
                         @item.MoTa
                     </div>
                 </td>
-                <td>
-                    <img src="@Url.Content("~/Hinh/Loai/" + item.Hinh)" 
-                         alt="@item.TenLoai" 
-                         style="max-width: 80px; max-height: 80px;" 
-                         class="img-thumbnail" />
-                </td>
+           
                 <td>
                     <a asp-action="SuaDanhMucSanPham" asp-route-MaLoai="@item.MaLoai" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil-square"></i> Sửa

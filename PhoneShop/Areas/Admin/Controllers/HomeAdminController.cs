@@ -154,7 +154,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 existingLoai.TenLoai = loai.TenLoai;
                 existingLoai.TenLoaiAlias = loai.TenLoaiAlias;
                 existingLoai.MoTa = loai.MoTa;
-                existingLoai.Hinh = loai.Hinh;
+                
 
                 db.Entry(existingLoai).State = EntityState.Modified;
                 db.SaveChanges();
