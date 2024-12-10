@@ -211,14 +211,36 @@
     </div>
 
         <script>
-            $(document).ready(function(){
-                $("#searchButton").click(function(){
-                    let url = '/HangHoas/Search?query='+ $("#searchText").val();
-                    window.location.href = url;
+            $(document).ready(function () {
+                // Khi nhấn vào một trang phân trang
+                $(document).on('click', '.pagination a', function (e) {
+                    e.preventDefault();  // Ngừng hành vi mặc định của thẻ <a> (không tải lại trang)
+
+                    var page = $(this).data('page');  // Lấy số trang từ thuộc tính data-page
+                    var url = '/HangHoas/Index?page=' + page;  // Tạo URL với số trang mới
+
+                    // Gửi yêu cầu Ajax đến URL phân trang
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function (response) {
+                            // Cập nhật lại danh sách sản phẩm sau khi phân trang vào div.grid-layout.wrapper-shop
+                            $('.grid-layout.wrapper-shop').html(response.itemsHtml);  // Cập nhật danh sách sản phẩm
+
+                            // Cập nhật phần phân trang
+                            $('#pagination').html(response.paginationHtml);  // Cập nhật phân trang
+                        },
+                        error: function () {
+                            alert('Đã xảy ra lỗi khi tải dữ liệu.');
+                        }
+                    });
                 });
             });
-
         </script>
+
+
+
+
         
        
 </body>

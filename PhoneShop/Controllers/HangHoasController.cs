@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using PhoneShop.ViewModels;
@@ -17,13 +16,22 @@ namespace PhoneShop.Controllers
         {
             db = context;
         }
-        public IActionResult Index(int? loai)
+
+        // Index action để trả về sản phẩm phân trang
+        public async Task<IActionResult> Index(int? loai, int page = 1)
         {
+            int pageSize = 3; // Số sản phẩm mỗi trang
+
+            // Tạo IQueryable cho danh sách sản phẩm
             var hangHoas = db.HangHoas.AsQueryable();
+
+            // Nếu có tham số lọc theo loại
             if (loai.HasValue)
             {
                 hangHoas = hangHoas.Where(p => p.MaLoai == loai.Value);
             }
+
+            // Chọn các trường dữ liệu cần thiết từ bảng HangHoas
             var result = hangHoas.Select(p => new HangHoaVM
             {
                 MaHh = p.MaHh,
@@ -34,17 +42,22 @@ namespace PhoneShop.Controllers
                 TenLoai = p.MaLoaiNavigation.TenLoai
             });
 
+            // Sử dụng PaginatedList để phân trang
+            var paginatedList = await PaginatedList<HangHoaVM>.CreateAsync(result, page, pageSize);
 
-            return View(result);
+            return View(paginatedList);
         }
 
+        // Action tìm kiếm sản phẩm (có thể sử dụng với AJAX)
         public IActionResult Search(string? query)
         {
             var hangHoas = db.HangHoas.AsQueryable();
+
             if (query != null)
             {
                 hangHoas = hangHoas.Where(p => p.TenHh.Contains(query));
             }
+
             var result = hangHoas.Select(p => new HangHoaVM
             {
                 MaHh = p.MaHh,
@@ -55,20 +68,22 @@ namespace PhoneShop.Controllers
                 TenLoai = p.MaLoaiNavigation.TenLoai
             });
 
-
             return View(result);
         }
 
-        public IActionResult Detail (int id)
+        // Action hiển thị chi tiết sản phẩm
+        public IActionResult Detail(int id)
         {
             var data = db.HangHoas
                 .Include(p => p.MaLoaiNavigation)
                 .SingleOrDefault(p => p.MaHh == id);
-            if(data == null)
+
+            if (data == null)
             {
                 TempData["Message"] = $"Not found merchandise for id {id}";
                 return Redirect("/404");
             }
+
             var result = new ChiTietHangHoaVM
             {
                 MaHh = data.MaHh,
@@ -78,10 +93,10 @@ namespace PhoneShop.Controllers
                 Hinh = data.Hinh ?? string.Empty,
                 MotaNgan = data.MoTaDonVi ?? string.Empty,
                 TenLoai = data.MaLoaiNavigation.TenLoai,
-                SoLuongTon = 10, //uncomplete
-                DiemDanhGia = 5, //uncomplete 
-
+                SoLuongTon = 10, // Chưa hoàn chỉnh
+                DiemDanhGia = 5, // Chưa hoàn chỉnh
             };
+
             return View(result);
         }
     }

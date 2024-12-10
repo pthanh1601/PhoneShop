@@ -43,25 +43,18 @@
 
         </div>
         <!-- pagination -->
-        <ul class="tf-pagination-wrap tf-pagination-list">
-            <li class="active">
-                <a href="#" class="pagination-link">1</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">2</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">3</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">4</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">
-                    <span class="icon icon-arrow-right"></span>
+        <!-- pagination -->
+        @model dynamic
+
+        <div class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <a href="javascript:void(0);" data-page="@i" class="page-link @((i == Model.CurrentPage) ? "active" : "")">
+                    @i
                 </a>
-            </li>
-        </ul>
+            }
+        </div>
+
     </div>
 </section>
 
