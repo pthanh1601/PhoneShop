@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace MyApp.Namespace
 {
     [Area("Admin")]
     [Route("Admin/HoaDon")]
+     [Authorize]
 
     public class HoaDonController : Controller
     {

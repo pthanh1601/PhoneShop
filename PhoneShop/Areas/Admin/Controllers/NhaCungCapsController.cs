@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
@@ -8,6 +9,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/NhaCungCaps")]
+     [Authorize]
     public class NhaCungCapsController : Controller
     {
         private readonly Hshop2023Context _context;

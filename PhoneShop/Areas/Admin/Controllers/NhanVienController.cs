@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PhoneShop.Data;
@@ -8,6 +9,7 @@ using System.Linq;
 namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+     [Authorize]
     public class NhanVienController : Controller
     {
         private readonly Hshop2023Context _context;

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace MyApp.Namespace
 {
     [Area("Admin")]
     [Route("Admin/Dashboard")]
-
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly Hshop2023Context _context;

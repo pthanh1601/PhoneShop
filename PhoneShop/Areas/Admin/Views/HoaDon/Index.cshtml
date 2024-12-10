@@ -2,53 +2,67 @@
 @using X.PagedList.Mvc.Core
 
 @model IPagedList<PhoneShop.Data.HoaDon>
+
 @{
     ViewData["Title"] = "Quản Lý Hóa Đơn";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>Quản Lý Hóa Đơn</h1>
 
+<h1 class="mb-4">Quản Lý Hóa Đơn</h1>
 
-<table class="table table-bordered table-hover">
-    <thead>
+<table class="table table-bordered table-hover table-striped">
+    <thead class="table-light">
         <tr>
             <th>@Html.DisplayNameFor(model => model.First().MaHd)</th>
             <th>@Html.DisplayNameFor(model => model.First().HoTen)</th>
             <th>@Html.DisplayNameFor(model => model.First().NgayDat)</th>
             <th>@Html.DisplayNameFor(model => model.First().DienThoai)</th>
-           
             <th>@Html.DisplayNameFor(model => model.First().CachThanhToan)</th>
             <th>@Html.DisplayNameFor(model => model.First().MaTrangThai)</th>
-            <th></th>
+            <th class="text-center">Thao Tác</th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.MaHd)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaKhNavigation.HoTen)</td>
-            <td>@Html.DisplayFor(modelItem => item.NgayDat)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaKhNavigation.DienThoai)</td>
-          
-            <td>@Html.DisplayFor(modelItem => item.CachThanhToan)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaTrangThaiNavigation.MaTrangThai)</td>
-            <td>
-                <a asp-action="Details" asp-area="Admin" asp-controller="HoaDon" asp-route-id="@item.MaHd">Chi tiết</a>
-            </td>
-           
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaHd</td>
+                <td>@item.MaKhNavigation.HoTen</td>
+                <td>@item.NgayDat.ToString("dd/MM/yyyy")</td>
+                <td>@item.MaKhNavigation.DienThoai</td>
+                <td>@item.CachThanhToan</td>
+                <td>@item.MaTrangThaiNavigation.MaTrangThai</td>
+                <td class="text-center">
+                    <a asp-action="Details" asp-area="Admin" asp-controller="HoaDon" asp-route-id="@item.MaHd" class="btn btn-info btn-sm">
+                        <i class="bi bi-info-circle"></i> Chi Tiết
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
 <div class="order__pagination">
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-            new PagedListRenderOptions
-    {
-        UlElementClasses = new List<string> { "pagination" },
-        LiElementClasses = new List<string> { "page-item" },
-        PageClasses = new List<string> { "page-link" }
-    })
+        new PagedListRenderOptions
+        {
+            UlElementClasses = new List<string> { "pagination justify-content-center" },
+            LiElementClasses = new List<string> { "page-item" },
+            PageClasses = new List<string> { "page-link" }
+        })
 </div>
 
+<style>
+    /* Căn giữa nội dung theo chiều dọc */
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Nút Chi Tiết */
+    .btn-sm {
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+    }
+</style>

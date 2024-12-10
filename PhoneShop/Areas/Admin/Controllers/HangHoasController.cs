@@ -7,12 +7,14 @@ using PhoneShop.Areas.Admin.ViewModels;
 using X.PagedList;
 using X.PagedList.Extensions;
 using PhoneShop.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin")]
     [Route("admin/hanghoa")]
+     [Authorize]
     public class HangHoasController : Controller
     {
         private readonly Hshop2023Context db;
