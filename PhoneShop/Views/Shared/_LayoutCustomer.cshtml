@@ -212,31 +212,74 @@
 
         <script>
             $(document).ready(function () {
-                // Khi nhấn vào một trang phân trang
-                $(document).on('click', '.pagination a', function (e) {
-                    e.preventDefault();  // Ngừng hành vi mặc định của thẻ <a> (không tải lại trang)
+                // Sự kiện khi click vào các số trang
+                $('.page-link').on('click', function () {
+                    var page = $(this).data('page'); // Lấy số trang từ thuộc tính data-page
+                    var loai = $('#loaiFilter').val(); // Lấy giá trị lọc loại (nếu có)
 
-                    var page = $(this).data('page');  // Lấy số trang từ thuộc tính data-page
-                    var url = '/HangHoas/Index?page=' + page;  // Tạo URL với số trang mới
-
-                    // Gửi yêu cầu Ajax đến URL phân trang
+                    // Gửi yêu cầu AJAX tới controller
                     $.ajax({
-                        url: url,
-                        method: 'GET',
+                        url: '/HangHoas1/GetProducts',  // Đường dẫn tới action GetProducts
+                        data: { page: page, loai: loai },  // Gửi số trang và loại
+                        type: 'GET',
                         success: function (response) {
-                            // Cập nhật lại danh sách sản phẩm sau khi phân trang vào div.grid-layout.wrapper-shop
-                            $('.grid-layout.wrapper-shop').html(response.itemsHtml);  // Cập nhật danh sách sản phẩm
+                            // Gọi hàm hiển thị sản phẩm
+                            displayProducts(response.data);
 
-                            // Cập nhật phần phân trang
-                            $('#pagination').html(response.paginationHtml);  // Cập nhật phân trang
+                            // Cập nhật phân trang (nếu cần)
+                            updatePagination(response.totalPages, page);
                         },
-                        error: function () {
-                            alert('Đã xảy ra lỗi khi tải dữ liệu.');
+                        error: function (error) {
+                            console.error('Lỗi khi lấy sản phẩm:', error);
                         }
                     });
                 });
+
+                // Hàm hiển thị sản phẩm vào div có lớp .grid-layout.wrapper-shop
+                // Hàm hiển thị sản phẩm vào div có lớp .grid-layout.wrapper-shop
+                function displayProducts(products) {
+                    var contentHtml = '';
+
+                    // Duyệt qua danh sách sản phẩm và tạo HTML cho từng sản phẩm
+                    products.forEach(function (product) {
+                        // Kiểm tra console.log để chắc chắn rằng bạn có các giá trị đúng
+                        console.log(product);
+
+                        // Dùng đúng tên thuộc tính theo dữ liệu trả về từ server
+                        contentHtml += `
+                    <div class="product-item">
+                        <img src="${product.hinh}" alt="${product.tenHh}" class="product-image"/>
+                        <h3>${product.tenHh}</h3>
+                        <p>${product.motaNgan}</p>
+                        <p><strong>Giá: </strong>${product.donGia}</p>
+                        <p><strong>Danh mục: </strong>${product.tenLoai}</p>
+                    </div>
+                `;
+                    });
+
+                    // Chèn HTML vào div có lớp grid-layout.wrapper-shop
+                    $('.grid-layout.wrapper-shop').html(contentHtml);
+                }
+
+
+
+                // Cập nhật phân trang (nếu cần)
+                function updatePagination(totalPages, currentPage) {
+                    $('.page-link').each(function () {
+                        var page = $(this).data('page');
+                        if (page == currentPage) {
+                            $(this).addClass('active');
+                        } else {
+                            $(this).removeClass('active');
+                        }
+                    });
+                }
             });
+
         </script>
+
+
+
 
 
 
