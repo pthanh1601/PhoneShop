@@ -125,7 +125,7 @@
                             </a>
                         </div>
                         <div class="col-xl-3 col-md-4 col-6">
-                            <a href="" class="logo-header">
+                            <a href="/" class="logo-header">
                                 <img src="~/images/logo/logo.svg" alt="logo" class="logo" />
                             </a>
                         </div>
@@ -133,7 +133,7 @@
                             <nav class="box-navigation text-center">
                                 <ul class="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                                     <li class="">
-                                        <a href="" class="item-link">
+                                        <a href="/" class="item-link">
                                             Home
                                         </a>
     
@@ -144,24 +144,8 @@
                                         </a>
                                     
                                     </li>
-                                    <li class="">
-                                        <a asp-controller="Registion" asp-action="Index" class="item-link">
-                                            Đăng ký
-                                        </a>
-                                        <div class="sub-menu mega-menu">
-                                            <div class="container">
-                             
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item position-relative">
-                                        <a href="#" class="item-link">
-                                            Pages<i class="icon icon-arrow-down"></i>
-                                        </a>
-                                        <div class="sub-menu submenu-default">
-                                     
-                                        </div>
-                                    </li>
+                       
+                                   
                               
                                 </ul>
                             </nav>
@@ -176,11 +160,27 @@
                                         <i class="icon icon-search"></i>
                                     </a>
                                 </li>
-                                <li class="nav-account">
-                                    <a asp-action="Index" asp-controller="login">
-                                        <i class="icon icon-account" ></i>
+
+                                <nav class="box-navigation text-center">
+                                    <ul class="box-nav-ul  flex-column align-items-start gap-30">
+
+                                <li class="menu-item position-relative">
+                                    <a href="#">
+                                        <i class="icon icon-account" style="font-size: 18px;line-height: 22px;font-weight: 400px;"> </i>
+                                                <i class="icon icon-arrow-down" style="font-size: 14px;line-height: 20px;font-weight: 400px;"></i>
                                     </a>
-                                </li>                     
+
+                                    <div class="sub-menu submenu-default">
+                                        <ul class="menu-list">
+                                         
+                                            <li><a asp-action="Index" asp-controller="login" class="menu-link-text link text_black-2">Đăng nhập</a></li>
+                                            <li><a asp-action="Index" asp-controller="Registion" class="menu-link-text link text_black-2">Đăng ký</a></li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+                                </ul>
+                                </nav>
                                 
                                 @await Component.InvokeAsync("Cart")
                                
@@ -205,7 +205,7 @@
         <div style="min-height:400px" class="hero-header">
             @RenderBody()
                 
-        </div>
+            </div>
         @await Html.PartialAsync("_Footer")
    
     </div>
@@ -219,7 +219,7 @@
             });
 
         </script>
-
+        
        
 </body>
 @await RenderSectionAsync("Scripts", required: false)
