@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using PhoneShop.Helper;
@@ -12,6 +13,25 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Hshop2023Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("PhoneShop"));
+    // Lấy chuỗi kết nối từ appsettings.json
+string connectionString = builder.Configuration.GetConnectionString("PhoneShop");
+
+// In chuỗi kết nối ra terminal
+Console.WriteLine($"Connection String: {connectionString}");
+ 
+
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    Console.WriteLine("Kết nối thành công!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi: {ex.Message}");
+            }
 });
 
 builder.Services.AddDistributedMemoryCache();

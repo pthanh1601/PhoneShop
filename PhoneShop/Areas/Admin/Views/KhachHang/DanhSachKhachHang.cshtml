@@ -1,9 +1,12 @@
-@model IEnumerable<PhoneShop.Data.KhachHang>
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<PhoneShop.Data.KhachHang>
+
 
 @{
-    ViewData["Title"] = "Danh Sách Khách Hàng";
+    ViewData["Title"] = "Quản Lý Khách Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
 }
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <h2>Danh Sách Khách Hàng</h2>
 
 <!-- Link to the create view -->
@@ -22,6 +25,9 @@
         </tr>
     </thead>
     <tbody>
+          @{
+            int index = 1; 
+        }
         @foreach (var khachHang in Model)
         {
             <tr>
@@ -33,12 +39,23 @@
                 <td>@(khachHang.HieuLuc ? "Đang hoạt động" : "Ngừng hoạt động")</td>
                 <td>
                     <!-- Link to the edit view, passing the customer ID -->
-                    <a href="/admin/KhachHang/Edit/@khachHang.MaKh" class="btn btn-warning">Sửa</a>
+                    <a  asp-action="SuaKhachHang" asp-Controller="KhachHang" asp-route-id="@khachHang.MaKh" class="btn btn-warning">Sửa</a>
 
                     <!-- Link to the delete view, passing the customer ID -->
-                    <a href="/admin/KhachHang/Delete/@khachHang.MaKh" class="btn btn-danger">Xóa</a>
+                    <a  asp-action="XoaKhachHang" asp-Controller="KhachHang" asp-route-id="@khachHang.MaKh" class="btn btn-danger">Xóa</a>
                 </td>
             </tr>
+            index++;
         }
     </tbody>
 </table>
+
+<div class="customer__pagination">
+    @Html.PagedListPager(Model, page => Url.Action("DanhSachKhachHang", new { page = page }),
+            new PagedListRenderOptions
+    {
+        UlElementClasses = new List<string> { "pagination" },
+        LiElementClasses = new List<string> { "page-item" },
+        PageClasses = new List<string> { "page-link" }
+    })
+</div>

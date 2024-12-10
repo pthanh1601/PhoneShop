@@ -1,9 +1,11 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+
 using PhoneShop.Data;
-using PhoneShop.ViewModels;
+using PhoneShop.Helper;
+using X.PagedList;
 using X.PagedList.Extensions;
 
 
@@ -55,20 +57,41 @@ namespace MyApp.Namespace
             }
 
             return View(hoaDon);
+
+
+
         }
 
         [HttpPost]
         public IActionResult UpdateStatus(int MaHd, int MaTrangThai)
         {
+          
             var hoaDon = hshop2023Context.HoaDons.Find(MaHd);
             if (hoaDon != null)
             {
                 hoaDon.MaTrangThai = MaTrangThai;
+                if (MaTrangThai == 3)
+                {
+                    hoaDon.NgayGiao = DateTime.Now;
+                }
+                  if (User.Identity.IsAuthenticated)
+            {
+                var maNv = User.Claims.FirstOrDefault(c => c.Type == MySetting.CLAIM_EMPLOYEERID)?.Value;
+
+        
+                Console.WriteLine("User ID: " + maNv);  // Kiểm tra giá trị
+                hoaDon.MaNv = maNv;
+
+            }
+            else
+            {
+                Console.WriteLine("User is not authenticated.");
+            }
                 hshop2023Context.SaveChanges();
             }
             return RedirectToAction("Details", new { id = MaHd });
         }
 
-        
-        }
+
+    }
 }

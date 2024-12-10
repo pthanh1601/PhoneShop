@@ -7,6 +7,7 @@ using PhoneShop.Areas.Admin.ViewModels;
 
 using X.PagedList;
 using X.PagedList.Extensions;
+using PhoneShop.ViewModels;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
@@ -66,7 +67,9 @@ namespace PhoneShop.Areas.Admin.Controllers
             {
                 // Lấy tên tệp và lưu vào thư mục 'images'
                 string fileName = Path.GetFileName(hinh.FileName);
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Hinh", "HangHoa");
+
 
                 // Tạo thư mục nếu chưa có
                 if (!Directory.Exists(uploadsFolder))
@@ -101,7 +104,7 @@ namespace PhoneShop.Areas.Admin.Controllers
                 DonGia = (double)hanghoa.DonGia,
                 Hinh = hanghoa.Hinh,
                 GiamGia = hanghoa.GiamGia,
-                SoLanXem = hanghoa.SoLanXem,
+                SoLanXem = 0,
                 MoTa = hanghoa.MoTa,
                 MaNcc = hanghoa.MaNcc,
             };
@@ -112,154 +115,6 @@ namespace PhoneShop.Areas.Admin.Controllers
             // Chuyển hướng đến danh sách hàng hóa sau khi thêm
             return RedirectToAction("DanhSachHangHoa");
         }
-
-
-
-
-        //   Sửa hàng hóa
-        //[Route("SuaHangHoa")]
-        //[HttpGet]
-        //      public IActionResult SuaHangHoa(int MaHh)
-        //   {
-
-        //       ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
-        //       ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
-
-        //       var hangHoa = db.HangHoas.Find(MaHh);
-        //       return View(hangHoa);
-        //   }
-
-        //[Route("SuaHangHoa")]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult SuaHangHoa(HangHoa hangHoa)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(hangHoa).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("DanhSachHangHoa", "HomeAdmin");
-        //    }
-        //    return View(hangHoa);
-
-
-        //}
-
-
-
-        //[Route("SuaHangHoa")]
-        //[HttpGet]
-        //public IActionResult SuaHangHoa(int MaHh)
-        //{
-        //    //var nccList = db.NhaCungCaps.ToList();
-        //    ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
-        //    ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
-        //    //ViewBag.MaNcc = new SelectList(nccList, "MaNcc", "TenCongTy");
-        //    var hangHoa = db.HangHoas.Find(MaHh);
-        //    return View(hangHoa);
-        //}
-
-        //[Route("SuaHangHoa")]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult SuaHangHoa(HangHoa hangHoa)
-        //{
-        //    // Kiểm tra MaHh được truyền không
-        //    if (hangHoa.MaHh == 0)
-        //    {
-        //        ModelState.AddModelError(string.Empty, "Không tìm thấy MaHh");
-        //    }
-        // var existingHangHoa = db.HangHoas.Find(hangHoa.MaHh);
-
-        // // Cập nhật từng thuộc tính để ép kiểu dữ liệu
-        // existingHangHoa.TenHh = (string)hangHoa.TenHh;
-        // existingHangHoa.MaLoai = (int)hangHoa.MaLoai;
-        // existingHangHoa.DonGia = (double)hangHoa.DonGia;
-        // existingHangHoa.Hinh = (string)hangHoa.Hinh;
-
-        // existingHangHoa.GiamGia = (double)hangHoa.GiamGia;
-        // existingHangHoa.SoLanXem = (int)hangHoa.SoLanXem;
-        // existingHangHoa.MoTa = (string)hangHoa.MoTa;
-        // existingHangHoa.MaNcc = (string)hangHoa.MaNcc;
-
-        //// Đánh dấu đối tượng là đã thay đổi và lưu thay đổi
-        // db.Entry(existingHangHoa).State = EntityState.Modified;
-        // db.SaveChanges();
-        // return RedirectToAction("DanhSachHangHoa");
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(hangHoa).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("DanhSachHangHoa");
-
-
-        //    }
-
-
-        //    ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
-        //    ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
-        //    return View(hangHoa);
-
-
-
-
-        //}
-
-
-
-
-
-
-
-
-
-
-
-        //[Route("SuaHangHoa")]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult SuaHangHoa(HangHoa hangHoa)
-        //{
-
-        //    // Tìm đối tượng hàng hóa từ cơ sở dữ liệu
-        //    var existingHangHoa = db.HangHoas.Find(hangHoa.MaHh);
-
-        //    // Cập nhật từng thuộc tính để ép kiểu dữ liệu
-        //    existingHangHoa.TenHh = (string)hangHoa.TenHh;
-        //    existingHangHoa.MaLoai = (int)hangHoa.MaLoai;
-        //    existingHangHoa.DonGia = (double)hangHoa.DonGia;
-        //    existingHangHoa.Hinh = hangHoa.Hinh;
-        //    existingHangHoa.GiamGia = (float)hangHoa.GiamGia;
-        //    existingHangHoa.SoLanXem = (int)hangHoa.SoLanXem;
-        //    existingHangHoa.MoTa = (string)hangHoa.MoTa;
-        //    existingHangHoa.MaNcc = (string)hangHoa.MaNcc;
-
-        //    // Đánh dấu đối tượng là đã thay đổi và lưu thay đổi
-        //    db.Entry(existingHangHoa).State = EntityState.Modified;
-        //    db.SaveChanges();
-        //    return RedirectToAction("DanhSachHangHoa");
-
-
-
-
-        //    // Nạp lại các ViewBag cho dropdown trong trường hợp ModelState không hợp lệ
-        //    ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
-        //    ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
-
-        //    return View(hangHoa);
-        //}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -298,96 +153,90 @@ namespace PhoneShop.Areas.Admin.Controllers
 
 
 
-        //sửa hàng hóa
         [Route("SuaHangHoa")]
         [HttpGet]
         public IActionResult SuaHangHoa(int MaHh)
         {
+
+            // Tìm hàng hóa theo mã
             var hangHoa = db.HangHoas.Find(MaHh);
 
             if (hangHoa == null)
             {
+                // Nếu không tìm thấy, chuyển hướng về danh sách hàng hóa
                 return RedirectToAction("DanhSachHangHoa");
             }
+
+            // Tạo đối tượng ViewModel để truyền dữ liệu ra view
             var hanghoa = new HangHoaViewModels()
             {
+
+                MaHh = hangHoa.MaHh, // Thêm MaHh vào ViewModel
                 TenHh = hangHoa.TenHh,
                 MaLoai = (int)hangHoa.MaLoai,
                 DonGia = hangHoa.DonGia,
                 Hinh = hangHoa.Hinh,
-                GiamGia = (double)hangHoa.GiamGia,
-                SoLanXem = (int)hangHoa.SoLanXem,
+                GiamGia = hangHoa.GiamGia.HasValue ? (double)hangHoa.GiamGia : 0, // Kiểm tra null
+                SoLanXem = hangHoa.SoLanXem.HasValue ? (int)hangHoa.SoLanXem : 0, // Kiểm tra null
                 MoTa = hangHoa.MoTa,
                 MaNcc = hangHoa.MaNcc,
-
             };
-            ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
-            ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
 
+            // Truyền danh sách loại hàng hóa vào ViewBag
+            ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai", hangHoa.MaLoai);
 
+            // Truyền danh sách nhà cung cấp vào ViewBag
+            ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy", hangHoa.MaNcc);
 
+            // Truyền thêm thông tin vào ViewData nếu cần
             ViewData["MaHh"] = hangHoa.MaHh;
-            ViewData["NgaySX"] = hangHoa.NgaySx;
+
+            // Trả về view với dữ liệu từ ViewModel
             return View(hanghoa);
 
         }
+
+
         [Route("SuaHangHoa")]
         [HttpPost]
-        public IActionResult SuaHangHoa(int MaHh, HangHoaViewModels hanghoa, IFormFile Hinh)
+        public IActionResult SuaHangHoa(HangHoaViewModels model, IFormFile Hinh)
         {
-            var hangHoa = db.HangHoas.Find(MaHh);
-
-            if (hangHoa == null)
+            // Kiểm tra nếu có file hình ảnh mới
+            if (Hinh != null)
             {
-                return RedirectToAction("DanhSachHangHoa");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                ViewData["MaHh"] = hangHoa.MaHh;
-                ViewData["NgaySX"] = hangHoa.NgaySx;
-
-                return View(hanghoa);
-            }
-
-            hangHoa.TenHh = hanghoa.TenHh;
-            hangHoa.MaLoai = hanghoa.MaLoai;
-            hangHoa.DonGia = hanghoa.DonGia;
-            hangHoa.GiamGia = hanghoa.GiamGia;
-            hangHoa.SoLanXem = hanghoa.SoLanXem;
-            hangHoa.MoTa = hanghoa.MoTa;
-            hangHoa.MaNcc = hanghoa.MaNcc;
-
-            if (Hinh != null && Hinh.Length > 0)
-            {
-                var fileName = Path.GetFileName(Hinh.FileName);  // Lấy tên tệp hình ảnh
-
-                var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "HangHoa");
-
-                if (!Directory.Exists(uploadDirectory))
-                {
-                    Directory.CreateDirectory(uploadDirectory);
-                }
-
-                var filePath = Path.Combine(uploadDirectory, fileName);
-
+                // Lưu hình ảnh mới và cập nhật trường "Hinh"
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Hinh", "HangHoa", Hinh.FileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     Hinh.CopyTo(stream);
                 }
-
-                hangHoa.Hinh = fileName;  // Cập nhật tên tệp hình ảnh vào cơ sở dữ liệu
+                model.Hinh = Hinh.FileName; // Cập nhật tên hình ảnh mới vào model
+            }
+            else
+            {
+                // Nếu không chọn file mới, giữ nguyên hình ảnh cũ
+                var hangHoa = db.HangHoas.Find(model.MaHh);
+                model.Hinh = hangHoa?.Hinh; // Giữ lại hình ảnh cũ
             }
 
-            db.SaveChanges();
-            db.Entry(hangHoa).Reload();
+            // Cập nhật các trường dữ liệu khác
+            var hangHoaToUpdate = db.HangHoas.Find(model.MaHh);
+            if (hangHoaToUpdate != null)
+            {
+                hangHoaToUpdate.TenHh = model.TenHh;
+                hangHoaToUpdate.MaLoai = model.MaLoai;
+                hangHoaToUpdate.DonGia = model.DonGia;
+                hangHoaToUpdate.GiamGia = model.GiamGia;
+                hangHoaToUpdate.SoLanXem = model.SoLanXem;
+                hangHoaToUpdate.MoTa = model.MoTa;
+                hangHoaToUpdate.MaNcc = model.MaNcc;
+                hangHoaToUpdate.Hinh = model.Hinh; // Cập nhật hình ảnh
+                db.SaveChanges();
+            }
+
 
             return RedirectToAction("DanhSachHangHoa");
         }
-
-
-
-
 
 
     }

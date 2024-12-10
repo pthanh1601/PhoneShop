@@ -1,87 +1,4 @@
-﻿@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
-@* @model X.PagedList.IPagedList<PhoneShop.Data.HangHoa> *@
-@* @using PhoneShop.Data *@
-@* @using X.PagedList.Mvc *@
-
-@* @{ *@
-@*     ViewData["Title"] = "DanhSachHangHoa"; *@
-@*     Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml"; *@
-@* } *@
-
-@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
-@* <h1>Danh sách hàng hóa</h1> *@
-
-@* <p> *@
-@*     <a asp-action="ThemHangHoa" class="btn btn-primary">Create New</a> *@
-@* </p> *@
-@* <p>@TempData["Message"]</p> *@
-@* <style> *@
-@*     .table td { *@
-@*         word-wrap: break-word;  *@
-@*         white-space: normal;  *@
-@*         max-width: 200px;  *@
-@*     } *@
-
-@*         .table td.mo-ta { *@
-@*             line-height: 1.5;  *@
-@*             max-width: 300px;  *@
-@*             height: auto; *@
-@*             overflow-wrap: break-word;  *@
-@*         } *@
-@* </style> *@
-
-@* <table class="table table-striped"> *@
-@*     <thead> *@
-@*         <tr class="table-warning"> *@
-@*             <th>STT</th> *@
-@*             <th>Tên Hàng Hóa</th> *@
-@*             <th>Mã loại</th> *@
-@*             <th>Đơn Giá</th> *@
-@*             <th>Hình Ảnh</th> *@
-@*             <th>Ngày SX</th> *@
-@*             <th>Mô Tả</th> *@
-@*             <th>Thao tác</th> *@
-@*         </tr> *@
-@*     </thead> *@
-@*     <tbody> *@
-@*         @{ *@
-@*             int index = 1;  *@
-@*         } *@
-@*         @foreach (var item in Model) *@
-@*         { *@
-@*             <tr> *@
-@*                 <td>@index</td> *@
-@*                 <td>@Html.DisplayFor(modelItem => item.TenHh)</td> *@
-@*                 <td>@Html.DisplayFor(modelItem => item.MaLoai)</td> *@
-@*                 <td>@Html.DisplayFor(modelItem => item.DonGia)</td> *@
-@*                 <td> *@
-@*                     <img src="@Url.Content("~/Hinh/HangHoa/" + item.Hinh)" alt="@item.TenHh" style="max-width: 100px; max-height: 100px;" /> *@
-@*                 </td> *@
-                
-@*                 <td>@Html.DisplayFor(modelItem => item.NgaySx)</td> *@
-@*                 <td class="mo-ta">@Html.DisplayFor(modelItem => item.MoTa)</td> *@
-@*                 <td> *@
-@*                     <a asp-action="SuaHangHoa" asp-route-MaHh="@item.MaHh">Edit</a> | *@
-@*                     <a asp-action="Details" asp-route-id="@item.MaHh">Details</a> | *@
-@*                     <a asp-action="XoaHangHoa" asp-route-MaHh="@item.MaHh">Delete</a> *@
-@*                 </td> *@
-@*             </tr> *@
-@*             index++; *@
-@*         } *@
-@*     </tbody> *@
-@* </table> *@
-
-@* <div class="product__pagination"> *@
-@*     @Html.PagedListPager(Model, page => Url.Action("DanhSachHangHoa", new { page = page }), *@
-@*             new PagedListRenderOptions *@
-@*     { *@
-@*         UlElementClasses = new List<string> { "pagination" }, *@
-@*         LiElementClasses = new List<string> { "page-item" }, *@
-@*         PageClasses = new List<string> { "page-link" } *@
-@*     }) *@
-@* </div> *@
-
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model X.PagedList.IPagedList<PhoneShop.Data.HangHoa>
 @using PhoneShop.Data
 @using X.PagedList.Mvc.Core
@@ -106,12 +23,14 @@
         max-width: 200px;
     }
 
-        .table td.mo-ta {
-            line-height: 1.5;
-            max-width: 300px;
-            height: auto;
-            overflow-wrap: break-word;
-        }
+
+    .table td.mo-ta {
+        line-height: 1.5;
+        max-width: 300px;
+        height: auto;
+        overflow-wrap: break-word;
+    }
+
 </style>
 
 <table class="table table-striped">
@@ -139,14 +58,21 @@
                 <td>@Html.DisplayFor(modelItem => item.MaLoai)</td>
                 <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
                 <td>
-                    <img src="@Url.Content("~/Hinh/HangHoa/" + item.Hinh)" alt="@item.TenHh" style="max-width: 100px; max-height: 100px;" />
+                    <img src="@Url.Content("~/Hinh/HangHoa/" + item.Hinh)" alt="@item.TenHh"
+                        style="max-width: 100px; max-height: 100px;" />
                 </td>
-                <td>@Html.DisplayFor(modelItem => item.NgaySx)</td>
+
+
+                <td>@item.NgaySx?.ToString("dd/MM/yyyy")</td>
+
+
                 <td class="mo-ta">@Html.DisplayFor(modelItem => item.MoTa)</td>
                 <td>
                     <a asp-action="SuaHangHoa" asp-route-MaHh="@item.MaHh">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.MaHh">Details</a> |
-                    <a asp-action="XoaHangHoa" asp-route-MaHh="@item.MaHh">Delete</a>
+                    @* <a asp-action="Details" asp-route-id="@item.MaHh">Details</a> | *@
+                    <a asp-action="XoaHangHoa" asp-route-MaHh="@item.MaHh"
+                        onclick="return confirm('Bạn có chắc chắn muốn xóa hàng hóa này?');">Delete</a>
+
                 </td>
             </tr>
             index++;
@@ -163,3 +89,4 @@
         PageClasses = new List<string> { "page-link" }
     })
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

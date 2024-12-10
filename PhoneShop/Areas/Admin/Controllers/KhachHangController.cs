@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AutoMapper;
+using X.PagedList.Extensions;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
@@ -27,9 +28,11 @@ namespace PhoneShop.Areas.Admin.Controllers
         #region Danh Sách Khách Hàng
         [Route("")]
         [Route("DanhSachKhachHang")]
-        public IActionResult DanhSachKhachHang()
+        public IActionResult DanhSachKhachHang(int? page)
         {
-            var danhSachKhachHang = db.KhachHangs.ToList();
+            int pageSize = 6 ;
+            int pageNumber = page ?? 1; 
+            var danhSachKhachHang = db.KhachHangs.AsNoTracking().OrderBy(kh => kh.HoTen).ToPagedList(pageNumber,pageSize);
             return View("~/Areas/Admin/Views/KhachHang/DanhSachKhachHang.cshtml", danhSachKhachHang);
         }
         #endregion

@@ -6,6 +6,8 @@ using PhoneShop.Data;
 using X.PagedList;
 using X.PagedList.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using PhoneShop.Models;
+using Microsoft.AspNetCore.Authentication;
 
 
 namespace PhoneShop.Areas.Admin.Controllers
@@ -16,16 +18,39 @@ namespace PhoneShop.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         Hshop2023Context db = new Hshop2023Context();
-
+        public HomeAdminController(Hshop2023Context context)
+        {
+            db = context;
+        }
         [Authorize]
 
         [Route("")]
         [Route("index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            // Điều hướng tới trang Dashboard
             return View();
         }
+        [Route("Dangxuat")]
+        [Authorize]
+        public async Task<IActionResult> DangXuat()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/login");
+        }
 
+
+
+
+
+
+
+
+
+
+
+
+        // Ở dưới là danh mục plese tách ra riêng//
         [Route("danhmucsanpham")]
         public IActionResult DanhMucSanPham(int? page)
         {
