@@ -1,13 +1,16 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Danh Sách Phân Công";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
 }
 
-
 <div class="container mt-4">
     <h2 class="text-center mb-4">@ViewData["Title"]</h2>
-
+ <!-- Nút thêm phân công mới -->
+    <div class="text-end mt-3">
+        <a href="@Url.Action("Create", "PhanCong")" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Thêm Phân Công Mới
+        </a>
+    </div>
     <!-- Hiển thị thông báo thành công hoặc lỗi nếu có -->
     @if (TempData["SuccessMessage"] != null)
     {
@@ -35,7 +38,7 @@
                     <th scope="col">Mã Phòng Ban</th>
                     <th scope="col">Ngày Phân Công</th>
                     <th scope="col">Hiệu Lực</th>
-                    <th scope="col">Hành Động</th>
+                    <th scope="col" class="text-center">Hành Động</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,19 +50,19 @@
                         <td>@item.MaPb</td>
                         <td>@item.NgayPc?.ToString("dd/MM/yyyy")</td>
                         <td>
-                            <span class="badge @(item.HieuLuc == true ? "bg-success" : "bg-danger")">
-                                @(item.HieuLuc == true ? "Có" : "Không")
+                            <span class="badge @(item.HieuLuc ? "bg-success" : "bg-danger")">
+                                @(item.HieuLuc ? "Có" : "Không")
                             </span>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Nút sửa phân công -->
-                            <a href="@Url.Action("Edit", "PhanCong", new { maPc = item.MaPc })" class="btn btn-primary btn-sm me-1">
+                            <a href="@Url.Action("Edit", "PhanCong", new { maPc = item.MaPc })" class="btn btn-warning btn-sm me-1">
                                 <i class="bi bi-pencil-square"></i> Sửa
                             </a>
 
                             <!-- Nút xóa phân công -->
-                            <form action="@Url.Action("Delete", "PhanCong", new { maPc = item.MaPc })" method="post" style="display:inline-block;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa phân công này không?')">
+                            <form action="@Url.Action("Delete", "PhanCong", new { maPc = item.MaPc })" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa phân công này không?')">
+                                <button type="submit" class="btn btn-danger btn-sm">
                                     <i class="bi bi-trash"></i> Xóa
                                 </button>
                             </form>
@@ -70,10 +73,8 @@
         </table>
     </div>
 
-    <!-- Nút thêm phân công mới -->
-    <div class="text-end mt-3">
-        <a href="@Url.Action("Create", "PhanCong")" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Thêm Phân Công Mới
-        </a>
-    </div>
+   
 </div>
+
+<!-- Bootstrap Icons CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">

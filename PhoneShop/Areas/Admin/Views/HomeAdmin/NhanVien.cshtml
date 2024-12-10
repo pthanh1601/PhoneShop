@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh Sách Nhân Viên";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
 }
 
@@ -8,43 +8,47 @@
 <h1 class="text-center my-4">Danh Sách Nhân Viên</h1>
 
 <!-- Nút thêm nhân viên mới -->
-<form action="/admin/nhanvien/create" method="post">
-    <button type="submit" class="btn btn-success mb-3">Thêm Nhân Viên Mới</button>
-</form>
+<div class="text-center mb-4">
+    <a href="/admin/nhanvien/create" class="btn btn-success">Thêm Nhân Viên Mới</a>
+</div>
 
 <!-- Bảng danh sách nhân viên -->
-<table class="table table-bordered table-hover">
-    <thead class="table-dark">
+<table class="table table-bordered table-hover table-striped">
+    <thead class="table-light">
         <tr>
             <th>MaNV</th>
-            <th>HoTen</th>
+            <th>Họ Tên</th>
             <th>Email</th>
-            <th>MatKhau</th>
-            <th>Hành Động</th>
+            <th>Mật Khẩu</th>
+            <th class="text-center">Hành Động</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var employee in Model)
         {
             <tr>
-                <td>@employee.MaNv</td>
+                <td class="text-center">@employee.MaNv</td>
                 <td>@employee.HoTen</td>
                 <td>@employee.Email</td>
                 <td>@employee.MatKhau</td>
-                <td>
+                <td class="text-center">
                     <!-- Nút sửa -->
-                    <form method="post" action="/Admin/NhanVien/Edit" class="d-inline-block">
-                        <input type="hidden" name="MaNv" value="@employee.MaNv" />
-                        <button type="submit" class="btn btn-warning btn-sm">Sửa</button>
-                    </form>
+                    <a href="/Admin/NhanVien/Edit/@employee.MaNv" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil-square"></i> Sửa
+                    </a>
 
                     <!-- Nút xóa -->
                     <form method="post" action="/Admin/NhanVien/Delete" class="d-inline-block" onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?');">
-                        <input type="hidden" name="maNv" value="@employee.MaNv" />
-                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                        <input type="hidden" name="MaNv" value="@employee.MaNv" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Xóa
+                        </button>
                     </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Bootstrap Icon CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">

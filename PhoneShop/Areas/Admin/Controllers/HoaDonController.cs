@@ -15,6 +15,7 @@ namespace MyApp.Namespace
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/HoaDon")]
+     [Authorize]
 
     public class HoaDonController : Controller
     {

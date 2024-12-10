@@ -48,7 +48,9 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options
     =>
 {
-    options.LoginPath = "/Login";
+
+    options.LoginPath = "/login";
+
     options.AccessDeniedPath = "/AccessDenied";
 });
 
@@ -96,11 +98,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-//<<<<<<< HEAD
-//// Map the SignalR hub
-//app.MapHub<ChatHub>("/chathub");
-
-//=======
-//>>>>>>> QLNV/QLPC
 app.Run();
 

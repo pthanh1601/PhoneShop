@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using PhoneShop.Data;
 using PhoneShop.ViewModels;
 using Microsoft.Extensions.Logging;
-using System.Text.Json; // Namespace for JSON serialization
+using System.Text.Json;
+using Microsoft.AspNetCore.Authorization; // Namespace for JSON serialization
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class PhanCongController : Controller
     {
         private readonly Hshop2023Context _context;

@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AutoMapper;
 using X.PagedList.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/KhachHang")]
+     [Authorize]
     public class KhachHangController : Controller
     {
         private readonly Hshop2023Context db;
