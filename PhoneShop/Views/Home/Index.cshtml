@@ -1,36 +1,37 @@
-﻿ @{
-     ViewData["Title"] = "Home Page"; 
- }
+﻿@model IEnumerable<PhoneShop.ViewModels.HangHoaVM>
+@{
+    ViewData["Title"] = "Home Page";
+}
 
 <!-- Slider -->
 <div class="tf-slideshow slider-home-2 slider-effect-fade position-relative">
     <div class="swiper tf-sw-slideshow"
-         data-preview="1"
-         data-tablet="1"
-         data-mobile="1"
-         data-centered="false"
-         data-space="0"
-         data-loop="true"
-         data-auto-play="true"
-         data-delay="2000"
-         data-speed="1000">
+    data-preview="1"
+    data-tablet="1"
+    data-mobile="1"
+    data-centered="false"
+    data-space="0"
+    data-loop="true"
+    data-auto-play="true"
+    data-delay="2000"
+    data-speed="1000">
         <div class="swiper-wrapper">
             <div class="swiper-slide" lazy="true">
                 <div class="wrap-slider">
                     <img class="lazyload"
-                         data-src="images/slider/Slideshow_Electronics2.jpg"
-                         src="images/slider/fashion-slideshow-04.jpg"
-                         alt="fashion-slideshow-01" />
+                    data-src="images/slider/Slideshow_Electronics2.jpg"
+                    src="images/slider/fashion-slideshow-04.jpg"
+                    alt="fashion-slideshow-01" />
                     <div class="box-content">
                         <div class="container">
-                            <h1 class="fade-item fade-item-1">
-                                Welcome to <br />ECOMUS
+                            <h1 class="fade-item fade-item-1" style="font-size: 60px;">
+                                Welcome to ECOMUS <br />
                             </h1>
                             <p class="fade-item fade-item-2">
                                 Let's explore the store together
                             </p>
                             <a asp-controller="HangHoas" asp-action="Index"
-                               class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-3">
+                            class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-3">
                                 <span>Shop collection</span><i class="icon icon-arrow-right"></i>
                             </a>
                         </div>
@@ -40,19 +41,19 @@
             <div class="swiper-slide" lazy="true">
                 <div class="wrap-slider">
                     <img class="lazyload"
-                         data-src="images/slider/phonecase-3.jpg"
-                         src="images/slider/fashion-slideshow-05.jpg"
-                         alt="fashion-slideshow-02" />
-            
+                    data-src="images/slider/phonecase-3.jpg"
+                    src="images/slider/fashion-slideshow-05.jpg"
+                    alt="fashion-slideshow-02" />
+
                 </div>
             </div>
             <div class="swiper-slide" lazy="true">
                 <div class="wrap-slider">
                     <img class="lazyload"
-                         data-src="images/slider/hero_macbook.png"
-                         src="images/slider/fashion-slideshow-06.jpg"
-                         alt="fashion-slideshow-03" />
-              
+                    data-src="images/slider/hero_macbook.png"
+                    src="images/slider/fashion-slideshow-06.jpg"
+                    alt="fashion-slideshow-03" />
+
                 </div>
             </div>
         </div>
@@ -82,329 +83,57 @@
         </div>
         <div class="hover-sw-nav hover-sw-2">
             <div class="swiper tf-sw-product-sell wrap-sw-over"
-                 data-preview="4"
-                 data-tablet="3"
-                 data-mobile="2"
-                 data-space-lg="30"
-                 data-space-md="15"
-                 data-pagination="2"
-                 data-pagination-md="3"
-                 data-pagination-lg="3">
+            data-preview="4"
+            data-tablet="3"
+            data-mobile="2"
+            data-space-lg="30"
+            data-space-md="15"
+            data-pagination="2"
+            data-pagination-md="3"
+            data-pagination-lg="3">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product"
-                                         data-src="images/products/iphone16promax.png"
-                                         src="images/products/iphone16promax.png"
-                                         alt="image-product" />
-                                    <img class="lazyload img-hover"
-                                         data-src="images/products/iphone16promax.png"
-                                         src="images/products/iphone16promax.png"
-                                         alt="image-product" />
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);"
-                                       class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
+                    @foreach (var item in Model.Take(7))
+                    {
+                        <div class="swiper-slide" lazy="true">
+                            <div class="card-product style-2">
+                                <div class="card-product-wrapper">
+                                    <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh class="product-img">
+                                        <img class="lazyload img-product"
+                                             src="~/Hinh/HangHoa/@item.Hinh"
+                                             src="~/Hinh/HangHoa/@item.Hinh"
+                                        alt="image-product" />
+                                        <img class="lazyload img-hover"
+                                             src="~/Hinh/HangHoa/@item.Hinh"
+                                             src="~/Hinh/HangHoa/@item.Hinh"
+                                        alt="image-product" />
                                     </a>
-                                    <a href="#compare"
-                                       data-bs-toggle="offcanvas"
-                                       aria-controls="offcanvasLeft"
-                                       class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                      
-                                <div class="on-sale-wrap text-end">
-                                    <div class="on-sale-item">-33%</div>
-                                </div>
-                            
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Iphone 16 Promax</a>
-                                <span class="price">1099$</span>
                                 
+                                    <div class="list-product-btn absolute-3">
+                                        <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh"
+                                        data-bs-toggle=""
+                                        class="box-icon quick-add style-2">
+                                            <span class="icon icon-bag"></span>
+                                            <span class="text">QUICK ADD</span>
+                                        </a>
+                                        <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh
+                                        data-bs-toggle=""
+                                        class="box-icon quickview style-2">
+                                            <span class="icon icon-view"></span>
+                                            <span class="text">QUICK VIEW</span>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                                <div class="card-product-info">
+                                    <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh class="title link">@item.TenHh</a>
+                                    <span class="price">@item.DonGia$</span>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product"
-                                         data-src="images/products/ss2.png"
-                                         src="images/products/ss2.png"
-                                         alt="image-product" />
-                                    <img class="lazyload img-hover"
-                                         data-src="images/products/ss2.png"
-                                         src="images/products/ss2.png"
-                                         alt="image-product" />
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);"
-                                       class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare"
-                                       data-bs-toggle="offcanvas"
-                                       aria-controls="offcanvasLeft"
-                                       class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                       
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Samsung Zfold</a>
-                                <span class="price">From 1000$</span>
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product"
-                                         data-src="images/products/Asus1.png"
-                                         src="images/products/Asus1.png"
-                                         alt="image-product" />
-                                    <img class="lazyload img-hover"
-                                         data-src="images/products/Asus1.png"
-                                         src="images/products/Asus1.png"
-                                         alt="image-product" />
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);"
-                                       class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare"
-                                       data-bs-toggle="offcanvas"
-                                       aria-controls="offcanvasLeft"
-                                       class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-2">
-                                    <a href="#quick_add"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Laptop Asus Vivobook</a>
-                                <span class="price">$999</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product"
-                                         data-src="images/products/Mac1.png"
-                                         src="images/products/Mac1.png"
-                                         alt="image-product" />
-                                    <img class="lazyload img-hover"
-                                         data-src="images/products/Mac1.png"
-                                         src="images/products/Mac1.png"
-                                         alt="image-product" />
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);"
-                                       class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare"
-                                       data-bs-toggle="offcanvas"
-                                       aria-controls="offcanvasLeft"
-                                       class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                           
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Macbook M1</a>
-                                <span class="price">999$</span>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product"
-                                         data-src="images/products/Mac2.png"
-                                         src="images/products/Mac2.png"
-                                         alt="image-product" />
-                                    <img class="lazyload img-hover"
-                                         data-src="images/products/Mac2.png"
-                                         src="images/products/Mac2.png"
-                                         alt="image-product" />
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);"
-                                       class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare"
-                                       data-bs-toggle="offcanvas"
-                                       aria-controls="offcanvasLeft"
-                                       class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                           
-                            </div>
-                            <div class="card-product-info">
-                                <a href="#" class="title link">Macbook M2</a>
-                                <span class="price">$10.00</span>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product"
-                                         data-src="images/products/Mac3.png"
-                                         src="images/products/Mac3.png"
-                                         alt="image-product" />
-                                    <img class="lazyload img-hover"
-                                         data-src="images/products/Mac3.png"
-                                         src="images/products/Mac3.png"
-                                         alt="image-product" />
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);"
-                                       class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare"
-                                       data-bs-toggle="offcanvas"
-                                       aria-controls="offcanvasLeft"
-                                       class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view"
-                                       data-bs-toggle="modal"
-                                       class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                             
-                            </div>
-                            <div class="card-product-info">
-                                <a href="#" class="title link">Macbook M3</a>
-                                <span class="price">1119$</span>
-                                
-                            </div>
-                        </div>
-                    </div>
+                    }
+
                 </div>
             </div>
             <div class="nav-sw nav-next-slider nav-next-product box-icon w_46 round">
@@ -417,6 +146,23 @@
     </div>
 </section>
 <!-- /Best seller -->
+<!-- Shop Collection -->
+<section class="flat-spacing-19">
+    <div class="container">
+        <div class="tf-grid-layout md-col-2 tf-img-with-text style-1">
+            <div class="tf-image-wrap wow fadeInUp" data-wow-delay="0s">
+                <img class="lazyload" data-src="images/slider/hero_macbook.png" src="images/slider/hero_macbook.png" alt="collection-img">
+            </div>
+            <div class="tf-content-wrap wow fadeInUp" data-wow-delay="0s">
+                <div class="heading">Redefining Smartphone <br> Excellence</div>
+                <p class="description">Explore the future of technology with our latest range of innovative smartphones.</p>
+
+                <a asp-action="Index" asp-controller="HangHoas" class="tf-btn style-2 btn-fill rounded-full animate-hover-btn">Shopping now</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Shop Collection -->
 
 
 
