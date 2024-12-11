@@ -20,7 +20,7 @@ namespace PhoneShop.Controllers
         // Index action để trả về sản phẩm phân trang
         public async Task<IActionResult> Index(int? loai, int page = 1)
         {
-            int pageSize = 3; // Số sản phẩm mỗi trang
+            int pageSize = 10; // Số sản phẩm mỗi trang
 
             // Tạo IQueryable cho danh sách sản phẩm
             var hangHoas = db.HangHoas.AsQueryable();
@@ -73,7 +73,7 @@ namespace PhoneShop.Controllers
         [HttpPost]
         public async Task<IActionResult> GetProducts(int? loai, int page = 1)
         {
-            int pageSize = 3; // Số sản phẩm mỗi trang
+            int pageSize = 10; // Số sản phẩm mỗi trang
 
             var hangHoas = db.HangHoas.AsQueryable();
 
