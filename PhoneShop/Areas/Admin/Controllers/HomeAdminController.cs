@@ -180,10 +180,16 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
 
-
+        [HttpGet]
+        [Route("ChatAdmin")]
+        public IActionResult ChatAdmin()
+        {
+            return View();
+        }
 
 
     }
+
 }
 //using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Mvc;

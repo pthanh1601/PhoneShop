@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using PhoneShop.Data;
 using PhoneShop.Helper;
 using PhoneShop.Hubs;
@@ -10,28 +14,28 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API Documentation",
+        Version = "v1"
+    });
+});
+
+//builder.Services.AddControllers().AddNewtonsoftJson(options =>
+//{
+//    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+//});
+
+
+builder.Services.AddHttpClient();
+
 builder.Services.AddDbContext<Hshop2023Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("PhoneShop"));
-    // Lấy chuỗi kết nối từ appsettings.json
-string connectionString = builder.Configuration.GetConnectionString("PhoneShop");
-
-// In chuỗi kết nối ra terminal
-Console.WriteLine($"Connection String: {connectionString}");
- 
-
-            try
-            {
-                using (var connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    Console.WriteLine("Kết nối thành công!");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi: {ex.Message}");
-            }
 });
 
 builder.Services.AddDistributedMemoryCache();
@@ -43,16 +47,18 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options
     =>
 {
-
-    options.LoginPath = "/login";
-
+    options.LoginPath = "/Login";
     options.AccessDeniedPath = "/AccessDenied";
-});
+}
+);
+
+
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -67,11 +73,20 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request  pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); // Ensure HSTS is used in production
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    });
 }
 
 app.UseHttpsRedirection();
@@ -79,24 +94,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // Ensure Authentication comes before Authorization
+app.UseSession();
+
+app.UseAuthentication();
+
+
 app.UseAuthorization();
-// app.MapControllerRoute(
-//     name: "admin",
-//     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-
-app.UseSession(); // Use session if required
-
-// Admin area route mapping
-app.MapControllerRoute(
-    name: "admin",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+// Map the SignalR hub
+app.MapHub<ChatHub>("/chathub");
 
+app.Run();

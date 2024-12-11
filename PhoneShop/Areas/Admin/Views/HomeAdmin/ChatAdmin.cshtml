@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Hỗ trợ khách hàng";
+}
+
+<h1>Hỗ trợ khách hàng</h1>
+
+<div style="display: flex; height: 80vh;">
+    <!-- Danh sách khách hàng -->
+    <div style="width: 30%; border-right: 1px solid #ccc; overflow-y: auto;">
+        <ul id="customerList" style="list-style: none; padding: 0; margin: 0;">
+            <!-- Danh sách khách hàng được thêm động tại đây -->
+        </ul>
+    </div>
+
+    <!-- Nội dung trò chuyện -->
+    <div style="width: 70%; display: flex; flex-direction: column;">
+        <div id="messages" style="flex: 1; padding: 10px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 10px;">
+            <!-- Tin nhắn được thêm động tại đây -->
+        </div>
+        <!-- Khu vực nhập tin nhắn -->
+        <div style="padding: 10px;">
+            <input id="messageInput" type="text" style="width: calc(100% - 60px); padding: 5px;" placeholder="Nhập tin nhắn...">
+            <button id="sendButton" style="width: 50px;">Gửi</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        // Lưu các cuộc trò chuyện theo Connection ID
+        const conversations = {};
+
+        // Xử lý khi nhận tin nhắn
+        connection.on("ReceiveMessage", (connectionId, message) => {
+            // Nếu cuộc trò chuyện của khách hàng chưa tồn tại, tạo mới
+            if (!conversations[connectionId]) {
+                conversations[connectionId] = [];
+            }
+            // Thêm tin nhắn vào cuộc trò chuyện của khách hàng
+            conversations[connectionId].push({ sender: connectionId, message });
+
+            // Kiểm tra nếu khách hàng chưa có trong danh sách
+            const customerList = document.getElementById("customerList");
+            if (!customerList.querySelector(`li[data-id="${connectionId}"]`)) {
+                const li = document.createElement("li");
+                li.textContent = `Khách hàng ${connectionId}`;
+                li.setAttribute("data-id", connectionId);
+                li.style.cursor = "pointer";
+
+                // Xử lý khi admin nhấn vào khách hàng
+                li.addEventListener("click", () => {
+                    // Bỏ chọn tất cả các khách hàng khác
+                    customerList.querySelectorAll("li").forEach(item => item.style.backgroundColor = "");
+                    li.style.backgroundColor = "#ddd";
+
+                    // Hiển thị tin nhắn của khách hàng được chọn
+                    displayMessages(connectionId);
+                });
+
+                customerList.appendChild(li);
+            }
+
+            // Nếu khách hàng đang được chọn, hiển thị tin nhắn ngay lập tức
+            const selectedCustomer = customerList.querySelector('li[data-selected="true"]');
+            if (selectedCustomer && selectedCustomer.getAttribute("data-id") === connectionId) {
+    displayMessages(connectionId);
+            }
+        });
+
+        // Nhận phản hồi từ Dialogflow và hiển thị trong khung chat admin
+        connection.on("ReceiveMessageToAdminChat", (customerId, message) => {
+            // Lưu tin nhắn dưới dạng admin gửi
+            if (!conversations[customerId]) {
+                conversations[customerId] = [];
+            }
+            conversations[customerId].push({ sender: "Admin", message });
+
+            // Kiểm tra nếu khách hàng đang được chọn
+            const customerList = document.getElementById("customerList");
+            const selectedCustomer = customerList.querySelector('li[data-selected="true"]');
+            if (selectedCustomer && selectedCustomer.getAttribute("data-id") === customerId) {
+                displayMessages(customerId);
+            }
+        });
+
+        // Hàm hiển thị tin nhắn của khách hàng
+        function displayMessages(connectionId) {
+            const messages = document.getElementById("messages");
+            messages.innerHTML = ""; // Xóa nội dung cũ
+
+            if (conversations[connectionId]) {
+                conversations[connectionId].forEach(chat => {
+                    const messageElement = document.createElement("div");
+                    messageElement.classList.add("message", chat.sender === "Admin" ? "admin" : "customer");
+                    messageElement.textContent = chat.message;
+                    messages.appendChild(messageElement);
+                });
+
+                // Cuộn xuống cuối cùng
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
+
+        // Kết nối tới SignalR
+        connection.start().then(() => {
+            connection.invoke("AddToAdminGroup").catch(err => console.error(err.toString()));
+        }).catch(err => console.error(err.toString()));
+
+        // Gửi tin nhắn
+        document.getElementById("sendButton").addEventListener("click", () => {
+            const message = document.getElementById("messageInput").value;
+            const customerList = document.getElementById("customerList");
+            const selectedCustomer = customerList.querySelector("li[style*='background-color']");
+
+            if (selectedCustomer) {
+                const connectionId = selectedCustomer.getAttribute("data-id");
+
+                if (message !== '') {
+                    // Lưu tin nhắn vào cuộc trò chuyện
+                    if (!conversations[connectionId]) {
+                        conversations[connectionId] = [];
+                    }
+                    conversations[connectionId].push({ sender: "Admin", message });
+
+                    // Hiển thị lại tin nhắn
+                    displayMessages(connectionId);
+
+                    // Gửi tin nhắn đến khách hàng
+                    connection.invoke("SendMessageToCustomer", connectionId, message).catch(err => console.error(err.toString()));
+
+                    // Xóa nội dung trong ô nhập tin nhắn
+                    document.getElementById("messageInput").value = "";
+                }
+            } else {
+    alert("Vui lòng chọn khách hàng để gửi tin nhắn.");
+            }
+        });
+
+</script>
+
+<style>
+    .message {
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 70%;
+    }
+
+        .message.customer {
+            background-color: #f0f0f0;
+            text-align: left;
+        }
+
+        .message.admin {
+            background-color: #d1e7dd;
+            text-align: right;
+            margin-left: auto;
+        }
+</style>
