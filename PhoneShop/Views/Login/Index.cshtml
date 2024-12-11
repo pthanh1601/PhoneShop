@@ -4,58 +4,70 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <h1 class="mb-4">Đăng nhập</h1>
 
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success">
-                @TempData["SuccessMessage"]
-            </div>
-        }
 
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="alert alert-danger">
-                @TempData["ErrorMessage"]
-            </div>
-        }
-
-        <form asp-action="Index" asp-route-returnurl="@ViewBag.ReturnUrl">
-            <div class="text-danger" asp-validation-summary="All"></div>
-            <div class="row">
-                <div class="row">
-                    <div class="col-md-12 col-lg-6">
-                        <div class="form-item">
-                            <label asp-for="@Model.Email" class="form-label my-3"></label><sup>*</sup>
-                            <input asp-for="@Model.Email" class="form-control">
-                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+<section class="flat-spacing-10">
+            <div class="container">
+                <div class="tf-grid-layout lg-col-2 tf-login-wrap">
+                    <div class="tf-login-form">
+                        <div id="recover">
+                            <h5 class="mb_24">Reset your password</h5>
+                            <p class="mb_30">We will send you an email to reset your password</p>
+                            <div>
+                                <form class="" id="login-form" action="#" method="post" accept-charset="utf-8" data-mailchimp="true">
+                                    <div class="tf-field style-1 mb_15">
+                                        <input class="tf-field-input tf-input" placeholder="" type="email" id="property3" name="email">
+                                        <label class="tf-field-label fw-4 text_black-2" for="property3">Email *</label>
+                                    </div>
+                                    <div class="mb_20">
+                                        <a href="#login" class="tf-btn btn-line">Cancel</a>
+                                    </div>
+                                    <div class="">
+                                        <button type="submit" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">Reset password</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="form-item">
-                            <label asp-for="@Model.Password " class="form-label my-3"></label><sup>*</sup>
-                            <input asp-for="@Model.Password " class="form-control">
-                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        <div id="login">
+                            <h5 class="mb_36">Log in</h5>
+                            <div>
+                                <form class="" id="login-form" asp-action="Index" asp-route-returnurl="@ViewBag.ReturnUrl" accept-charset="utf-8">
+                                    <div class="tf-field style-1 mb_15">
+                                        <label asp-for="@Model.Email" class="form-label my-3"></label><sup>*</sup>
+                                        <input asp-for="@Model.Email" class="form-control">
+                                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="tf-field style-1 mb_30">
+                                        <label asp-for="@Model.Password " class="form-label my-3"></label><sup>*</sup>
+                                        <input asp-for="@Model.Password " class="form-control">
+                                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb_20">
+                                        <a href="#recover" class="tf-btn btn-line">Forgot your password?</a>
+                                    </div>
+                                    <div class="">
+                                        <button type="submit" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">Log in</button>
+                                    </div>
+                                </form>
+                                @if (ViewBag.EmailNotActivated != null && (bool)ViewBag.EmailNotActivated)
+                                {
+                                    <div class="alert alert-warning mt-4">
+                                        Tài khoản của bạn chưa được kích hoạt.
+                                        Nhấn vào nút bên dưới để gửi lại email kích hoạt.
+                                    </div>
+                                    <form asp-action="ResendActivationEmail" method="post">
+                                        <input type="hidden" name="email" value="@ViewBag.UserEmail" />
+                                        <button type="submit" class="btn btn-primary">Gửi lại email kích hoạt</button>
+                                    </form>
+                                }
+                            </div>
                         </div>
                     </div>
-                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đăng nhập</button>
-                        <a asp-asp-controller="KhachHang" asp-action="QuenMatKhau" class="btn border-danger">Quên mật khẩu</a>
+                    <div class="tf-login-content">
+                        <h5 class="mb_36">I'm new here</h5>
+                        <p class="mb_20">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails.</p>
+                        <a href="/Registion" class="tf-btn btn-line">Register<i class="icon icon-arrow1-top-left"></i></a>
                     </div>
                 </div>
             </div>
-        </form>
-
-        @if (ViewBag.EmailNotActivated != null && (bool)ViewBag.EmailNotActivated)
-        {
-            <div class="alert alert-warning mt-4">
-                Tài khoản của bạn chưa được kích hoạt.
-                Nhấn vào nút bên dưới để gửi lại email kích hoạt.
-            </div>
-            <form asp-action="ResendActivationEmail" method="post">
-                <input type="hidden" name="email" value="@ViewBag.UserEmail" />
-                <button type="submit" class="btn btn-primary">Gửi lại email kích hoạt</button>
-            </form>
-        }
-    </div>
-</div>
+        </section>

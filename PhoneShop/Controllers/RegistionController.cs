@@ -57,7 +57,7 @@ namespace PhoneShop.Controllers
                         khachHang.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
                     }
 
-                    db.KhachHangs.Add(khachHang);
+                    db.Add(khachHang);
                     db.SaveChanges();
 
                     // Tạo ActivationToken với email
@@ -112,7 +112,7 @@ namespace PhoneShop.Controllers
                         {
                             new Claim(ClaimTypes.Email, khachHang.Email),
                             new Claim(ClaimTypes.Name, khachHang.HoTen),
-                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.HoTen),
+                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKh),
                             new Claim(ClaimTypes.Role, "Customer"),
                         };
 

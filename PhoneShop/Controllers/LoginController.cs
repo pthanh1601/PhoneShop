@@ -39,7 +39,7 @@ namespace PhoneShop.Controllers
                 {
                     if (khachHang.MatKhau != model.Password.ToMd5Hash(khachHang.RandomKey))
                     {
-                        ModelState.AddModelError("Loi", "Sai mật khẩu.");
+                        ModelState.AddModelError(nameof(model.Password), "Sai mật khẩu.");
                     }
                     else if (!khachHang.HieuLuc)
                     {
@@ -53,7 +53,7 @@ namespace PhoneShop.Controllers
                         {
                             new Claim(ClaimTypes.Email, khachHang.Email),
                             new Claim(ClaimTypes.Name, khachHang.HoTen),
-                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.HoTen),
+                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKh),
                             new Claim(ClaimTypes.Role, "Customer"),
                         };
 
@@ -72,7 +72,7 @@ namespace PhoneShop.Controllers
                     {
                         if (nhanVien.MatKhau != model.Password)
                         {
-                            ModelState.AddModelError("loi", "Sai mật khẩu.");
+                            ModelState.AddModelError(nameof(model.Password), "Sai mật khẩu.");
                         }
                         else
                         {
@@ -92,12 +92,100 @@ namespace PhoneShop.Controllers
                     else
                     {
                         // Nếu không tìm thấy trong cả hai bảng
-                        ModelState.AddModelError("loi", "Tài khoản không tồn tại.");
+                        ModelState.AddModelError(nameof(model.Email), "Tài khoản không tồn tại.");
                     }
                 }
             }
             return View();
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> LoginAjax(LoginVM model, string? ReturnUrl)
+        {
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+            if (ModelState.IsValid)
+            {
+                var khachHang = db.KhachHangs.SingleOrDefault(kh => kh.Email == model.Email);
+                if (khachHang != null)
+                {
+                    Console.WriteLine(model.Password);
+
+                    Console.WriteLine($"KhachHang Password: {khachHang.MatKhau}");
+                    Console.WriteLine($"Model Password: {model.Password.ToMd5Hash(khachHang.RandomKey)}");
+                    if (khachHang.MatKhau != model.Password.ToMd5Hash(khachHang.RandomKey))
+                    {
+                        ModelState.AddModelError(nameof(model.Password), "Sai mật khẩu.");
+                    }
+
+                    if (!khachHang.HieuLuc)
+                    {
+                        return Json(new { success = false, message = "Tài khoản chưa được kích hoạt." });
+                    }
+                    else
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Email, khachHang.Email),
+                            new Claim(ClaimTypes.Name, khachHang.HoTen),
+                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKh),
+                            new Claim(ClaimTypes.Role, "Customer"),
+                        };
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimPrincipal = new ClaimsPrincipal(claimsIdentity);
+                        await HttpContext.SignInAsync(claimPrincipal);
+
+                        return Json(new { success = true, redirectUrl = ReturnUrl ?? "/" });
+                    }
+                }
+                else
+                {
+                    var nhanVien = db.NhanViens.SingleOrDefault(nv => nv.Email == model.Email);
+                    if (nhanVien != null)
+                    {
+                        if (nhanVien.MatKhau != model.Password)
+                        {
+                            return Json(new { success = false, message = "Sai mật khẩu." });
+                        }
+                        else
+                        {
+                            var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Email, nhanVien.Email),
+                            new Claim(ClaimTypes.Name, nhanVien.HoTen),
+                            new Claim(MySetting.CLAIM_EMPLOYEERID, nhanVien.MaNv),
+                            new Claim(ClaimTypes.Role, "Employee"),
+                        };
+
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var claimPrincipal = new ClaimsPrincipal(claimsIdentity);
+                            await HttpContext.SignInAsync(claimPrincipal);
+
+                            return Json(new { success = true, redirectUrl = ReturnUrl ?? "/Admin/" });
+                        }
+                        
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(nameof(model.Email), "Tài khoản không tồn tại.");
+                    }
+                }
+            }
+
+
+            // Trả về lỗi cho từng trường nếu có
+            var errors = ModelState.Where(m => m.Value.Errors.Any())
+                                   .ToDictionary(
+                                       m => m.Key,
+                                       m => m.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                                   );
+            return Json(new { success = false, errors });
+        }
+
 
         // Action gửi lại email kích hoạt
         [HttpPost]
@@ -148,7 +236,7 @@ namespace PhoneShop.Controllers
                         {
                             new Claim(ClaimTypes.Email, khachHang.Email),
                             new Claim(ClaimTypes.Name, khachHang.HoTen),
-                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.HoTen),
+                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKh),
                             new Claim(ClaimTypes.Role, "Customer"),
                         };
 

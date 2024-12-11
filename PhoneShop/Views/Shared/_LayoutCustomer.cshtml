@@ -1,149 +1,279 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!-- Mirrored from themesflat.co/html/ecomus/home-02.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 02 Sep 2024 12:24:59 GMT -->
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <meta charset="utf-8">
-   
-    
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta charset="utf-8" />
+    <title>Ecomus</title>
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+    <meta name="author" content="themesflat.com" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-    <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <!-- font -->
+    <link rel="stylesheet" href="~/fonts/fonts.css" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/fonts/font-icons.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min1.css" />
+    <link rel="stylesheet" href="~/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/styles1.css" />
+    <link rel="stylesheet" href="~/css/StyleUploadImg.css">
+    <link rel="stylesheet" href="~/css/style_Profile.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="chrome-extension://mooikfkahbdckldjjndioackbalphokd/assets/prompt.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <!-- Favicon and Touch Icons  -->
+    <link rel="shortcut icon" href="~/images/logo/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="~/images/logo/favicon.png" />
 
-    <!-- Libraries Stylesheet -->
-    <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="~/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="~/css/style.css?v=1.00" rel="stylesheet">
     @RenderSection("Styles", required: false)
-
-
 </head>
-<body>
-    <div>
-        <!-- Spinner Start -->
-        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
 
-        <!-- Navbar start -->
-        <div class="container-fluid fixed-top">
-            <div class="container topbar bg-primary d-none d-lg-block">
-                <div class="d-flex justify-content-between">
-                    <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
-                    </div>
-                    <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                    </div>
-                </div>
+<body class="preload-wrapper">
+    <div>
+        <!-- preload -->
+        <div class="preload preload-container">
+            <div class="preload-logo">
+                <div class="spinner"></div>
             </div>
-            <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
-                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
-                    </button>
-                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a asp-controller="HangHoas" asp-action="Index" class="nav-item nav-link">Shop</a>
-                            <a asp-controller="KhachHang" asp-action="DangKy" class="nav-item nav-link">Đăng Ký</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
+        </div>
+        <!-- /preload -->
+        <div id="wrapper">
+            <!-- Top bar -->
+            <div class="tf-top-bar bg_white line">
+                <div class="px_15 lg-px_40">
+                    <div class="tf-top-bar_wrap grid-3 gap-30 align-items-center">
+                        <ul class="tf-top-bar_item tf-social-icon d-flex gap-10">
+                            <li>
+                                <a href="#" class="box-icon w_28 round social-facebook bg_line">
+                                    <i class="icon fs-12 icon-fb"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="box-icon w_28 round social-twiter bg_line">
+                                    <i class="icon fs-10 icon-Icon-x"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="box-icon w_28 round social-instagram bg_line">
+                                    <i class="icon fs-12 icon-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="box-icon w_28 round social-tiktok bg_line">
+                                    <i class="icon fs-12 icon-tiktok"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="box-icon w_28 round social-pinterest bg_line">
+                                    <i class="icon fs-12 icon-pinterest-1"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="text-center overflow-hidden">
+                            <div class="swiper tf-sw-top_bar"
+                                 data-preview="1"
+                                 data-space="0"
+                                 data-loop="true"
+                                 data-speed="1000"
+                                 data-delay="2000">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <p class="top-bar-text fw-5">
+                                            Spring Fashion Sale
+                                            <a href="shop-default.html"
+                                               title="all collection"
+                                               class="tf-btn btn-line">
+                                                Shop now<i class="icon icon-arrow1-top-left"></i>
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <p class="top-bar-text fw-5">
+                                            Summer sale discount off 70%
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <p class="top-bar-text fw-5">
+                                            Time to refresh your wardrobe.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
-                        <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                            @await Component.InvokeAsync("Cart")
-                            <a asp-action="DangNhap" asp-controller="KhachHang" class="my-auto" title="Đăng nhập">
-                                <i class="fas fa-user fa-2x"></i>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /Top bar -->
+            <!-- Header -->
+            <header id="header" class="header-default">
+                <div class="px_15 lg-px_40">
+                    <div class="row wrapper-header align-items-center">
+                        <div class="col-md-4 col-3 tf-lg-hidden">
+                            <a href="#mobileMenu"
+                               data-bs-toggle="offcanvas"
+                               aria-controls="offcanvasLeft">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="16"
+                                     viewBox="0 0 24 16"
+                                     fill="none">
+                                    <path d="M2.00056 2.28571H16.8577C17.1608 2.28571 17.4515 2.16531 17.6658 1.95098C17.8802 1.73665 18.0006 1.44596 18.0006 1.14286C18.0006 0.839753 17.8802 0.549063 17.6658 0.334735C17.4515 0.120408 17.1608 0 16.8577 0H2.00056C1.69745 0 1.40676 0.120408 1.19244 0.334735C0.978109 0.549063 0.857702 0.839753 0.857702 1.14286C0.857702 1.44596 0.978109 1.73665 1.19244 1.95098C1.40676 2.16531 1.69745 2.28571 2.00056 2.28571ZM0.857702 8C0.857702 7.6969 0.978109 7.40621 1.19244 7.19188C1.40676 6.97755 1.69745 6.85714 2.00056 6.85714H22.572C22.8751 6.85714 23.1658 6.97755 23.3801 7.19188C23.5944 7.40621 23.7148 7.6969 23.7148 8C23.7148 8.30311 23.5944 8.59379 23.3801 8.80812C23.1658 9.02245 22.8751 9.14286 22.572 9.14286H2.00056C1.69745 9.14286 1.40676 9.02245 1.19244 8.80812C0.978109 8.59379 0.857702 8.30311 0.857702 8ZM0.857702 14.8571C0.857702 14.554 0.978109 14.2633 1.19244 14.049C1.40676 13.8347 1.69745 13.7143 2.00056 13.7143H12.2863C12.5894 13.7143 12.8801 13.8347 13.0944 14.049C13.3087 14.2633 13.4291 14.554 13.4291 14.8571C13.4291 15.1602 13.3087 15.4509 13.0944 15.6653C12.8801 15.8796 12.5894 16 12.2863 16H2.00056C1.69745 16 1.40676 15.8796 1.19244 15.6653C0.978109 15.4509 0.857702 15.1602 0.857702 14.8571Z"
+                                          fill="currentColor"></path>
+                                </svg>
                             </a>
                         </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Navbar End -->
+                        <div class="col-xl-3 col-md-4 col-6">
+                            <a href="/" class="logo-header">
+                                <img src="~/images/logo/logo.svg" alt="logo" class="logo" />
+                            </a>
+                        </div>
+                        <div class="col-xl-6 tf-md-hidden">
+                            <nav class="box-navigation text-center">
+                                <ul class="box-nav-ul d-flex align-items-center justify-content-center gap-30">
+                                    <li class="">
+                                        <a href="/" class="item-link">
+                                            Home
+                                        </a>
 
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </li>
+                                    <li class="">
+                                        <a asp-controller="HangHoas" asp-action="Index" class="item-link">
+                                            Shop
+                                        </a>
+
+                                    </li>
+
+
+
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-xl-3 col-md-4 col-3">
+                            <ul class="nav-icon d-flex justify-content-end align-items-center gap-20">
+                                <li class="nav-search">
+                                    <a href="#canvasSearch"
+                                       data-bs-toggle="offcanvas"
+                                       aria-controls="offcanvasLeft"
+                                       class="nav-icon-item">
+                                        <i class="icon icon-search"></i>
+                                    </a>
+                                </li>
+
+                                <nav class="box-navigation text-center">
+                                    <ul class="box-nav-ul  flex-column align-items-start gap-30">
+
+                                        <li class="menu-item position-relative">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <a href="/KhachHang/Profile">
+                                                    <i class="icon icon-account" style="font-size: 18px;line-height: 22px;font-weight: 400px;"> </i>
+                                                    <span>Profile</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#login" data-bs-toggle="modal">
+                                                    <i class="icon icon-account" style="font-size: 18px;line-height: 22px;font-weight: 400px;"> </i>
+                                                    <span>Log in</span>
+                                                </a>
+                                            }
+                                        </li>
+
+                                    </ul>
+                                </nav>
+
+                                @await Component.InvokeAsync("Cart")
+
+                            </ul>
+                        </div>
                     </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input id="searchText" type="search" class="form-control p-3" placeholder="keywords" aria-describedby="searchButton">
-                            <span id="searchButton" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                </div>
+            </header>
+            <!-- /Header -->
+            <!-- Javascript -->
+            <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="~/js/jquery.min.js"></script>
+            <script type="text/javascript" src="~/js/swiper-bundle.min.js"></script>
+            <script type="text/javascript" src="~/js/carousel.js"></script>
+            <script type="text/javascript" src="~/js/bootstrap-select.min.js"></script>
+            <script type="text/javascript" src="~/js/lazysize.min.js"></script>
+            <script type="text/javascript" src="~/js/bootstrap-select.min.js"></script>
+            <script type="text/javascript" src="~/js/count-down.js"></script>
+            <script type="text/javascript" src="~/js/wow.min.js"></script>
+            <script type="text/javascript" src="~/js/multiple-modal.js"></script>
+            <script type="text/javascript" src="~/js/main1.js"></script>
+            <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+            <div style="min-height:400px" class="hero-header">
+                @RenderBody()
+
+            </div>
+            @await Html.PartialAsync("_Footer")
+
+            @await Html.PartialAsync("_ChatBox")
+
+            <!-- modal login -->
+            @await Component.InvokeAsync("Login")
+            @await Component.InvokeAsync("Registion")
+
+            <div class="modal modalCentered fade form-sign-in modal-part-content" id="forgotPassword">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="header">
+                            <div class="demo-title">Reset your password</div>
+                            <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
+                        </div>
+                        <div class="tf-login-form">
+                            <form class="">
+                                <div>
+                                    <p>Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails</p>
+                                </div>
+                                <div class="tf-field style-1">
+                                    <input class="tf-field-input tf-input" placeholder=" " type="email" name="">
+                                    <label class="tf-field-label" for="">Email *</label>
+                                </div>
+                                <div>
+                                    <a href="#login" data-bs-toggle="modal" class="btn-link link">Cancel</a>
+                                </div>
+                                <div class="bottom">
+                                    <div class="w-100">
+                                        <button type="submit" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Reset password</span></button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- /modal login -->
+
         </div>
-        <!-- Modal Search End -->
 
-        <div style="min-height:400px" class="hero-header">
-            @RenderBody()
-        </div>
-        
-
-        @await Html.PartialAsync("_Footer")
-    </div>
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-    @await Html.PartialAsync("_ChatBox")
-
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/easing/easing.min.js"></script>
-    <script src="~/lib/waypoints/waypoints.min.js"></script>
-    <script src="~/lib/lightbox/js/lightbox.min.js"></script>
-    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="~/js/main.js?v=1.00"></script>
-    @RenderSection("Scripts", required:false)
-
-
-    <script>
-        $(document).ready(function(){
-            $("#searchButton").click(function(){
-                let url = '/HangHoas/Search?query='+ $("#searchText").val();
-                window.location.href = url;
+        <script>
+            $(document).ready(function () {
+                $("#searchButton").click(function () {
+                    let url = '/HangHoas/Search?query=' + $("#searchText").val();
+                    window.location.href = url;
+                });
             });
-        });
-        
-    </script>
+
+        </script>
 
 
 </body>
+@await RenderSectionAsync("Scripts", required: false)
+
+<!-- Mirrored from themesflat.co/html/ecomus/home-02.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 02 Sep 2024 12:25:08 GMT -->
 </html>

@@ -1,11 +1,198 @@
-﻿
+﻿@model PhoneShop.ViewModels.RegisterVM
+
 @{
     ViewData["Title"] = "Profile";
 }
 
-<h1>Profile</h1>
-<div>
-    <h2>Welcome @Context.User.Identity.Name</h2>
-    <a asp-action="DangXuat">Đăng xuất</a>
+
+
+<div class="container light-style flex-grow-1 container-p-y">
+    <h4 class="font-weight-bold py-3 mb-4">
+        Account settings
+    </h4>
+    <div class="card overflow-hidden">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3 pt-0">
+                <div class="list-group list-group-flush account-settings-links">
+                    <a class="list-group-item list-group-item-action active" data-toggle="list"
+                       href="#account-general">General</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list"
+                       href="#account-change-password">Change password</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list"
+                       href="#account-info">Info</a>
+                    <a class="list-group-item list-group-item-action" 
+                       href="/KhachHang/DangXuat">LogOut</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="account-general">
+                        <div class="card-body media">
+                            <div class="upload" style="position: relative; width: 180px; height: 180px;">
+                                <img id="profileImage" src="~/Hinh/KhachHang/@Model.Hinh" alt="" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                                <div class="round">
+                                    <input type="file" name="Hinh" id="Hinh" onchange="previewImage(event)">
+                                    <i class="fa fa-camera" style="color: #fff;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body">
+                            <div class="form-group">
+                                
+                                <input asp-for="@Model.MaKh" class="form-control" hidden>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model.HoTen" class="form-label my-3"></label><sup>*</sup>
+                                <input asp-for="@Model.HoTen" class="form-control">
+                                <span asp-validation-for="@Model.HoTen" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model.Email" class="form-label my-3"></label><sup>*</sup>
+                                <input asp-for="@Model.Email" class="form-control">
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                                <div class="alert alert-warning mt-3">
+                                    Your email is not confirmed. Please check your inbox.<br>
+                                    <a href="javascript:void(0)">Resend confirmation</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade mb-5" id="account-change-password">
+                        <div class="card-body pb-2">
+                            <div class="form-group">
+                                <label for="CurrentPassword" class="form-label my-3">Mật khẩu hiện tại:</label>
+                                <input type="password" id="CurrentPassword" name="CurrentPassword" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="NewPassword" class="form-label my-3">Mật khẩu mới:</label>
+                                <input type="password" id="NewPassword" name="NewPassword" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="RepeatPassword" class="form-label my-3">Xác nhận mật khẩu:</label>
+                                <input type="password" id="RepeatPassword" name="RepeatPassword" class="form-control">
+                            </div>
+                            
+
+                            
+
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-info">
+                        <div class="card-body pb-2">
+                            <div class="form-group">
+                                <label asp-for="@Model.DiaChi" class="form-label my-3"></label><sup>*</sup>
+                                <input asp-for="@Model.DiaChi" class="form-control">
+                                <span asp-validation-for="@Model.DiaChi" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model.NgaySinh" class="form-label my-3"></label>
+                                <input asp-for="@Model.NgaySinh" class="form-control">
+                                <span asp-validation-for="@Model.NgaySinh" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                 <div class="form-check">
+                                     <input asp-for="@Model.GioiTinh" class="form-check-input" type="checkbox" id="GioiTinh">
+                                     <label class="form-check-label" for="GioiTinh">Nam?</label>
+                                 </div>
+                            
+                            </div>
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body pb-2 mb-4">
+                            <h6 class="mb-4">Contacts</h6>
+                            <div class="form-group">
+                                 <label asp-for="@Model.DienThoai" class="form-label my-3"></label><sup>*</sup>
+                                 <input asp-for="@Model.DienThoai" class="form-control">
+                                 <span asp-validation-for="@Model.DienThoai" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-right mt-3">
+        <button id="updateButton" type="button" class="btn btn-primary">Cập nhật</button>&nbsp;
+        <button type="button" class="btn btn-default">Hủy</button>
+    </div>
 </div>
+
+
+    
+
+  
+
+
+
+<script>
+    // Add click event to camera icon
+    document.querySelector('.round').addEventListener('click', function () {
+        document.getElementById('Hinh').click();
+    });
+
+    document.getElementById("updateButton").addEventListener("click", function () {
+        // Tạo form data
+        var formData = new FormData();
+
+        // Lấy dữ liệu từ các trường
+        formData.append("MaKh", document.querySelector("[name='MaKh']").value);
+        formData.append("HoTen", document.querySelector("[name='HoTen']").value);
+        formData.append("Email", document.querySelector("[name='Email']").value);
+        formData.append("DiaChi", document.querySelector("[name='DiaChi']").value);
+        formData.append("NgaySinh", document.querySelector("[name='NgaySinh']").value);
+        formData.append("GioiTinh", document.querySelector("[name='GioiTinh']").checked);
+        formData.append("DienThoai", document.querySelector("[name='DienThoai']").value);
+
+        // Kiểm tra nếu người dùng upload ảnh
+        var hinhFile = document.getElementById("Hinh").files[0];
+        if (hinhFile) {
+            formData.append("Hinh", hinhFile); // Thêm file vào form
+        } else {
+            formData.append("Hinh", ""); // Không thay đổi ảnh
+        }
+
+        // Lấy mật khẩu nếu có thay đổi
+        var currentPassword = document.querySelector("[name='CurrentPassword']").value;
+        var newPassword = document.querySelector("[name='NewPassword']").value;
+        var repeatPassword = document.querySelector("[name='RepeatPassword']").value;
+
+        if (newPassword && repeatPassword) {
+            formData.append("CurrentPassword", currentPassword);
+            formData.append("NewPassword", newPassword);
+            formData.append("RepeatPassword", repeatPassword);
+        }
+
+        // Gửi dữ liệu qua Ajax
+        fetch("/KhachHang/Update", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Cập nhật thành công!");
+                } else {
+                    alert("Có lỗi xảy ra: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+            });
+    });
+
+    // Preview the uploaded image
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('profileImage');
+            output.src = reader.result; // Update the image src with the selected file
+            output.style.objectFit = 'cover'; // Adjust content to fill 100x100 while cropping
+        };
+        reader.readAsDataURL(event.target.files[0]); // Read the uploaded file
+    }
+</script>
 

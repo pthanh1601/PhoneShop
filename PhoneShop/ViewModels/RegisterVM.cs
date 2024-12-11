@@ -6,17 +6,17 @@ namespace PhoneShop.ViewModels
     {
         [Key]
         [Display(Name = "Tên đăng nhập")]
-        [Required(ErrorMessage ="*")]
+        [Required(ErrorMessage ="Chưa nhập tên đăng nhập")]
         [MaxLength(20,ErrorMessage ="Tối đa 20 kí tự")]
         public string MaKh { get; set; }
 
         [Display(Name = "Mật Khẩu")]
-        [Required(ErrorMessage ="*")]
+        [Required(ErrorMessage ="Chưa nhập mật khẩu")]
         [DataType(DataType.Password)]
         public string MatKhau { get; set; }
 
         [Display(Name = "Họ và Tên")]
-        [Required(ErrorMessage = "*")]
+        [Required(ErrorMessage = "Chưa nhập họ và tên")]
         [MaxLength(50, ErrorMessage = "Tối đa 50 kí tự")]
         public string HoTen { get; set; }
 
@@ -28,6 +28,7 @@ namespace PhoneShop.ViewModels
         public DateTime? NgaySinh { get; set; }
 
         [Display(Name = "Địa chỉ")]
+        [Required(ErrorMessage = "Chưa nhập địa chỉ")]
         [MaxLength(60, ErrorMessage = "Tối đa 60 kí tự")]
         public string DiaChi { get; set; }
 
