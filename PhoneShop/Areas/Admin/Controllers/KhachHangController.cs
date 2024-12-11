@@ -11,6 +11,8 @@ using AutoMapper;
 using X.PagedList.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+
 namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]

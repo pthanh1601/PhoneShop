@@ -1,18 +1,13 @@
 ﻿@model PhoneShop.ViewModels.RegisterVM
-@{
-    ViewData["Title"] = "Index";
-}
-<p>@ViewBag.Message</p>
 
-
-<section class="flat-spacing-10">
-    <div class="container">
-        <div class="form-register-wrap custom-modal">
-            <div class="flat-title align-items-start gap-0 mb_30 px-0">
-                <h5 class="mb_18">Register</h5>
-                <p class="text_black-2">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails</p>
+<div class="modal modalCentered fade form-sign-in modal-part-content" id="register">
+    <div class="modal-dialog modal-dialog-centered custom-modal">
+        <div class="modal-content">
+            <div class="header">
+                <div class="demo-title">Register</div>
+                <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
             </div>
-            <div class="tf-login-form ">
+            <div class="tf-login-form">
                 <form class="" asp-controller="Registion" asp-action="Index" enctype="multipart/form-data">
                     <div class="upload" style="position: relative; width: 100px; height: 100px;">
                         <img id="profileImage" src="~/Hinh/icons/noprofil.jpg" alt="" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
@@ -47,6 +42,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="tf-field style-1">
                                 <label asp-for="@Model.NgaySinh" class="form-label my-3"></label>
@@ -71,12 +67,12 @@
                         </div>
                     </div>
 
-                    <div class="bottom mt-4">
+                    <div class="bottom">
                         <div class="w-100">
                             <button type="submit" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Register</span></button>
                         </div>
-                        <div class="w-100" style="margin-top: 5px">
-                            <a href="/Login" class="btn-link fw-6 w-100 link">
+                        <div class="w-100">
+                            <a href="#login" data-bs-toggle="modal" class="btn-link fw-6 w-100 link">
                                 Already have an account? Log in here
                                 <i class="icon icon-arrow1-top-left"></i>
                             </a>
@@ -86,27 +82,28 @@
             </div>
         </div>
     </div>
-</section>
-<script>
-        // Add click event to camera icon
-        document.querySelector('.round').addEventListener('click', function () {
-            document.getElementById('Hinh').click();
-        });
+</div>
 
-        // Preview the uploaded image
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('profileImage');
-                output.src = reader.result; // Update the image src with the selected file
-                output.style.objectFit = 'cover'; // Adjust content to fill 100x100 while cropping
-            };
-    reader.readAsDataURL(event.target.files[0]); // Read the uploaded file
-        }
+<script>
+    // Add click event to camera icon
+    document.querySelector('.round').addEventListener('click', function () {
+        document.getElementById('Hinh').click();
+    });
+
+    // Preview the uploaded image
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('profileImage');
+            output.src = reader.result; // Update the image src with the selected file
+            output.style.objectFit = 'cover'; // Adjust content to fill 100x100 while cropping
+        };
+        reader.readAsDataURL(event.target.files[0]); // Read the uploaded file
+    }
 </script>
 <style>
     .custom-modal {
-        max-width: 1200px;
+        max-width: 800px;
         width: 90%;
     }
 

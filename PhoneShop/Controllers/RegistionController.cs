@@ -18,7 +18,7 @@ namespace PhoneShop.Controllers
         private readonly IConfiguration _configuration;
         private readonly string secretKey = @"qazwsxedcrfvtgbyhnujmiklopQAZWSXEDCRFVTGBYHNUJMIKLOP!";
 
-        public RegistionController(IConfiguration configuration,Hshop2023Context context, IMapper mapper)
+        public RegistionController(IConfiguration configuration, Hshop2023Context context, IMapper mapper)
         {
             db = context;
             _mapper = mapper;
@@ -57,7 +57,7 @@ namespace PhoneShop.Controllers
                         khachHang.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
                     }
 
-                    db.KhachHangs.Add(khachHang);
+                    db.Add(khachHang);
                     db.SaveChanges();
 
                     // Tạo ActivationToken với email
@@ -112,7 +112,7 @@ namespace PhoneShop.Controllers
                         {
                             new Claim(ClaimTypes.Email, khachHang.Email),
                             new Claim(ClaimTypes.Name, khachHang.HoTen),
-                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.HoTen),
+                            new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKh),
                             new Claim(ClaimTypes.Role, "Customer"),
                         };
 
@@ -172,7 +172,7 @@ namespace PhoneShop.Controllers
         <p>Nếu bạn không yêu cầu tài khoản này, hãy bỏ qua email này.</p>
         <p>Thân mến,<br/>Đội ngũ PhoneShop</p>";
 
-            MyUtil.SendEmail(_configuration ,email, subject, body);
+            MyUtil.SendEmail(_configuration, email, subject, body);
         }
 
         #endregion
