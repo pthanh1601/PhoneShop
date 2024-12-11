@@ -48,16 +48,19 @@ namespace PhoneShop.Controllers
             return View(paginatedList);
         }
 
-        // Action tìm kiếm sản phẩm (có thể sử dụng với AJAX)
-        public IActionResult Search(string? query)
+        public async Task<IActionResult> Search(string? query, int page = 1)
         {
+            int pageSize = 10; // Số sản phẩm mỗi trang
+
             var hangHoas = db.HangHoas.AsQueryable();
 
-            if (query != null)
+            // Nếu có query, lọc sản phẩm theo tên
+            if (!string.IsNullOrEmpty(query))
             {
                 hangHoas = hangHoas.Where(p => p.TenHh.Contains(query));
             }
 
+            // Chọn các trường cần thiết từ bảng HangHoas
             var result = hangHoas.Select(p => new HangHoaVM
             {
                 MaHh = p.MaHh,
@@ -68,22 +71,35 @@ namespace PhoneShop.Controllers
                 TenLoai = p.MaLoaiNavigation.TenLoai
             });
 
-            return View(result);
+            // Tính tổng số sản phẩm
+            int totalItems = await result.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            // Phân trang
+            var paginatedList = await PaginatedList<HangHoaVM>.CreateAsync(result, page, pageSize);
+
+            // Truyền thông tin về số trang và từ khóa tìm kiếm vào ViewData
+            ViewData["TotalPages"] = totalPages;
+            ViewData["Query"] = query; // Truyền lại query cho các liên kết phân trang
+
+            return View(paginatedList); // Trả về danh sách sản phẩm phân trang
         }
+
+
+
         [HttpPost]
         public async Task<IActionResult> GetProducts(int? loai, int page = 1)
         {
-            int pageSize = 10; // Số sản phẩm mỗi trang
+            int pageSize = 10;
 
-            var hangHoas = db.HangHoas.AsQueryable();
+            var query = db.HangHoas.AsQueryable();
 
             if (loai.HasValue)
             {
-                hangHoas = hangHoas.Where(p => p.MaLoai == loai.Value);
+                query = query.Where(p => p.MaLoai == loai.Value);
             }
 
-            // Chọn các trường cần thiết
-            var result = hangHoas.Select(p => new HangHoaVM
+            var result = query.Select(p => new HangHoaVM
             {
                 MaHh = p.MaHh,
                 TenHh = p.TenHh,
@@ -99,10 +115,13 @@ namespace PhoneShop.Controllers
             {
                 data = paginatedList,
                 totalPages = paginatedList.TotalPages,
-                currentPage = page,
+                currentPage = paginatedList.CurrentPage,
+                hasPrevious = paginatedList.HasPreviousPage,
+                hasNext = paginatedList.HasNextPage,
                 totalCount = paginatedList.TotalCount
             });
         }
+
         // Action hiển thị chi tiết sản phẩm
         public IActionResult Detail(int id)
         {

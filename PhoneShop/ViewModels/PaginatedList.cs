@@ -14,19 +14,34 @@ namespace PhoneShop.ViewModels
         {
             TotalCount = count;
             PageSize = pageSize;
-            CurrentPage = pageIndex;
+
+            // Bảo đảm CurrentPage nằm trong giới hạn hợp lệ
+            CurrentPage = pageIndex < 1 ? 1 : pageIndex > (int)Math.Ceiling(count / (double)pageSize)
+                ? (int)Math.Ceiling(count / (double)pageSize)
+                : pageIndex;
+
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
             this.AddRange(items);
         }
 
-        // Phương thức giúp tạo PaginatedList từ IQueryable để sử dụng cho Entity Framework
+        // Kiểm tra trạng thái trang
+        public bool HasPreviousPage => CurrentPage > 1;
+        public bool HasNextPage => CurrentPage < TotalPages;
+
+        // Phương thức tạo PaginatedList từ IQueryable
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
+            // Đếm tổng số phần tử
             var count = await source.CountAsync();
-            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            // Lấy danh sách phần tử cho trang hiện tại
+            var items = await source
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }
-
 }
