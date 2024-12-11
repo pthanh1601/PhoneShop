@@ -46,14 +46,19 @@
         <!-- pagination -->
         @model dynamic
 
-        <div class="pagination">
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <a href="javascript:void(0);" data-page="@i" class="page-link @((i == Model.CurrentPage) ? "active" : "")">
-                    @i
-                </a>
-            }
+        <div class="pagination-wrapper d-flex justify-content-center mt-4">
+            <ul class="pagination pagination-lg">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a href="javascript:void(0);" data-page="@i" class="page-link">
+                            @i
+                        </a>
+                    </li>
+                }
+            </ul>
         </div>
+
         <div id="content-area">
             <!-- Nội dung trả về từ server sẽ được hiển thị tại đây -->
         </div>

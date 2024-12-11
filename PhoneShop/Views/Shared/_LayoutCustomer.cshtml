@@ -213,20 +213,20 @@
         <script>
             $(document).ready(function () {
                 // Sự kiện khi click vào các số trang
-                $('.page-link').on('click', function () {
+                $(document).on('click', '.page-link', function () {
                     var page = $(this).data('page'); // Lấy số trang từ thuộc tính data-page
                     var loai = $('#loaiFilter').val(); // Lấy giá trị lọc loại (nếu có)
 
                     // Gửi yêu cầu AJAX tới controller
                     $.ajax({
-                        url: '/HangHoas1/GetProducts',  // Đường dẫn tới action GetProducts
+                        url: '/HangHoas/GetProducts',  // Đường dẫn tới action GetProducts
                         data: { page: page, loai: loai },  // Gửi số trang và loại
-                        type: 'GET',
+                        type: 'POST',
                         success: function (response) {
                             // Gọi hàm hiển thị sản phẩm
                             displayProducts(response.data);
 
-                            // Cập nhật phân trang (nếu cần)
+                            // Cập nhật phân trang
                             updatePagination(response.totalPages, page);
                         },
                         error: function (error) {
@@ -236,47 +236,66 @@
                 });
 
                 // Hàm hiển thị sản phẩm vào div có lớp .grid-layout.wrapper-shop
-                // Hàm hiển thị sản phẩm vào div có lớp .grid-layout.wrapper-shop
                 function displayProducts(products) {
                     var contentHtml = '';
 
                     // Duyệt qua danh sách sản phẩm và tạo HTML cho từng sản phẩm
                     products.forEach(function (product) {
-                        // Kiểm tra console.log để chắc chắn rằng bạn có các giá trị đúng
-                        console.log(product);
-
-                        // Dùng đúng tên thuộc tính theo dữ liệu trả về từ server
                         contentHtml += `
-                    <div class="product-item">
-                        <img src="${product.hinh}" alt="${product.tenHh}" class="product-image"/>
-                        <h3>${product.tenHh}</h3>
-                        <p>${product.motaNgan}</p>
-                        <p><strong>Giá: </strong>${product.donGia}</p>
-                        <p><strong>Danh mục: </strong>${product.tenLoai}</p>
-                    </div>
-                `;
+                                <div class="card-product">
+                                    <div class="card-product-wrapper">
+                                        <a href="/HangHoas/Detail/${product.maHh}" class="product-img">
+                                            <img src="${product.hinh}" class="lazyload img-product rounded-top" alt="${product.tenHh}">
+                                            <img class="lazyload img-hover" src="${product.hinh}" alt="${product.tenHh}">
+                                        </a>
+                                        <div class="list-product-btn">
+                                            <a href="/Cart/AddToCart/${product.maHh}" class="box-icon bg_white quick-add tf-btn-loading">
+                                                <span class="icon icon-bag"></span>
+                                            </a>
+                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
+                                                <span class="icon icon-heart"></span>
+                                                <span class="tooltip">Add to Wishlist</span>
+                                                <span class="icon icon-delete"></span>
+                                            </a>
+                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
+                                                <span class="icon icon-compare"></span>
+                                                <span class="tooltip">Add to Compare</span>
+                                                <span class="icon icon-check"></span>
+                                            </a>
+                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
+                                                <span class="icon icon-view"></span>
+                                                <span class="tooltip">Quick View</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-info">
+                                        <a href="/HangHoas/Detail/${product.maHh}">
+                                            ${product.tenHh}
+                                        </a>
+                                        <span class="price">$${product.donGia}</span>
+                                        <ul class="list-color-product">
+                                            <!-- Các màu sắc hoặc tùy chọn bổ sung -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
                     });
 
                     // Chèn HTML vào div có lớp grid-layout.wrapper-shop
                     $('.grid-layout.wrapper-shop').html(contentHtml);
                 }
 
-
-
-                // Cập nhật phân trang (nếu cần)
+                // Hàm cập nhật phân trang
                 function updatePagination(totalPages, currentPage) {
-                    $('.page-link').each(function () {
-                        var page = $(this).data('page');
-                        if (page == currentPage) {
-                            $(this).addClass('active');
-                        } else {
-                            $(this).removeClass('active');
-                        }
-                    });
+                    // Đầu tiên, loại bỏ lớp 'active' khỏi tất cả các trang
+                    $('.page-item').removeClass('active');
+
+                    // Sau đó, thêm lớp 'active' vào nút trang hiện tại
+                    $(`.page-link[data-page=${currentPage}]`).closest('.page-item').addClass('active');
                 }
             });
-
         </script>
+
 
 
 
