@@ -17,7 +17,7 @@ namespace PhoneShop.Controllers
         {
             db = context;
         }
-        public IActionResult Index(int? loai)
+        public IActionResult Index(int? loai, int page = 1, int pageSize = 8)
         {
             var hangHoas = db.HangHoas.AsQueryable();
             if (loai.HasValue)
@@ -34,8 +34,11 @@ namespace PhoneShop.Controllers
                 TenLoai = p.MaLoaiNavigation.TenLoai
             });
 
+            int totalItems = result.Count(); var items = result.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            return View(result);
+            var model = new ProductListVM { Items = items, PageNumber = page, TotalItems = totalItems, PageSize = pageSize };
+
+            return View(model);
         }
 
         public IActionResult Search(string? query)

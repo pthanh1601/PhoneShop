@@ -12,7 +12,7 @@ using X.PagedList.Extensions;
 
 namespace MyApp.Namespace
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/HoaDon")]
      [Authorize]

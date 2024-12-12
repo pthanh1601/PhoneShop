@@ -15,7 +15,8 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    //[Authorize(Roles = "Admin")]
+    [Area("admin")]
     [Route("admin/KhachHang")]
      [Authorize]
     public class KhachHangController : Controller

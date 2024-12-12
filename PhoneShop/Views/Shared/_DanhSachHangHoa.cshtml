@@ -45,22 +45,25 @@
         <!-- pagination -->
         <ul class="tf-pagination-wrap tf-pagination-list">
             <li class="active">
-                <a href="#" class="pagination-link">1</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">2</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">3</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">4</a>
-            </li>
-            <li>
-                <a href="#" class="pagination-link animate-hover-btn">
-                    <span class="icon icon-arrow-right"></span>
-                </a>
-            </li>
+                @if (Model.PageNumber > 1){
+                <li class="active">
+                    <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" class="pagination-link">1</a>
+                </li>
+
+                } @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                <li class="active">
+                    <a href="@Url.Action("Index", new { page = i })" class="@(Model.PageNumber == i ? "active" : "") rounded pagination-link">@i</a>
+                </li>
+
+                } @if (Model.PageNumber < Model.TotalPages)
+                {
+                    <li class="active">
+                    <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" class="rounded pagination-link">&raquo;</a>
+                </li>
+
+                }
+                
         </ul>
     </div>
 </section>

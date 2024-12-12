@@ -8,8 +8,12 @@ using System.Linq;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
+   
     [Area("Admin")]
-     [Authorize]
+   
+    [Route("admin")]
+    [Route("admin/nhanvien")]
+    [Authorize]
     public class NhanVienController : Controller
     {
         private readonly Hshop2023Context _context;
@@ -40,6 +44,9 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
         // Phương thức GET để hiển thị trang thêm nhân viên
+        
+        [Route("create")]
+        
         public IActionResult Create()
         {
             return View("~/Areas/Admin/Views/HomeAdmin/ThemNhanVien.cshtml");
@@ -149,7 +156,9 @@ namespace PhoneShop.Areas.Admin.Controllers
             // Nếu không tìm thấy nhân viên, trả về lỗi
             return NotFound();
         }
-
+       
+        [Route("nhanvien")]
+        
         public IActionResult Index()
         {
             // Truy vấn danh sách nhân viên từ cơ sở dữ liệu

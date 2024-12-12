@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authorization; // Namespace for JSON serialization
 namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+   
+    [Route("admin")]
+    [Route("admin/homeadmin")]
     [Authorize]
     public class PhanCongController : Controller
     {
@@ -20,7 +23,8 @@ namespace PhoneShop.Areas.Admin.Controllers
             _context = context;
             _logger = logger;
         }
-
+       
+        [Route("create")]
         // GET: Display Create Assignment page
         public IActionResult Create()
         {
@@ -35,96 +39,102 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
         // POST: Add assignment to the database
+        
+        [Route("create")]
+        
         [HttpPost]
         public async Task<IActionResult> Add(PhanCongVM viewModel)
         {
-//<<<<<<< HEAD
-//            if (ModelState.IsValid)
-//            {
-//                try
-//                {
-//                    var phanCong = new PhanCong
-//                    {
-//                        MaNv = viewModel.PhanCong.MaNv,
-//                        MaPb = viewModel.PhanCong.MaPb,
-//                        NgayPc = viewModel.PhanCong.NgayPc,
-//                        HieuLuc = viewModel.PhanCong.HieuLuc
-//                    };
 
-//                    _context.PhanCongs.Add(phanCong);
-//                    await _context.SaveChangesAsync();
-
-//                    // Log JSON serialized data to debug console
-//                    _logger.LogInformation($"New assignment added: {JsonSerializer.Serialize(phanCong)}");
-
-//                    TempData["SuccessMessage"] = "Thêm phân công thành công.";
-//                    return RedirectToAction("Index");
-//                }
-//                catch (Exception ex)
-//                {
-//                    _logger.LogError($"Error adding assignment: {ex.Message}");
-//                    ModelState.AddModelError("", "Có lỗi xảy ra khi thêm phân công. Vui lòng thử lại.");
-
-//                    viewModel.NhanViens = _context.NhanViens.ToList();
-//                    viewModel.PhongBans = _context.PhongBans.ToList();
-//                    return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
-//                }
-//            }
-
-//            viewModel.NhanViens = _context.NhanViens.ToList();
-//            viewModel.PhongBans = _context.PhongBans.ToList();
-//            return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
-//        }
-
-//=======
-            // Kiểm tra tính hợp lệ của dữ liệu
             if (ModelState.IsValid)
             {
-                // Gán giá trị mặc định cho NgayPc nếu người dùng không nhập
-                var phanCong = new PhanCong
+                try
                 {
-                    MaNv = viewModel.PhanCong.MaNv,
-                    MaPb = viewModel.PhanCong.MaPb,
-                    NgayPc = viewModel.PhanCong.NgayPc ?? new DateTime(2017, 12, 17, 10, 16, 39, 180),
-                    HieuLuc = viewModel.PhanCong.HieuLuc
-                };
+                    var phanCong = new PhanCong
+                    {
+                        MaNv = viewModel.PhanCong.MaNv,
+                        MaPb = viewModel.PhanCong.MaPb,
+                        NgayPc = viewModel.PhanCong.NgayPc,
+                        HieuLuc = viewModel.PhanCong.HieuLuc
+                    };
 
-                // Thêm vào database
-                _context.PhanCongs.Add(phanCong);
-                await _context.SaveChangesAsync();
+                    _context.PhanCongs.Add(phanCong);
+                    await _context.SaveChangesAsync();
 
-                _logger.LogInformation($"New assignment added: {JsonSerializer.Serialize(phanCong)}");
+                    // Log JSON serialized data to debug console
+                    _logger.LogInformation($"New assignment added: {JsonSerializer.Serialize(phanCong)}");
 
-                TempData["SuccessMessage"] = "Thêm phân công thành công.";
-                return RedirectToAction("Index");
+                    TempData["SuccessMessage"] = "Thêm phân công thành công.";
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error adding assignment: {ex.Message}");
+                    ModelState.AddModelError("", "Có lỗi xảy ra khi thêm phân công. Vui lòng thử lại.");
+
+                    viewModel.NhanViens = _context.NhanViens.ToList();
+                    viewModel.PhongBans = _context.PhongBans.ToList();
+                    return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
+                }
             }
 
-            // Xuất lỗi của ModelState ra để kiểm tra
-            var errorMessages = ModelState.Values
-                .SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToList();
-
-            // Ghi log lỗi (nếu có sử dụng logging)
-            foreach (var error in errorMessages)
-            {
-                _logger.LogError($"ModelState Error: {error}");
-            }
-
-            // Truyền lỗi vào TempData để hiển thị trên View
-            TempData["ModelStateErrors"] = string.Join("; ", errorMessages);
-
-            // Truyền lại các dữ liệu vào viewModel
-            viewModel.NhanViens = _context.NhanViens.ToList(); // Lấy danh sách nhân viên từ DB
-            viewModel.PhongBans = _context.PhongBans.ToList(); // Lấy danh sách phòng ban từ DB
-
-            // Trả về view cùng dữ liệu
+            viewModel.NhanViens = _context.NhanViens.ToList();
+            viewModel.PhongBans = _context.PhongBans.ToList();
             return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
         }
 
 
-//>>>>>>> QLNV/QLPC
+        //    // Kiểm tra tính hợp lệ của dữ liệu
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Gán giá trị mặc định cho NgayPc nếu người dùng không nhập
+        //        var phanCong = new PhanCong
+        //        {
+        //            MaNv = viewModel.PhanCong.MaNv,
+        //            MaPb = viewModel.PhanCong.MaPb,
+        //            NgayPc = viewModel.PhanCong.NgayPc ?? new DateTime(2017, 12, 17, 10, 16, 39, 180),
+        //            HieuLuc = viewModel.PhanCong.HieuLuc
+        //        };
+
+        //        // Thêm vào database
+        //        _context.PhanCongs.Add(phanCong);
+        //        await _context.SaveChangesAsync();
+
+        //        _logger.LogInformation($"New assignment added: {JsonSerializer.Serialize(phanCong)}");
+
+        //        TempData["SuccessMessage"] = "Thêm phân công thành công.";
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    // Xuất lỗi của ModelState ra để kiểm tra
+        //    var errorMessages = ModelState.Values
+        //        .SelectMany(v => v.Errors)
+        //        .Select(e => e.ErrorMessage)
+        //        .ToList();
+
+        //    // Ghi log lỗi (nếu có sử dụng logging)
+        //    foreach (var error in errorMessages)
+        //    {
+        //        _logger.LogError($"ModelState Error: {error}");
+        //    }
+
+        //    // Truyền lỗi vào TempData để hiển thị trên View
+        //    TempData["ModelStateErrors"] = string.Join("; ", errorMessages);
+
+        //    // Truyền lại các dữ liệu vào viewModel
+        //    viewModel.NhanViens = _context.NhanViens.ToList(); // Lấy danh sách nhân viên từ DB
+        //    viewModel.PhongBans = _context.PhongBans.ToList(); // Lấy danh sách phòng ban từ DB
+
+        //    // Trả về view cùng dữ liệu
+        //    return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
+        //}
+
+
+        ////>>>>>>> QLNV/QLPC
         // GET: Display assignment list
+        
+        [Route("phancong")]
+        
         public async Task<IActionResult> Index()
         {
             var assignments = await _context.PhanCongs.ToListAsync();
@@ -134,6 +144,7 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
         // GET: Display Edit Assignment page
+        [Route("update")]
         public IActionResult Edit(int maPc)
         {
             var phanCong = _context.PhanCongs.FirstOrDefault(pc => pc.MaPc == maPc);
