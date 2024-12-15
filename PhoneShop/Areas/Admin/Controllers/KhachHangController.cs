@@ -15,7 +15,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+   
     [Area("admin")]
     [Route("admin/KhachHang")]
      [Authorize]
@@ -29,7 +29,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             db = context;
             _mapper = mapper;
         }
-
+        
         #region Danh Sách Khách Hàng
         [Route("")]
         [Route("DanhSachKhachHang")]
@@ -43,6 +43,7 @@ namespace PhoneShop.Areas.Admin.Controllers
         #endregion
 
         #region Create KhachHang
+        [Authorize(Roles = "Admin")]
         [HttpGet("Create")]
         public IActionResult ThemKhachHang()
         {
@@ -88,7 +89,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/KhachHang/ThemKhachHang.cshtml", model);
         }
         #endregion
-
+       
         #region Edit KhachHang
         [HttpGet("Edit/{id}")]
         public IActionResult SuaKhachHang(string id)
@@ -98,7 +99,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View("~/Areas/Admin/Views/KhachHang/SuaKhachHang.cshtml", khachHang);
         }
-
+    
         [HttpPost("Edit/{id}")]
         public IActionResult SuaKhachHang(KhachHang model, IFormFile Hinh)
         {
@@ -127,7 +128,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/KhachHang/SuaKhachHang.cshtml", model);
         }
         #endregion
-
+  
         #region Delete KhachHang
         [HttpGet("Delete/{id}")]
         public IActionResult XoaKhachHang(string id)

@@ -53,7 +53,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
 
 
-
+       
         // Ở dưới là danh mục plese tách ra riêng//
         [Route("danhmucsanpham")]
         public IActionResult DanhMucSanPham(int? page)
@@ -76,7 +76,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("ThemDanhMucSanPham")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -121,7 +121,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
         //}
 
-
+        [Authorize(Roles = "Admin")]
         [Route("SuaDanhMucSanPham")]
         [HttpGet]
         public IActionResult SuaDanhMucSanPham(int MaLoai)
@@ -135,7 +135,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View(loai);
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("SuaDanhMucSanPham")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -168,7 +168,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
 
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("XoaDanhMucSanPham")]
         [HttpGet]
         public IActionResult XoaDanhMucSanPham(int MaLoai)

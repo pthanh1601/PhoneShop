@@ -8,12 +8,8 @@ using System.Linq;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
-   
     [Area("Admin")]
-   
-    [Route("admin")]
-    [Route("admin/nhanvien")]
-    [Authorize]
+    [Route("admin/NhanVien")]
     public class NhanVienController : Controller
     {
         private readonly Hshop2023Context _context;
@@ -24,36 +20,25 @@ namespace PhoneShop.Areas.Admin.Controllers
             _context = context;
             _configuration = configuration;
         }
-
-        // Hàm kiểm tra kết nối SQL Server
-        public IActionResult CheckConnection()
+        [Route("")]
+        [Route("Index")]
+        public IActionResult Index()
         {
-            try
-            {
-                var connectionString = _configuration.GetConnectionString("PhoneShop");
-                using (var connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();  // Mở kết nối
-                    return Content("Kết nối SQL Server thành công.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return Content($"Lỗi kết nối: {ex.Message}");
-            }
+            // Truy vấn danh sách nhân viên từ cơ sở dữ liệu
+            var employees = _context.NhanViens.ToList();
+            return View("~/Areas/Admin/Views/HomeAdmin/NhanVien.cshtml", employees);
         }
-
         // Phương thức GET để hiển thị trang thêm nhân viên
-        
-        [Route("create")]
-        
+        [HttpGet("Create")]
         public IActionResult Create()
         {
-            return View("~/Areas/Admin/Views/HomeAdmin/ThemNhanVien.cshtml");
+            var nv = new NhanVien();
+            return View("~/Areas/Admin/Views/HomeAdmin/ThemNhanVien.cshtml",nv);
         }
 
         // Phương thức POST để thêm nhân viên vào cơ sở dữ liệu
-        [HttpPost]
+
+        [HttpPost("Create")]
         public IActionResult Create(NhanVien nhanVien)
         {
             // Kiểm tra nếu email đã tồn tại
@@ -81,8 +66,8 @@ namespace PhoneShop.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/HomeAdmin/ThemNhanVien.cshtml", nhanVien);
         }
 
-        // Phương thức GET để hiển thị danh sách nhân viên
-        [HttpPost]
+       [Route ("Edit/{id}")]
+        [HttpGet]
         public IActionResult Edit(string MaNv)
         {
             var nhanVien = _context.NhanViens.FirstOrDefault(nv => nv.MaNv == MaNv);  // Tìm nhân viên theo mã
@@ -93,6 +78,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View("~/Areas/Admin/Views/HomeAdmin/SuaNhanVien.cshtml", nhanVien);  // Trả về trang sửa với dữ liệu nhân viên
         }
+        [Route("Edit/{id}")]
         [HttpPost]
         public IActionResult Update(NhanVien nhanVien)
         {
@@ -137,33 +123,26 @@ namespace PhoneShop.Areas.Admin.Controllers
             // Nếu dữ liệu không hợp lệ, trả lại trang chỉnh sửa
             return View("~/Areas/Admin/Views/HomeAdmin/SuaNhanVien.cshtml", nhanVien);
         }
-        [HttpPost]
-        public IActionResult Delete(string maNv)
-        {
-            // Tìm nhân viên trong cơ sở dữ liệu theo MaNv
-            var nhanVien = _context.NhanViens.FirstOrDefault(nv => nv.MaNv == maNv);
+        // [HttpPost]
+        // public IActionResult Delete(string maNv)
+        // {
+        //     // Tìm nhân viên trong cơ sở dữ liệu theo MaNv
+        //     var nhanVien = _context.NhanViens.FirstOrDefault(nv => nv.MaNv == maNv);
 
-            if (nhanVien != null)
-            {
-                // Xóa nhân viên
-                _context.NhanViens.Remove(nhanVien);
-                _context.SaveChanges();
+        //     if (nhanVien != null)
+        //     {
+        //         // Xóa nhân viên
+        //         _context.NhanViens.Remove(nhanVien);
+        //         _context.SaveChanges();
 
-                // Chuyển hướng về trang danh sách nhân viên
-                return RedirectToAction(nameof(Index));
-            }
+        //         // Chuyển hướng về trang danh sách nhân viên
+        //         return RedirectToAction(nameof(Index));
+        //     }
 
-            // Nếu không tìm thấy nhân viên, trả về lỗi
-            return NotFound();
-        }
-       
-        [Route("nhanvien")]
-        
-        public IActionResult Index()
-        {
-            // Truy vấn danh sách nhân viên từ cơ sở dữ liệu
-            var employees = _context.NhanViens.ToList();
-            return View("~/Areas/Admin/Views/HomeAdmin/NhanVien.cshtml", employees);
-        }
+        //     // Nếu không tìm thấy nhân viên, trả về lỗi
+        //     return NotFound();
+        // }
+
+
     }
 }

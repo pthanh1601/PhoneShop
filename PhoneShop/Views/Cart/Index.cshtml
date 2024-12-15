@@ -49,8 +49,8 @@
                                         </a>
                                         <div class="cart-info">
                                             <a asp-action="Detail" asp-controller="HangHoas" asp-route-id=@item.MaHh class="cart-title link">@item.TenHh</a>
-                                            
-                                            <a class="remove-cart link remove" asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.MaHh">Remove</a>
+
+                                            <a  asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.MaHh"><i class="fa fa-times text-danger"></i></a>
                                         </div>
                                     </td>
                                     <td class="tf-cart-item_price" cart-data-title="Price">

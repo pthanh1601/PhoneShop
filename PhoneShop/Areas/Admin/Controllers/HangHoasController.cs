@@ -16,7 +16,7 @@ namespace PhoneShop.Areas.Admin.Controllers
     [Area("admin")]
     [Route("admin")]
     [Route("admin/hanghoa")]
-    [Authorize]
+    
     public class HangHoasController : Controller
     {
         private readonly Hshop2023Context db;
@@ -25,10 +25,11 @@ namespace PhoneShop.Areas.Admin.Controllers
         public HangHoasController(Hshop2023Context context, IWebHostEnvironment environment)
         {
             this.db = context;
-            this.environment = environment;
+           _environment = environment;
         }
         
         [Route("hanghoa")]
+        
         public IActionResult DanhSachHangHoa(int? page)
         {
             int pageSize = 8;
@@ -37,7 +38,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             var lstHangHoa = db.HangHoas.AsNoTracking().OrderBy(h => h.TenHh).ToPagedList(pageNumber, pageSize);
             return View(lstHangHoa);
         }
-
+       
         [Route("ThemHangHoa")]
         [HttpGet]
         public IActionResult ThemHangHoa()
@@ -48,7 +49,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View();
         }
-
+        
         [Route("ThemHangHoa")]
         [HttpPost]
         //[ValidateAntiForgeryToken]
@@ -122,7 +123,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
 
         //Xóa hàng hóa
-
+        [Authorize(Roles = "Admin")]
         [Route("XoaHangHoa")]
         [HttpGet]
         public IActionResult XoaHangHoa(int MaHh)
@@ -155,7 +156,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
 
 
-
+        [Authorize(Roles = "Admin")]
         [Route("SuaHangHoa")]
         [HttpGet]
         public IActionResult SuaHangHoa(int MaHh)

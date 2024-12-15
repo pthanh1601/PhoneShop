@@ -7,6 +7,7 @@ using X.PagedList.Extensions;
 
 namespace PhoneShop.Areas.Admin.Controllers
 {
+    
     [Area("Admin")]
     [Route("admin/NhaCungCaps")]
      [Authorize]
@@ -18,7 +19,7 @@ namespace PhoneShop.Areas.Admin.Controllers
         {
             _context = context;
         }
-
+      
         // GET: Admin/NhaCungCaps
         [Route("")]
         [Route("Index")]
@@ -33,7 +34,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View(pagedNhacungcap);
         }
-
+        
         // GET: Admin/NhaCungCaps/Details/5
         [Route("Details/{id}")]
         public async Task<IActionResult> Details(string id)
@@ -51,14 +52,14 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View(nhaCungCap);
         }
-
+       
         // GET: Admin/NhaCungCaps/Create
         [Route("Create")]
         public IActionResult Create()
         {
             return View();
         }
-
+       
         // POST: Admin/NhaCungCaps/Create
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
@@ -72,7 +73,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             }
             return View(nhaCungCap);
         }
-
+        
         // GET: Admin/NhaCungCaps/Edit/5
         [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(string id)
@@ -89,7 +90,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             }
             return View(nhaCungCap);
         }
-
+        
         // POST: Admin/NhaCungCaps/Edit/5
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
@@ -122,7 +123,7 @@ namespace PhoneShop.Areas.Admin.Controllers
             }
             return View(nhaCungCap);
         }
-
+       
         // GET: Admin/NhaCungCaps/Delete/5
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(string id)
@@ -140,7 +141,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 
             return View(nhaCungCap);
         }
-
+        
         // POST: Admin/NhaCungCaps/Delete/5
         [HttpPost("Delete/{id}")]
         [ValidateAntiForgeryToken]

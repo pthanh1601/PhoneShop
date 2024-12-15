@@ -12,10 +12,10 @@ using X.PagedList.Extensions;
 
 namespace MyApp.Namespace
 {
-    //[Authorize(Roles = "Admin")]
+   
     [Area("Admin")]
     [Route("Admin/HoaDon")]
-     [Authorize]
+     
 
     public class HoaDonController : Controller
     {
@@ -25,8 +25,10 @@ namespace MyApp.Namespace
             hshop2023Context = context;
         }
         // GET: Admin/HoaDon
+        
         [Route("")]
         [Route("Index")]
+        [Authorize]
         public async Task<IActionResult> Index(int? page)
         {
             int pageSize = 10; // Số lượng mục mỗi trang
@@ -42,7 +44,7 @@ namespace MyApp.Namespace
 
             return View(pagedHoaDons);
         }
-
+        
         [HttpGet("Details/{id:int}")]
         public async Task<IActionResult> Details(int id)
         {

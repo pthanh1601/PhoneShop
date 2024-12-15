@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhoneShop.Data
 {
     public partial class PhanCong
     {
-        public int MaPc { get; set; }
-
+        public required int MaPc { get; set; }
+        
         public string MaNv { get; set; } = null!;
+
 
         public string MaPb { get; set; } = null!;
 

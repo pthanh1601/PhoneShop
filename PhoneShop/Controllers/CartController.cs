@@ -28,7 +28,7 @@ namespace PhoneShop.Controllers
 
             return View(Cart);
         }
-
+        [Authorize(Roles = "Customer")]
         public IActionResult AddToCart(int id, int quantity = 1)
         {
             var gioHang = Cart;

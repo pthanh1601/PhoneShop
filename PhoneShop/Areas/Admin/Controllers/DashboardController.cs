@@ -13,6 +13,7 @@ using X.PagedList.Extensions;
 
 namespace MyApp.Namespace
 {
+    
     [Area("Admin")]
     [Route("Admin/Dashboard")]
     [Authorize]
@@ -23,7 +24,7 @@ namespace MyApp.Namespace
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("")]
         [Route("Index")]
         public IActionResult Index()

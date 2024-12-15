@@ -13,6 +13,8 @@ namespace PhoneShop.Hubs
         {
             string customerId = GetCustomerIdFromClaims();
             ConnectedUsers[Context.ConnectionId] = customerId; // Mặc định là khách hàng
+            await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessageWelcome", "Admin", "Xin chào quý khách hàng thân mến đến với website bán hàng Ecomus. Tôi có thế giúp gì cho bạn");
+
             await base.OnConnectedAsync();
         }
         private string GetCustomerIdFromClaims()

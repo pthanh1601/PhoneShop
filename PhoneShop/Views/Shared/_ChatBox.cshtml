@@ -115,7 +115,37 @@
             // Cuộn xuống cuối cùng
             messages.scrollTop = messages.scrollHeight;
         });
+        connection.on("ReceiveMessageWelcome", (sender, message) => {
+    const messages = document.getElementById("messages");
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
 
+    if (sender === "Admin") {
+        messageElement.classList.add('message', 'admin');
+    } else {
+        messageElement.classList.add('message', 'customer');
+    }
+
+    messages.appendChild(messageElement);
+
+    // Cuộn xuống cuối cùng
+    messages.scrollTop = messages.scrollHeight;
+    });connection.on("ReceiveMessageWelcome", (sender, message) => {
+        const messages = document.getElementById("messages");
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+
+        if (sender === "Admin") {
+            messageElement.classList.add('message', 'admin');
+        } else {
+            messageElement.classList.add('message', 'customer');
+        }
+
+        messages.appendChild(messageElement);
+
+        // Cuộn xuống cuối cùng
+        messages.scrollTop = messages.scrollHeight;
+    });
 
         connection.start().catch(err => console.error(err.toString()));
 
@@ -217,6 +247,7 @@
             border-radius: 50%;
             cursor: pointer;
             margin: 16px;
+            z-index:1000;
         }
 
         button.chatbox-close {
@@ -368,5 +399,13 @@
             justify-content: space-around;
             flex: 0 0 auto;
         }
+
+    .chatbox-popup__main, .chatbox-panel__main {
+        flex: 1;
+        overflow-y: auto; /* Cho phép cuộn dọc */
+        max-height: 400px; /* Chiều cao tối đa của khung chat, bạn có thể điều chỉnh giá trị này */
+        padding: 10px;
+        box-sizing: border-box;
+    }
     /*** Chat Box End ***/
 </style>
