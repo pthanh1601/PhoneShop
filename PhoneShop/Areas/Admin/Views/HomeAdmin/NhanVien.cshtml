@@ -2,6 +2,7 @@
     ViewData["Title"] = "Danh Sách Nhân Viên";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.Admin.cshtml";
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @model IEnumerable<PhoneShop.Data.NhanVien>
 
@@ -26,26 +27,26 @@
     <tbody>
         @foreach (var employee in Model)
         {
-            <tr>
-                <td class="text-center">@employee.MaNv</td>
-                <td>@employee.HoTen</td>
-                <td>@employee.Email</td>
-                <td>@employee.MatKhau</td>
-                <td class="text-center">
-                    <!-- Nút sửa -->
-                    <a href="/Admin/NhanVien/Edit/@employee.MaNv" class="btn btn-warning btn-sm">
-                        <i class="bi bi-pencil-square"></i> Sửa
-                    </a>
+                <tr>
+                    <td class="text-center">@employee.MaNv</td>
+                    <td>@employee.HoTen</td>
+                    <td>@employee.Email</td>
+                    <td>@employee.MatKhau</td>
+                    <td class="text-center">
+                        <!-- Nút sửa -->
+                        <a href="/Admin/NhanVien/Edit/@employee.MaNv" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil-square"></i> Sửa
+                        </a>
 
-                    <!-- Nút xóa -->
+                    @* <!-- Nút xóa -->
                     <form method="post" action="/Admin/NhanVien/Delete" class="d-inline-block" onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?');">
                         <input type="hidden" name="MaNv" value="@employee.MaNv" />
                         <button type="submit" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i> Xóa
                         </button>
-                    </form>
-                </td>
-            </tr>
+                    </form> *@
+                    </td>
+                </tr>
         }
     </tbody>
 </table>

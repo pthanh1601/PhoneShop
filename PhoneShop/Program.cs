@@ -104,6 +104,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+// Admin area route mapping
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 // Map the SignalR hub
 app.MapHub<ChatHub>("/chathub");

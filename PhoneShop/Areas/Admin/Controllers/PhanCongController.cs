@@ -10,6 +10,7 @@ namespace PhoneShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
+    [Route("admin/PhanCong")]
     public class PhanCongController : Controller
     {
         private readonly Hshop2023Context _context;
@@ -20,8 +21,17 @@ namespace PhoneShop.Areas.Admin.Controllers
             _context = context;
             _logger = logger;
         }
+        [Route("")]
+        [Route("Index")]
+        public async Task<IActionResult> Index()
+        {
+            var assignments = await _context.PhanCongs.ToListAsync();
+            _logger.LogInformation($"Assignments loaded: {JsonSerializer.Serialize(assignments)}");
 
+            return View("~/Areas/Admin/Views/HomeAdmin/PhanCong.cshtml", assignments);
+        }
         // GET: Display Create Assignment page
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             var model = new PhanCongVM
@@ -35,48 +45,10 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
         // POST: Add assignment to the database
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Add(PhanCongVM viewModel)
         {
-//<<<<<<< HEAD
-//            if (ModelState.IsValid)
-//            {
-//                try
-//                {
-//                    var phanCong = new PhanCong
-//                    {
-//                        MaNv = viewModel.PhanCong.MaNv,
-//                        MaPb = viewModel.PhanCong.MaPb,
-//                        NgayPc = viewModel.PhanCong.NgayPc,
-//                        HieuLuc = viewModel.PhanCong.HieuLuc
-//                    };
 
-//                    _context.PhanCongs.Add(phanCong);
-//                    await _context.SaveChangesAsync();
-
-//                    // Log JSON serialized data to debug console
-//                    _logger.LogInformation($"New assignment added: {JsonSerializer.Serialize(phanCong)}");
-
-//                    TempData["SuccessMessage"] = "Thêm phân công thành công.";
-//                    return RedirectToAction("Index");
-//                }
-//                catch (Exception ex)
-//                {
-//                    _logger.LogError($"Error adding assignment: {ex.Message}");
-//                    ModelState.AddModelError("", "Có lỗi xảy ra khi thêm phân công. Vui lòng thử lại.");
-
-//                    viewModel.NhanViens = _context.NhanViens.ToList();
-//                    viewModel.PhongBans = _context.PhongBans.ToList();
-//                    return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
-//                }
-//            }
-
-//            viewModel.NhanViens = _context.NhanViens.ToList();
-//            viewModel.PhongBans = _context.PhongBans.ToList();
-//            return View("~/Areas/Admin/Views/HomeAdmin/ThemPhanCong.cshtml", viewModel);
-//        }
-
-//=======
             // Kiểm tra tính hợp lệ của dữ liệu
             if (ModelState.IsValid)
             {
@@ -123,17 +95,12 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
 
-//>>>>>>> QLNV/QLPC
+        //>>>>>>> QLNV/QLPC
         // GET: Display assignment list
-        public async Task<IActionResult> Index()
-        {
-            var assignments = await _context.PhanCongs.ToListAsync();
-            _logger.LogInformation($"Assignments loaded: {JsonSerializer.Serialize(assignments)}");
 
-            return View("~/Areas/Admin/Views/HomeAdmin/PhanCong.cshtml", assignments);
-        }
 
         // GET: Display Edit Assignment page
+        [HttpGet("Edit/{id:int}")]
         public IActionResult Edit(int maPc)
         {
             var phanCong = _context.PhanCongs.FirstOrDefault(pc => pc.MaPc == maPc);
@@ -153,7 +120,8 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
         // POST: Update assignment
-        [HttpPost]
+        [HttpPost("Edit/{id}")]
+
         public async Task<IActionResult> Update(PhanCongVM viewModel)
         {
             if (ModelState.IsValid)
@@ -199,34 +167,34 @@ namespace PhoneShop.Areas.Admin.Controllers
         }
 
         // POST: Delete assignment
-        [HttpPost]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete(int maPc)
         {
-//<<<<<<< HEAD
-//            try
-//            {
-//                var phanCong = await _context.PhanCongs.FirstOrDefaultAsync(pc => pc.MaPc == maPc);
-//                if (phanCong != null)
-//                {
-//                    _context.PhanCongs.Remove(phanCong);
-//                    await _context.SaveChangesAsync();
+            //<<<<<<< HEAD
+            //            try
+            //            {
+            //                var phanCong = await _context.PhanCongs.FirstOrDefaultAsync(pc => pc.MaPc == maPc);
+            //                if (phanCong != null)
+            //                {
+            //                    _context.PhanCongs.Remove(phanCong);
+            //                    await _context.SaveChangesAsync();
 
-//                    // Log JSON serialized data to debug console
-//                    _logger.LogInformation($"Assignment deleted: {JsonSerializer.Serialize(phanCong)}");
+            //                    // Log JSON serialized data to debug console
+            //                    _logger.LogInformation($"Assignment deleted: {JsonSerializer.Serialize(phanCong)}");
 
-//                    TempData["SuccessMessage"] = "Xóa phân công thành công.";
-//                    return RedirectToAction(nameof(Index));
-//                }
+            //                    TempData["SuccessMessage"] = "Xóa phân công thành công.";
+            //                    return RedirectToAction(nameof(Index));
+            //                }
 
-//                return NotFound();
-//            }
-//            catch (Exception ex)
-//            {
-//                _logger.LogError($"Error deleting assignment: {ex.Message}");
-//                return BadRequest("Có lỗi xảy ra khi xóa phân công.");
-//            }
-//        }
-//=======
+            //                return NotFound();
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                _logger.LogError($"Error deleting assignment: {ex.Message}");
+            //                return BadRequest("Có lỗi xảy ra khi xóa phân công.");
+            //            }
+            //        }
+            //=======
             // Tìm phân công cần xóa từ cơ sở dữ liệu
             var phanCong = await _context.PhanCongs
                 .FirstOrDefaultAsync(pc => pc.MaPc == maPc);
@@ -248,6 +216,6 @@ namespace PhoneShop.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-//>>>>>>> QLNV/QLPC
+        //>>>>>>> QLNV/QLPC
     }
 }
